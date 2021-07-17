@@ -105,7 +105,7 @@ const World = () => {
 
   const onMouseOutMarker = (marker) => {
     console.log(`Leaving card`);
-    setHover(false);
+    // setHover(false);
   }
 
   return (
@@ -124,7 +124,7 @@ const World = () => {
         </div>
       ) : null}
       {hover ? (
-        <div style={startModalStyle}>
+        <div style={cardStyle}>
           <GlobjectCard
             style={{ position: 'sticky', right: '200px' }}
             src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
@@ -154,6 +154,12 @@ const World = () => {
 };
 
 export default World;
+
+const cardStyle = {
+  width: "5vw",
+  height: "5vw",
+  position: 'fixed'
+}
 
 const startModalStyle = {
   width: '100%',
