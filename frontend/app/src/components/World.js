@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import ReactGlobe from 'react-globe';
+import texture from './16k.jpeg';
 
 const sampleData = [
     {
@@ -76,23 +77,19 @@ const World = () => {
         markerRadiusScaleRange: [0.005, 0.02],
         markerType: 'dot',
         enableMarkerToolTip: true,
-        // markerEnterAnimationDuration: 3000,
-        // markerEnterEasingFunction: ['Bounce', 'InOut'],
-        // markerExitEasingFunction: ['Cubic', 'Out'],
-        // markerTooltipRenderer: marker => 
-        //     `${marker.city} (Sales: ${marker.value}.0M)`,
-        // markerRadiusScaleRange: [0.01, 0.05],
-
-        focusAnimationDuration: 2000,
-        focusDistanceRadiusScale: 2,
+        focusAnimationDuration: 3000,
+        focusDistanceRadiusScale: 1.4,
         focusEasingFunction: ['Circular', 'In'],
         enableDefocus: false,
     }
+
+    // const texture = 'https://raw.githubusercontent.com/chrisrzhou/react-globe/main/textures/globe_dark.jpg'
 
     return (
         <>   
             <button onClick={() => setFocus([1.3521, 103.8198])}>Singapore</button>
             <ReactGlobe 
+                globeTexture={texture}
                 focus={focus}
                 height="100vh"
                 width="100wh"
