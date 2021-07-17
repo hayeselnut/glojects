@@ -4,6 +4,7 @@ import texture from './8k.jpeg';
 
 import { filterByExactField } from './WorldUtil/projectsUtil';
 import { zoomToMarker } from './WorldUtil/cameraAnimations';
+import api from '../api/index';
 
 import GlobjectCard from '../components/common/GlojectCard';
 
@@ -38,8 +39,7 @@ const initOptions = {
   // markerEnterAnimationDuration: 3000,
   // markerEnterEasingFunction: ['Bounce', 'InOut'],
   // markerExitEasingFunction: ['Cubic', 'Out'],
-  markerTooltipRenderer: (marker) =>
-    `${marker.title} Boss Coffee Boss Iced Long Black`,
+  markerTooltipRenderer: (marker) => `${marker.title}`,
   // markerRadiusScaleRange: [0.01, 0.05],
 
   // cameraAutoRotateSpeed: 0.5,
@@ -67,6 +67,12 @@ const World = () => {
   const [options, setOptions] = useState(initOptions);
   const [hover, setHover] = useState(false);
 
+  const [cardSrc, setCardSrc] = useState('');
+  const [cardTitle, setCardTitle] = useState('');
+  const [cardTags, setCardTags] = useState([]);
+  const [cardDescription, setCardDescription] = useState('');
+  const [cardOwner, setCardOwner] = useState('');
+
   const initZoom = () => {
     // const newOptions = {...options};
     // newOptions.cameraAutoRotateSpeed = 0.1;
@@ -76,7 +82,24 @@ const World = () => {
   };
 
   useEffect(() => {
-    setProjects(sampleData);
+    const ue = async () => {
+      const glojectData = await api.glojects.getAllActives();
+      console.log('gd', glojectData);
+      glojectData.forEach((d) => {
+        const coordinates = [d.location.latitude, d.location.longitude];
+        d.coordinates = coordinates;
+        d.value = 25;
+        if (d.difficulty === 'EASY') {
+          d['color'] = 'green';
+        } else if (d.difficulty === 'MEDIUM') {
+          d['color'] = 'blue';
+        } else if (d.difficulty === 'HARD') {
+          d['color'] = 'red';
+        }
+      });
+      setProjects(glojectData);
+    };
+    ue();
 
     window.addEventListener('keydown', () => {
       initZoom();
@@ -85,11 +108,17 @@ const World = () => {
   }, []);
 
   const onClick = (obj) => {
-    console.log('obj');
+    console.log('obj', obj);
     zoomToMarker(setFocus, obj);
     const newOptions = { ...options };
     newOptions.cameraAutoRotateSpeed = 0;
     setOptions(newOptions);
+
+    setCardSrc(obj.image);
+    setCardTitle(obj.title);
+    setCardTags(obj.tags);
+    setCardDescription(obj.setCardDescription);
+    setCardOwner(obj.owner);
     setHover(true);
   };
 
@@ -128,11 +157,11 @@ const World = () => {
       {hover ? (
         <div style={cardStyle}>
           <GlobjectCard
-            src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
-            title="Boss Coffee Boss Iced Long Black"
-            tags={['coffee', 'tea']}
-            description="iced long black flas k brew breed hot / chilled fast - no1 coffee in japan kawaiiiiiidesu"
-            owner="35Z6uU2PpFRb9XbVG0rF"
+            src={cardSrc}
+            title={cardTitle}
+            tags={cardTags}
+            description={cardDescription}
+            owner={cardOwner}
           />
         </div>
       ) : null}
