@@ -40,7 +40,7 @@ const initOptions = {
     //     `${marker.city} (Sales: ${marker.value}.0M)`,
     // markerRadiusScaleRange: [0.01, 0.05],
 
-    cameraAutoRotateSpeed: 0.5,
+    // cameraAutoRotateSpeed: 0.5,
 
     focusAnimationDuration: 2000,
     focusDistanceRadiusScale: 1.5,
@@ -56,11 +56,11 @@ const World = () => {
     const [options, setOptions] = useState(initOptions);
 
     const initZoom = () => {
-        const newOptions = {...options};
-        newOptions.cameraAutoRotateSpeed = 0.1;
+        // const newOptions = {...options};
+        // newOptions.cameraAutoRotateSpeed = 0.1;
         setFocus([-33, 151]);
         setOpen(false);
-        setOptions(newOptions);
+        // setOptions(newOptions);
     }
 
     useEffect(() => {
