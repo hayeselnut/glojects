@@ -35,6 +35,7 @@ const NavBar = (props) => {
   const [buttons, setButtons] = useState('');
   const [signupOpen, setSignupOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [userId, setUserId] = useState(localStorage.getItem('id'));
 
   const handleItemClick = () => {};
   const handleLogout = async () => {
@@ -43,8 +44,9 @@ const NavBar = (props) => {
   };
 
   useEffect(() => {
-    if (logggedIn) {
-      console.log('logged in');
+    const pathname = window.location.pathname;
+    console.log(pathname);
+    if (logggedIn || userId !== '') {
       setButtons(
         <RightDiv>
           <Avatar props={props} />
@@ -54,7 +56,6 @@ const NavBar = (props) => {
         </RightDiv>
       );
     } else {
-      console.log('logged out');
       setButtons(
         <RightDiv>
           <Button name="sign in" inverted onClick={() => setLoginOpen(true)}>
