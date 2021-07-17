@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Modal, Form, Input, Header } from 'semantic-ui-react';
 import { signup } from '../../firebase/auth';
 import 'react-nice-input-password/dist/react-nice-input-password.css';
+import './InvisInput.css';
 
 export default function SignupModal(props) {
   const { signupOpen, setSignupOpen } = props;
@@ -17,51 +18,78 @@ export default function SignupModal(props) {
 
   return (
     <Modal
-      dimmer="blurred"
+      dimmer="blurring"
       open={signupOpen}
       onClose={() => setSignupOpen(false)}
+      basic
+      size="tiny"
+      style={{ display: 'flex', justifyContent: 'center' }}
     >
-      <Modal.Header>Become part of Globjects now!</Modal.Header>
+      <Header as="h1" textAlign="center">
+        Become part of Gl<span>&#x1f30e;</span>jects now!
+      </Header>
       <Modal.Content>
-        <div style={{ margin: 10, marginRight: 40, marginLeft: 40 }}>
-          <Header as="h3">Username</Header>
-          <Input
-            onChange={(event) => setUsername(event.target.value)}
-            placeholder="xxJohnSmithxx"
-            fluid
-            required
-            autoFocus
-          />
-          <Header as="h3">Email</Header>
-          <Input
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="john_smith@email.com"
-            fluid
-            required
-            autoFocus
-          />
-          <Header as="h3">Password</Header>
-          <Input
-            onChange={(event) => setPassword(event.target.value)}
-            placeholder="mypass123"
-            fluid
-            required
-            autoFocus
-            type="password"
-          />
-          <Header as="h3">Location</Header>
-          <Input
-            onChange={(event) => setLocation(event.target.value)}
-            placeholder="Sydney"
-            fluid
-            required
-            autoFocus
-          />
-        </div>
+        <Form>
+          <div style={{ margin: 10, marginRight: 40, marginLeft: 40 }}>
+            <Header as="h3" style={{ color: 'white' }}>
+              Username
+            </Header>
+            <Input
+              onChange={(event) => setUsername(event.target.value)}
+              placeholder="xxJohnSmithxx"
+              fluid
+              required
+              autoFocus
+              transparent
+              style={{ borderBottom: '1px solid grey', color: 'white' }}
+            />
+            <Header as="h3" style={{ color: 'white' }}>
+              Email
+            </Header>
+            <Input
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="john_smith@email.com"
+              fluid
+              required
+              autoFocus
+              transparent
+              style={{ borderBottom: '1px solid grey' }}
+            />
+            <Header as="h3" style={{ color: 'white' }}>
+              Password
+            </Header>
+            <Input
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="*******"
+              fluid
+              required
+              autoFocus
+              type="password"
+              transparent
+              style={{ borderBottom: '1px solid grey' }}
+            />
+            <Header as="h3" style={{ color: 'white' }}>
+              Location
+            </Header>
+            <Input
+              onChange={(event) => setLocation(event.target.value)}
+              placeholder="Sydney"
+              fluid
+              required
+              autoFocus
+              transparent
+              style={{ borderBottom: '1px solid grey' }}
+            />
+          </div>
+        </Form>
       </Modal.Content>
-      <Modal.Actions>
-        <Button onClick={() => handleSignup()}>Sign up</Button>
-      </Modal.Actions>
+      <Button
+        style={{ margin: 'auto', display: 'flex', justifyContent: 'center' }}
+        inverted
+        onClick={() => handleSignup()}
+      >
+        Sign up
+      </Button>
     </Modal>
   );
 }
