@@ -18,14 +18,13 @@ const Avatar = (props) => {
   useEffect(() => {
     const ue = async () => {
       const userData = await api.users.getById(profileId);
-      console.log('userdata', userData);
       setUserData(userData);
     };
     ue();
   }, [profileId]);
 
   const handleClick = () => {
-    setProfileId(currUserId);
+    setProfileId(profileId);
     setProfileOpen(true);
     setGlojectOpen(false);
     console.log(profileId);
