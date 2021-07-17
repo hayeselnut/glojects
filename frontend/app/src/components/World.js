@@ -61,12 +61,15 @@ const World = () => {
     const initZoom = () => {
         // const newOptions = {...options};
         // newOptions.cameraAutoRotateSpeed = 0.1;
+        window.removeEventListener('keydown', initZoom, true);
         setFocus([-33, 151]);
         setOpen(false);
         // setOptions(newOptions);
     }
 
     useEffect(() => {
+        window.addEventListener('keydown', initZoom, true);
+
         api.glojects.getAllActives().then((res) => {
             const newGlojects = [];
             res.forEach((value, index) => {
@@ -76,11 +79,6 @@ const World = () => {
             
             console.log("New glojects are ", newGlojects);
             setGlojects(newGlojects);
-        })
-
-        window.addEventListener('keydown', () => {
-            initZoom();
-            window.removeEventListener('keydown', initZoom);
         })
     }, []);
 
