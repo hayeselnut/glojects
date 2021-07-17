@@ -43,8 +43,10 @@ class API {
           past_glojects: [],
           interests: [],
         }),
-      getById: async (uid) =>
-        await this.#db.collection('users').doc(uid).get().data(),
+      getById: async (uid) => {
+        const response = await this.#db.collection('users').doc(uid).get();
+        return response.data();
+      },
       exists: async (uid) => (await this.users.getById(uid)).exists,
     };
   }
