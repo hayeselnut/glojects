@@ -7,6 +7,7 @@ import SignupPage from './components/signupPage/SignupPage';
 import GlojectPage from './components/glojectPage.jsx/GlojectPage';
 
 import './App.css';
+import { signup, resendVerification, login, logout } from './firebase/auth';
 import UserProfilePage from './components/userProfilePage/UserProfilePage';
 
 function App() {
