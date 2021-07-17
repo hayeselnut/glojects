@@ -32,5 +32,5 @@
 }
 
 export function redirect (path) {
-  document.location.href = path;
+  document.location.href = `${process.env.PUBLIC_URL}${path}`;
 }

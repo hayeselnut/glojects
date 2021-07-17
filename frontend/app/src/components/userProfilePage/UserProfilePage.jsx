@@ -3,7 +3,6 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import { Container, Header, Image } from 'semantic-ui-react';
 import api from '../../api';
-import NavBar from '../common/NavBar';
 
 const UserProfilePage = (props) => {
   const { uid } = useParams();
