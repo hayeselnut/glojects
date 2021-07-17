@@ -9,9 +9,10 @@ export default function SignupModal(props) {
   const [email, setEmail] = React.useState('');
   const [location, setLocation] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [photo, setPhoto] = React.useState('');
 
   const handleSignup = () => {
-    if (signup(email, password, username, location)) {
+    if (signup(email, password, username, location, photo)) {
       setSignupOpen(false);
     }
   };
@@ -54,6 +55,14 @@ export default function SignupModal(props) {
           <Input
             onChange={(event) => setLocation(event.target.value)}
             placeholder="Sydney"
+            fluid
+            required
+            autoFocus
+          />
+          <Header as="h3">Photo URL</Header>
+          <Input
+            onChange={(event) => setPhoto(event.target.value)}
+            placeholder="Photo URL"
             fluid
             required
             autoFocus

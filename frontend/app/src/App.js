@@ -9,7 +9,7 @@ import UserProfilePage from './components/userProfilePage/UserProfilePage';
 import NewGlojectPage from './components/newGlojectPage/NewGlojectPage';
 
 import './App.css';
-import 'semantic-ui-css/semantic.min.css'
+import 'semantic-ui-css/semantic.min.css';
 
 function App() {
   return (
@@ -18,9 +18,9 @@ function App() {
         <Switch>
           <PrivateRoute path="/signup" component={SignupPage} />
           <Route exact path="/" component={LandingPage} />
-          <Route exact path='/g/new' component={NewGlojectPage} />
-          <Route exact path='/g/:glojectId' component={GlojectPage} />
-          <Route exact path='/u/:username' component={UserProfilePage} />
+          <Route exact path="/g/new" component={NewGlojectPage} />
+          <Route exact path="/g/:glojectId" component={GlojectPage} />
+          <Route exact path="/u/:uid" component={UserProfilePage} />
         </Switch>
       </Router>
     </StoreProvider>

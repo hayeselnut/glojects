@@ -20,20 +20,14 @@ const GlojectPage = (props) => {
 
   return (
     <Container>
-      <Header>
-        {glojectData.title}
-      </Header>
-      <p>
-        {glojectData.description}
-      </p>
-      <p>
-        Owner:
-      </p>
+      <Header>{glojectData.title}</Header>
+      <p>{glojectData.description}</p>
+      <p>Owner:</p>
       <Avatar username={glojectData.owner} />
-      <p>
-        Team members:
-      </p>
-      {glojectData.team?.map((username) => <Avatar username={username} />)}
+      <p>Team members:</p>
+      {glojectData.team?.map((username) => (
+        <Avatar username={username} />
+      ))}
     </Container>
   );
 
