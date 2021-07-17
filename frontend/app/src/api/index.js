@@ -45,21 +45,30 @@ class API {
         const data = snapshot.data();
         return {id, ...data};
       },
+
+      getAllFilters: async ({difficulty, tags}) => {
+        const allGlojects = await this.glojects.getAll();
+
+        console.log("tags length", tags.length)
+        return allGlojects
+          .filter((gloject) => difficulty === '' ? true : gloject.difficulty === difficulty)
+          .filter((gloject) => tags.length ? tags.every(t => gloject.tags.includes(t)) : true );
+      },
+      getAllTags: async () => {
+        const allGlojects = await this.glojects.getAll();
+        const allTags = [...new Set(allGlojects.map((gloject) => gloject.tags).flat())];
+        return allTags;
+      },
       exists: async (glojectId) =>
         (await this.glojects.getById(glojectId)).exists,
       create: async (glojectData) =>
         await this.#db.collection('glojects').add(glojectData),
       delete: async (glojectId) =>
         await this.#db.collection('glojects').doc(glojectId).delete(),
-      // update: {
-      //   title: async (glojectId, title) => await this.#db.collection('glojects').doc(glojectId).update({title}),
-      //   description: async (glojectId, description) => await this.#db.collection('glojects').doc(glojectId).update({description}),
-      //   team: async (glojectId, team) => await this.#db.collection('glojects').doc(glojectId).update({team}),
-      //   tags: async (glojectId, tags) => await this.#db.collection('glojects').doc(glojectId).update({tags}),
-      // },
+      update: async (glojectId, updated) => await this.#db.collection('glojects').doc(glojectId).update(updated),
     };
     this.users = {
-      createUser: async (uid, username, email, location) =>
+      createUser: async (uid, username, email, location, image) =>
         await this.#db.collection('users').doc(uid).set({
           username: username,
           email: email,
@@ -67,8 +76,15 @@ class API {
           active_glojects: [],
           past_glojects: [],
           interests: [],
+          image: image,
         }),
-      getById: async (uid) => await this.#db.collection('users').doc(uid).get(),
+      getById: async (uid) => {
+        const snapshot = await this.#db.collection('users').doc(uid).get()
+        const id = snapshot.id;
+        const data = snapshot.data();
+        return {id, ...data};
+      },
+      getCurrentUserId: () => firebase.auth().currentUser.id,
       exists: async (uid) => (await this.users.getById(uid)).exists,
     };
   }

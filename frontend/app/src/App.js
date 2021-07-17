@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { StoreProvider } from './utils/store';
 
 import PrivateRoute from './PrivateRoute';
@@ -27,7 +27,7 @@ function App() {
           <Route exact path="/api" component={ApiPage} />
           <Route exact path="/g/new" component={NewGlojectPage} />
           <Route exact path="/g/:glojectId" component={GlojectPage} />
-          <Route exact path="/u/:username" component={UserProfilePage} />
+          <Route exact path="/u/:uid" component={UserProfilePage} />
         </Switch>
       </Router>
     </StoreProvider>

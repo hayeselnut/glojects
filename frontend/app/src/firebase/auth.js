@@ -2,7 +2,7 @@
 import firebase from 'firebase/app';
 import api from '../api';
 
-export const signup = async (email, password, username, location) => {
+export const signup = async (email, password, username, location, image) => {
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
@@ -12,7 +12,7 @@ export const signup = async (email, password, username, location) => {
       user.sendEmailVerification().then(() => {
         console.log('Sent verification email');
       });
-      api.users.createUser(user.id, username, email, location);
+      api.users.createUser(user.id, username, email, location, image);
     })
     .catch((error) => {
       const errorCode = error.code;

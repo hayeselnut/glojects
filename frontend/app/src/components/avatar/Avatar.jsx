@@ -4,6 +4,7 @@ import { Image } from 'semantic-ui-react';
 import api from '../../api';
 
 const Avatar = (props) => {
+  const { userId } = props;
   const [userData, setUserData] = useState({});
 
   const [userId, setUserId] = useState('');
@@ -11,10 +12,8 @@ const Avatar = (props) => {
   useEffect(() => {
     const ue = async () => {
       const user = await firebase.auth().currentUser;
-      console.log(user.id);
-      await setUserId(user.id);
-      const snapshot = await api.users.getById(userId);
-      setUserData(snapshot.data());
+      const userData = await api.users.getById(user.id);
+      setUserData(userData);
     };
     ue();
   }, [userId]);
@@ -22,8 +21,8 @@ const Avatar = (props) => {
   return (
     <a href={`/u/${userId}`}>
       <div>
-        <Image src={userData?.picture} avatar />
-        <span>{userId}</span>
+        <Image src={userData.image} avatar />
+        <span>{userData.username}</span>
       </div>
     </a>
   );
