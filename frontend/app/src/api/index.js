@@ -35,7 +35,7 @@ class API {
     };
     this.users = {
       createUser: async (uid, username, email, location) =>
-        await this.#db.collection('users').document(uid).set({
+        await this.#db.collection('users').doc(uid).set({
           username: username,
           email: email,
           location: location,
