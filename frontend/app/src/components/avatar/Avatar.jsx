@@ -18,6 +18,7 @@ const Avatar = (props) => {
   useEffect(() => {
     const ue = async () => {
       const userData = await api.users.getById(profileId);
+      console.log('response', userData);
       setUserData(userData);
     };
     ue();

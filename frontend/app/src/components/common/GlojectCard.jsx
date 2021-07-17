@@ -28,7 +28,7 @@ const GlojectCard = (props) => {
             alignItems: 'center',
           }}
         >
-          <Avatar userId={props.owner} />
+          <Avatar profileId={props.owner} />
           <a>Read more</a>
         </div>
       </Card.Content>
