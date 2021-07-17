@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal, Form, Input, Header } from 'semantic-ui-react';
+import { Button, Modal, Input, Header } from 'semantic-ui-react';
 import { login } from '../../firebase/auth';
 import 'react-nice-input-password/dist/react-nice-input-password.css';
 
@@ -22,8 +22,7 @@ export default function LoginModal(props) {
       onClose={() => setLoginOpen(false)}
       basic
       size="tiny"
-      style={{ zIndex: -1 }}
-      style={{ display: 'flex', justifyContent: 'center' }}
+      style={{ zIndex: -1, display: 'flex', justifyContent: 'center' }}
     >
       <Header as="h1" textAlign="center">
         Login to Gl<span>&#x1f30e;</span>jects now!

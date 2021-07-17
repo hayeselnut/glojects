@@ -86,7 +86,7 @@ const ApiPage = () => {
         />
         <Button
           content="Get gloject meeting filters"
-          onClick={() => api.glojects.getAllFilters({difficulty, tags}).then((res) => console.log(res))}
+          onClick={() => api.glojects.getAllFilters({difficulty, tags}).then((res) => console.log(res + " difficulty was " + difficulty + "!!!"))}
         />
       </Segment>
     </Container>

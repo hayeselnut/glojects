@@ -1,8 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { StoreProvider } from './utils/store';
 
 import PrivateRoute from './PrivateRoute';
-import LandingPage from './components/landingPage/LandingPage';
 import SignupPage from './components/signupPage/SignupPage';
 import GlojectPage from './components/glojectPage.jsx/GlojectPage';
 import UserProfilePage from './components/userProfilePage/UserProfilePage';
@@ -15,20 +13,21 @@ import EditGlojectPage from './components/editGlojectPage/EditGlojectPage';
 
 function App() {
   return (
-    <StoreProvider>
+    <>
       <NavBar />
       <Router>
         <Switch>
-          <PrivateRoute path="/signup" component={SignupPage} />
-          <Route exact path="/" component={World} />
-          <Route exact path="/api" component={ApiPage} />
-          <Route exact path="/g/new" component={NewGlojectPage} />
-          <Route exact path="/g/:glojectId" component={GlojectPage} />
-          <Route exact path="/g/:glojectId/edit" component={EditGlojectPage} />
-          <Route exact path="/u/:uid" component={UserProfilePage} />
+          {console.log("In router")}
+          <PrivateRoute path={`${process.env.PUBLIC_URL}/signup`} component={SignupPage} />
+          <Route exact path={`${process.env.PUBLIC_URL}/`} component={World} />
+          <Route exact path={`${process.env.PUBLIC_URL}/api`} component={ApiPage} />
+          <Route exact path={`${process.env.PUBLIC_URL}/g/new`} component={NewGlojectPage} />
+          <Route exact path={`${process.env.PUBLIC_URL}/g/:glojectId`} component={GlojectPage} />
+          <Route exact path={`${process.env.PUBLIC_URL}/g/:glojectId/edit`} component={EditGlojectPage} />
+          <Route exact path={`${process.env.PUBLIC_URL}/u/:uid`} component={UserProfilePage} />
         </Switch>
       </Router>
-    </StoreProvider>
+    </>
   );
 }
 
