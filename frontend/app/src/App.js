@@ -19,8 +19,7 @@ function App() {
       <Router>
         <Switch>
           <PrivateRoute path="/signup" component={SignupPage} />
-          <Route exact path="/World" component={World} />
-          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/" component={World} />
           <Route exact path="/api" component={ApiPage} />
           <Route exact path="/g/new" component={NewGlojectPage} />
           <Route exact path="/g/:glojectId" component={GlojectPage} />
