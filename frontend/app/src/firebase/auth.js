@@ -36,7 +36,7 @@ export const resendVerification = async (email) => {
 };
 
 export const login = async (email, password) => {
-  firebase
+  await firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
@@ -45,7 +45,8 @@ export const login = async (email, password) => {
       if (!user?.emailVerified) {
         throw new Error('Please verify your email');
       }
-      console.log('Successfully logged in.');
+      console.log('Successfully logged in.', user);
+      localStorage.setItem('id', user.uid);
       return true;
     })
     .catch((error) => {
@@ -61,6 +62,7 @@ export const logout = async () => {
     .auth()
     .signOut()
     .then(() => {
+      localStorage.removeItem('id');
       console.log('Logged out!');
     })
     .catch((error) => {

@@ -8,11 +8,11 @@ export default function LoginModal(props) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const handleLogin = async () => {
-    await login(email, password);
-    console.log('setting loginopen');
-    setLoggedIn(true);
-    setLoginOpen(false);
+  const handleLogin = () => {
+    login(email, password).then(() => {
+      setLoggedIn(true);
+      setLoginOpen(false);
+    });
   };
 
   return (

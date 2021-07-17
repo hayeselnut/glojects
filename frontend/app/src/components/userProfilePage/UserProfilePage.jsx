@@ -58,8 +58,6 @@ const UserProfilePage = (props) => {
     });
   }, [userData]);
 
-  console.log('userdata', userData);
-
   return (
     <div>
       <Container style={{ marginTop: '5%' }}>
