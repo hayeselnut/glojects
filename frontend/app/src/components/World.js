@@ -85,7 +85,6 @@ const World = () => {
     api.glojects.getAllActives().then((res) => {
       const newGlojects = [];
       res.forEach((value, index) => {
-        console.log('value', value);
         newGlojects.push(scrapeToGlojectObj(value));
       });
 
@@ -95,7 +94,6 @@ const World = () => {
   }, []);
 
   const onClick = (obj) => {
-    console.log('obj', obj);
     zoomToMarker(setFocus, obj);
     const newOptions = { ...options };
     newOptions.cameraAutoRotateSpeed = 0;
