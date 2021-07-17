@@ -4,7 +4,7 @@ import SignupModal from './SignupModal';
 
 const SignupPage = () => {
   const history = useHistory();
-  const [signupOpen, setSignupOpen] = useState(true);
+  const [signupOpen, setSignupOpen] = useState(false);
   return (
     <div>
       Sign up page

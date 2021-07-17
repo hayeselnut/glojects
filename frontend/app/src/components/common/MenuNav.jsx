@@ -3,52 +3,42 @@ import React, { Component, useEffect, useState } from 'react';
 import { Menu, Segment, Header } from 'semantic-ui-react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import { logout } from '../../firebase/auth';
+import SignupModal from '../signupPage/SignupModal';
+import LoginModal from '../signupPage/LoginModal';
 
 const MenuNav = () => {
   const [activeItem, setActiveItem] = useState('home');
   const [logggedIn, setLoggedIn] = useState(false);
   const [buttons, setButtons] = useState('');
+  const [signupOpen, setSignupOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
 
-  const handleItemClick = (name) => {
-    setActiveItem(name);
+  const handleItemClick = () => {};
+  const handleLogout = async () => {
+    await logout();
+    setLoggedIn(false);
   };
 
   useEffect(() => {
-    const user = firebase.auth().currentUser;
-    if (!user) {
-      setLoggedIn(!true);
+    if (logggedIn) {
+      console.log('logged in');
       setButtons(
         <Menu.Menu position="right">
-          <Menu.Item
-            name="account"
-            active={activeItem === 'account'}
-            onClick={handleItemClick}
-          />
-          <Menu.Item
-            name="sign out"
-            active={activeItem === 'signout'}
-            onClick={handleItemClick}
-          />
+          <Menu.Item name="account" onClick={handleItemClick} />
+          <Menu.Item name="sign out" onClick={handleLogout} />
         </Menu.Menu>
       );
     } else {
-      setLoggedIn(false);
+      console.log('logged out');
       setButtons(
         <Menu.Menu position="right">
-          <Menu.Item
-            name="sign in"
-            active={activeItem === 'sign in'}
-            onClick={handleItemClick}
-          />
-          <Menu.Item
-            name="register"
-            active={activeItem === 'register'}
-            onClick={handleItemClick}
-          />
+          <Menu.Item name="sign in" onClick={() => setLoginOpen(true)} />
+          <Menu.Item name="register" onClick={() => setSignupOpen(true)} />
         </Menu.Menu>
       );
     }
-  }, []);
+  }, [logggedIn]);
 
   return (
     <Segment inverted>
@@ -64,6 +54,18 @@ const MenuNav = () => {
         <Header style={{ color: 'white', margin: 0 }}>Glojects</Header>
         {buttons}
       </Menu>
+      <SignupModal
+        signupOpen={signupOpen}
+        setSignupOpen={setSignupOpen}
+        logggedIn={logggedIn}
+        setLoggedIn={setLoggedIn}
+      ></SignupModal>
+      <LoginModal
+        loginOpen={loginOpen}
+        setLoginOpen={setLoginOpen}
+        logggedIn={logggedIn}
+        setLoggedIn={setLoggedIn}
+      ></LoginModal>
     </Segment>
   );
 };
