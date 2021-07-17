@@ -7,31 +7,34 @@ const Avatar = (props) => {
   const { userId, removeFromTeam } = props;
   const [userData, setUserData] = useState({});
 
-  const currUserId = localStorage.getItem('id')
+  const currUserId = localStorage.getItem('id');
 
   useEffect(() => {
     const ue = async () => {
       const userData = await api.users.getById(userId);
+      console.log('userdata', userData);
       setUserData(userData);
     };
     ue();
   }, [userId]);
 
   return (
-    <div style={{display: 'flex'}}>
-      <a href={`/u/${userId}`} style={{flexGrow: 1}}>
-        <Image src={userData.image} avatar style={{marginRight: '0.5em'}} />
-        <span>{`${userData.username}${userId === currUserId && ' (You)'}`}</span>
+    <div style={{ display: 'flex' }}>
+      <a href={`/u/${userId}`} style={{ flexGrow: 1, width: '200px' }}>
+        <Image src={userData.image} avatar style={{ marginRight: '0.5em' }} />
+        <span>{`${userData.username}${
+          userId === currUserId && ' (You)'
+        }`}</span>
       </a>
       {removeFromTeam && (
         <Icon
           fitted
           circular
           inverted
-          size='tiny'
-          color='grey'
-          name='minus'
-          style={{cursor: 'pointer'}}
+          size="tiny"
+          color="grey"
+          name="minus"
+          style={{ cursor: 'pointer' }}
           onClick={(e) => removeFromTeam()}
         />
       )}
