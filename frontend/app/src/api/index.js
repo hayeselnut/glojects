@@ -14,16 +14,28 @@ const getDb = () => {
 class API {
   #db;
 
-  constructor () {
+  constructor() {
     this.#db = getDb();
     this.glojects = {
       getAll: async () => await this.#db.collection('glojects').get(),
-      getById: async (glojectId) => await this.#db.collection('glojects').doc(glojectId).get(),
-      exists: async (glojectId) => (await this.glojects.getById(glojectId)).exists,
+      getById: async (glojectId) =>
+        await this.#db.collection('glojects').doc(glojectId).get(),
+      exists: async (glojectId) =>
+        (await this.glojects.getById(glojectId)).exists,
     };
     this.users = {
-      getByUsername: async (username) => await this.#db.collection('users').doc(username).get(),
-      exists: async (username) => (await this.users.getByUsername(username)).exists,
+      createUser: async (uid, username, email, location) =>
+        await this.#db.collection('users').document(uid).set({
+          username: username,
+          email: email,
+          location: location,
+          active_glojects: [],
+          past_glojects: [],
+          interests: [],
+        }),
+      getByUsername: async (uid) =>
+        await this.#db.collection('users').doc(uid).get(),
+      exists: async (uid) => (await this.users.getByUsername(uid)).exists,
     };
   }
 }
