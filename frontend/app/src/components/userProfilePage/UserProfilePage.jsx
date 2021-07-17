@@ -29,11 +29,12 @@ const UserProfilePage = (props) => {
       return api.glojects.getById(id);
     });
     Promise.all(promises).then((res) => {
+      console.log('res', res);
       setActiveGlojects(
         res.map((g) => {
           return (
             <div style={{ cursor: 'pointer', margin: '3px 0px' }}>
-              <b onClick={() => history.push(`/g/${g.id}`)}>{g.data().title}</b>
+              <b onClick={() => history.push(`/g/${g.id}`)}>{g.title}</b>
             </div>
           );
         })
@@ -47,7 +48,7 @@ const UserProfilePage = (props) => {
         res.map((g) => {
           return (
             <div style={{ cursor: 'pointer', margin: '3px 0px' }}>
-              <b onClick={() => history.push(`/g/${g.id}`)}>{g.data().title}</b>
+              <b onClick={() => history.push(`/g/${g.id}`)}>{g.title}</b>
             </div>
           );
         })
@@ -55,11 +56,10 @@ const UserProfilePage = (props) => {
     });
   }, [userData]);
 
-  console.log('userdta', userData);
+  console.log('userdata', userData);
 
   return (
     <div>
-      <NavBar props={userData} />
       <Container style={{ marginTop: '5%' }}>
         <div
           style={{
@@ -79,7 +79,7 @@ const UserProfilePage = (props) => {
           />
           <div style={{ marginLeft: '50px' }}>
             <Header style={{ fontSize: '40px' }}>{userData.username}</Header>
-            <Header>{userData.email}</Header>
+            <Header>&#x1f4e7;: {userData.email}</Header>
           </div>
         </div>
         <Header>About me</Header>
