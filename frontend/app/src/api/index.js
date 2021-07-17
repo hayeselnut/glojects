@@ -38,8 +38,12 @@ class API {
           .get();
         return convertToArray(snapshot);
       },
-      getById: async (glojectId) =>
-        (await this.#db.collection('glojects').doc(glojectId).get()).data(),
+      getById: async (glojectId) => {
+        const snapshot = await this.#db.collection('glojects').doc(glojectId).get();
+        const id = snapshot.id;
+        const data = snapshot.data();
+        return {id, ...data};
+      },
       exists: async (glojectId) =>
         (await this.glojects.getById(glojectId)).exists,
       create: async (glojectData) =>
