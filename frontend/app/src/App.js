@@ -18,16 +18,6 @@ function App() {
         >
           Learn React
         </a>
-        <button onClick={() => signup('vickywu2118@gmail.com', 'test1234')}>
-          Sign up
-        </button>
-        <button onClick={() => login('vickywu2118@gmail.com', 'test1234')}>
-          Login
-        </button>
-        <button onClick={() => resendVerification('vickywu2118@gmail.com')}>
-          Resend
-        </button>
-        <button onClick={() => logout}>Logout</button>
       </header>
     </div>
   );

@@ -42,6 +42,7 @@ export const login = (email, password) => {
       if (!user?.emailVerified) {
         throw new Error('Please verify your email');
       }
+      console.log('Successfully logged in.');
     })
     .catch((error) => {
       const errorCode = error.code;
