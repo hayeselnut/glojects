@@ -1,67 +1,30 @@
-// Contains all the front-end API calls
+// Contains all communication with Firestore database
 
-const defaultFetchParams = {
-  cache: 'no-cache',
-  method: '',
-};
+import firebase from 'firebase';
+import 'firebase/firestore';
+import { firebaseConfig } from '../firebase/firebaseConfig';
 
-const isSuccess = (response) => {
-  return response.status >= 200 && response.status <= 299;
-};
-
-// Handler for fetch requests
-export const request = async (
-  url,
-  reqType = 'GET',
-  data = {},
-  headers = null
-) => {
-  const fetchParams = { ...defaultFetchParams };
-  fetchParams.method = reqType;
-
-  if (data.body !== undefined) {
-    fetchParams.headers = { 'Content-Type': 'application/json' };
-    fetchParams.body = JSON.stringify(data.body);
+const getDb = () => {
+  if (firebase.apps.length === 0) {
+    firebase.initializeApp(firebaseConfig);
   }
-  if (headers !== null) {
-    fetchParams.headers = { ...fetchParams.headers, ...headers };
-  }
-
-  try {
-    const response = await fetch(url, fetchParams);
-    if (isSuccess(response)) {
-      if (response.headers.get('content-length') !== '0') {
-        return await response.json();
-      } else {
-        return { status: response.status, statusText: response.statusText };
-      }
-    } else {
-      throw Error(
-        JSON.stringify({
-          status: response.status,
-          statusText: response.statusText,
-        })
-      );
-    }
-  } catch (err) {
-    console.error(`API call failed: ${err}`);
-    throw err;
-  }
+  return firebase.firestore();
 };
 
-//     ================================================================
-//                           Auth API calls
-//     ================================================================
+class API {
+  #db;
 
-// Example api call
-export const registerUser = async (data) => {
-  const result = await request(
-    '/auth/register/user',
-    'POST',
-    {
-      body: data.body,
-    },
-    data.headers
-  );
-  return result;
-};
+  constructor () {
+    this.#db = getDb();
+    this.glojects = {
+      getAll: async () => await this.#db.collection('glojects').get(),
+      getById: async (glojectId) => await this.#db.collection('glojects').doc(glojectId).get(),
+    };
+    this.users = {
+      getByUsername: async (username) => await this.#db.collection('users').doc(username).get(),
+      exists: async (username) => (await this.#db.collection('users').doc(username).get()).exists
+    };
+  }
+}
+
+export default new API();
