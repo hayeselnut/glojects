@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # firebase
-firebaseConfig.js
+# firebaseConfig.js
 
 # dependencies
 /node_modules

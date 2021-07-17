@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Button, Container, Form, Header, Message, Radio } from 'semantic-ui-react';
+import { Button, Container, Form, Header, Message, Popup, Radio } from 'semantic-ui-react';
 import api from '../../api';
 import { fileToDataUrl, redirect } from '../../helpers';
 
-const NewGlojectPage = () => {
+const EditGlojectPage = (props) => {
+  const { glojectId } = props.match.params;
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   // const [dueDate, setDueDate] = useState(null); // Due date gives time pressure - not rly a good thing? Make people learn and do stuff at their own pace
@@ -13,16 +15,25 @@ const NewGlojectPage = () => {
   // const [language, setLanguage] = useState('English'); // I think we shouldn't do language because it creates a barrier of entry - better to force everyoen to use English?
   const [maxTeamSize, setMaxTeamSize] = useState(6);
   const [image, setImage] = useState('');
-  const [location, setLocation] = useState({longitude: 0, latitude: 0}); // TODO: find current location
-  const owner = "9cT8BRyqvf9I8l9EPB6i"; // TODO: find get current user
-  // const owner = api.users.getCurrentUserId();
-
-  const team = [];
-  const status = "ACTIVE"
+  const [location, setLocation] = useState({longitude: 0, latitude: 0});
 
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const ue = async () => {
+      const glojectData = await api.glojects.getById(glojectId);
+      setTitle(glojectData.title);
+      setDescription(glojectData.description);
+      setTags(glojectData.tags.join(', '));
+      setDifficulty(glojectData.difficulty);
+      setMaxTeamSize(parseInt(glojectData.maxTeamSize, 10));
+      setImage(glojectData.image);
+      setLocation(glojectData.location);
+    };
+    ue();
+  }, []);
 
   const convertAndSetImage = async (file) => {
     try {
@@ -53,20 +64,34 @@ const NewGlojectPage = () => {
       return;
     }
 
+    if (maxTeamSize === '' || maxTeamSize < 2) {
+      setErrorMsg('Maximum team size must be an integer greater than or equal to 2');
+      setError(true);
+      return;
+    }
+
     setLoading(true);
-    const res = await api.glojects.create({
-      title, description, difficulty, owner, team, status, image, maxTeamSize, location,
+    await api.glojects.update(glojectId, {
+      title, description, difficulty, image, maxTeamSize, location,
       tags: extractTags(tags),
     })
     setLoading(false);
 
-    redirect(`/g/${res.id}`);
+    redirect(`/g/${glojectId}`);
   }
 
   return (
     <Container>
-      <Header content="Make a new Gloject"/>
-      <Form loading={loading}  error={error} onSubmit={handleSubmit}>
+      <Header content="Edit Gloject"/>
+      <Popup on='click' inverted position='left center' trigger={<Button circular floated='right' negative icon='trash' />}>
+        <p>Are you sure you want to delete this question?</p>
+        <Button content='Delete' negative onClick={() => {
+          api.glojects.delete(glojectId);
+          redirect("/");
+        }}
+      />
+      </Popup>
+      <Form loading={loading} error={error} onSubmit={handleSubmit}>
         <Message error content={errorMsg} />
         <Form.Input
           name='glojectTitle'
@@ -157,10 +182,10 @@ const NewGlojectPage = () => {
           onChange={(e) => {setTags(e.target.value)}}
         />
 
-        <Button primary type='submit' content='Create Gloject' />
+        <Button primary type='submit' content='Save Gloject' />
       </Form>
     </Container>
   );
 };
 
-export default NewGlojectPage;
+export default EditGlojectPage;

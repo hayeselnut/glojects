@@ -2,40 +2,44 @@ import React, { useState, useEffect } from 'react';
 import ReactGlobe from 'react-globe';
 import texture from './8k.jpeg';
 
-import { filterByExactField } from './WorldUtil/projectsUtil';
+import api from '../api';
+
+// import ToggleExperienceBtn from './ui/toggleExperienceBtn';
 import { zoomToMarker } from './WorldUtil/cameraAnimations';
-import api from '../api/index';
+import { scrapeToGlojectObj } from './WorldUtil/projectsUtil';
+import RandomGlojectBtn from './ui/RandomGlojectBtn';
 
 import GlobjectCard from '../components/common/GlojectCard';
 
-const sampleData = [...Array(25).keys()].map(() => ({
-  projectName: 'Project Name',
-  experience: ['beginner', 'moderate', 'expert'][Math.round(Math.random() * 2)],
-  coordinates: [(Math.random() - 0.5) * 180, (Math.random() - 0.5) * 360],
-  value: 25,
-}));
+// const sampleData = [...Array(25).keys()].map(() => ({
+//     projectName: "Project Name",
+//     difficulty: ["Easy", "Medium", "Hard"][Math.round(Math.random() * 2)],
+//     coordinates: [(Math.random() - 0.5) * 180, (Math.random() - 0.5) * 360],
+//     value: 25,
+// }));
 
-sampleData.forEach((marker, index) => {
-  marker['id'] = index.toString();
-  if (marker.experience === 'beginner') {
-    marker['color'] = 'green';
-  } else if (marker.experience === 'moderate') {
-    marker['color'] = 'blue';
-  } else if (marker.experience === 'expert') {
-    marker['color'] = 'red';
-  }
-});
+// sampleData.forEach((marker, index) => {
+//     marker['id'] = index.toString();
+//     if (marker.difficulty === "Easy") {
+//         marker['color'] = 'green';
+//     } else if (marker.difficulty === "Medium") {
+//         marker['color'] = 'blue';
+//     } else if (marker.difficulty === "Hard") {
+//         marker['color'] = 'red';
+//     }
+// })
 
-console.log(sampleData);
+// console.log(sampleData);
 
 const initOptions = {
   enableMarkerGlow: true,
-  // markerGlowCoefficient: 1,
-  // markerGlowPower: 1,
-  // markerGlowRadiusScale: 0.8,
+  markerGlowCoefficient: 1,
+  markerGlowPower: 1,
+  markerGlowRadiusScale: 0.6,
+
   markerRadiusScaleRange: [0.005, 0.02],
-  markerType: 'dot',
-  enableMarkerTooltip: true,
+  markerType: 'dot', // dot | bar
+  enableMarkerToolTip: true,
   // markerEnterAnimationDuration: 3000,
   // markerEnterEasingFunction: ['Bounce', 'InOut'],
   // markerExitEasingFunction: ['Cubic', 'Out'],
@@ -49,19 +53,10 @@ const initOptions = {
   cameraRotateSpeed: 0.5,
   focusEasingFunction: ['Linear', 'None'],
   enableDefocus: true,
-  // markerToolTipRenderer: () => <GlobjectCard
-  //   style={{ position: 'sticky', right: '200px' }}
-  //   src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
-  //   title="Boss Coffee Boss Iced Long Black"
-  //   tags={['coffee', 'tea']}
-  //   description="iced long black flas k brew breed hot / chilled fast - no1 coffee in japan kawaiiiiiidesu"
-  //   owner="35Z6uU2PpFRb9XbVG0rF"
-  // />, markerRenderer
-  // markerToolTipRenderer: marker => `HELP ME PLEASE ${marker.color}`,
 };
 
 const World = () => {
-  const [projects, setProjects] = useState([]);
+  const [glojects, setGlojects] = useState([]);
   const [focus, setFocus] = useState(null);
   const [open, setOpen] = useState(true);
   const [options, setOptions] = useState(initOptions);
@@ -76,34 +71,26 @@ const World = () => {
   const initZoom = () => {
     // const newOptions = {...options};
     // newOptions.cameraAutoRotateSpeed = 0.1;
+    window.removeEventListener('keydown', initZoom, true);
+    window.removeEventListener('click', initZoom, true);
     setFocus([-33, 151]);
     setOpen(false);
     // setOptions(newOptions);
   };
 
   useEffect(() => {
-    const ue = async () => {
-      const glojectData = await api.glojects.getAllActives();
-      console.log('gd', glojectData);
-      glojectData.forEach((d) => {
-        const coordinates = [d.location.latitude, d.location.longitude];
-        d.coordinates = coordinates;
-        d.value = 25;
-        if (d.difficulty === 'EASY') {
-          d['color'] = 'green';
-        } else if (d.difficulty === 'MEDIUM') {
-          d['color'] = 'blue';
-        } else if (d.difficulty === 'HARD') {
-          d['color'] = 'red';
-        }
-      });
-      setProjects(glojectData);
-    };
-    ue();
+    window.addEventListener('keydown', initZoom, true);
+    window.addEventListener('click', initZoom, true);
 
-    window.addEventListener('keydown', () => {
-      initZoom();
-      window.removeEventListener('keydown', initZoom);
+    api.glojects.getAllActives().then((res) => {
+      const newGlojects = [];
+      res.forEach((value, index) => {
+        console.log('value', value);
+        newGlojects.push(scrapeToGlojectObj(value));
+      });
+
+      console.log('New glojects are ', newGlojects);
+      setGlojects(newGlojects);
     });
   }, []);
 
@@ -113,11 +100,10 @@ const World = () => {
     const newOptions = { ...options };
     newOptions.cameraAutoRotateSpeed = 0;
     setOptions(newOptions);
-
     setCardSrc(obj.image);
     setCardTitle(obj.title);
     setCardTags(obj.tags);
-    setCardDescription(obj.setCardDescription);
+    setCardDescription(obj.description);
     setCardOwner(obj.owner);
     setHover(true);
   };
@@ -129,20 +115,17 @@ const World = () => {
     setHover(false);
   };
 
-  const onMouseOverMarker = (marker) => {
-    console.log(`MARKER: ${marker}`);
-    // setHover(true);
+  const updateGlojects = (newGlojects) => {
+    setGlojects(newGlojects);
   };
 
-  const onMouseOutMarker = (marker) => {
-    console.log(`Leaving card`);
-    // setHover(false);
+  const updateFocus = (coordinates) => {
+    setFocus(coordinates);
   };
 
   return (
     <>
-      {/* <button onClick={() => setProjects(filterByExactField(projects, "experience", "beginner"))}>Filter by Beginner</button> */}
-      {/* <button onClick={() => setFocus([1.3521, 103.8198])}>Singapore</button> */}
+      {console.log('In world')}
       {open ? (
         <div style={startModalStyle}>
           <div style={upperText} />
@@ -154,6 +137,8 @@ const World = () => {
           <div style={lowerText}>Press any key to continue</div>
         </div>
       ) : null}
+      <RandomGlojectBtn glojects={glojects} updateFocus={updateFocus} />
+      {/* <ToggleExperienceBtn updateGlojects={updateGlojects}/> */}
       {hover ? (
         <div style={cardStyle}>
           <GlobjectCard
@@ -170,13 +155,11 @@ const World = () => {
         focus={focus}
         height="100vh"
         width="100wh"
-        markers={projects}
+        markers={glojects}
         options={options}
         onClickMarker={onClick}
         onDefocus={onDefocus}
         initialCameraDistanceRadiusScale={25}
-        onMouseOverMarker={onMouseOverMarker}
-        onMouseOutMarker={onMouseOutMarker}
       />
     </>
   );

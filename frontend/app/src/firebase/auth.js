@@ -12,7 +12,7 @@ export const signup = async (email, password, username, location, image) => {
       user.sendEmailVerification().then(() => {
         console.log('Sent verification email');
       });
-      api.users.createUser(user.id, username, email, location, image);
+      api.users.createUser(user.uid, username, email, location, image);
     })
     .catch((error) => {
       const errorCode = error.code;
