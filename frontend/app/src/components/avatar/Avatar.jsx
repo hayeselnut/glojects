@@ -20,9 +20,9 @@ const Avatar = (props) => {
 
   return (
     <div style={{ display: 'flex' }}>
-      <a href={`/u/${userId}`} style={{ flexGrow: 1, width: '200px' }}>
+      <a href={`/u/${userId}`} style={{ flexGrow: 1, alignSelf: 'center' }}>
         <Image src={userData.image} avatar style={{ marginRight: '0.5em' }} />
-        <span>{`${userData.username}${
+        <span style={{ flexGrow: 1, width: '200px' }}>{`${userData.username}${
           userId === currUserId && ' (You)'
         }`}</span>
       </a>
