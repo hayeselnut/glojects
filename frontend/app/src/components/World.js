@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import ReactGlobe from 'react-globe';
-import texture from './16k.jpeg';
+import texture from './8k.jpeg';
 
 import { filterByExactField } from './WorldUtil/projectsUtil';
 import { zoomToMarker } from './WorldUtil/cameraAnimations';
 
-const sampleData = [...Array(50).keys()].map(() => ({
+const sampleData = [...Array(25).keys()].map(() => ({
     projectName: "Project Name",
     experience: ["beginner", "moderate", "expert"][Math.round(Math.random() * 2)],
     coordinates: [(Math.random() - 0.5) * 180, (Math.random() - 0.5) * 360],
-    value: 50,
+    value: 25,
 }));
 
 sampleData.forEach((marker, index) => {
@@ -40,7 +40,7 @@ const initOptions = {
     //     `${marker.city} (Sales: ${marker.value}.0M)`,
     // markerRadiusScaleRange: [0.01, 0.05],
 
-    cameraAutoRotateSpeed: 0.5,
+    // cameraAutoRotateSpeed: 0.5,
 
     focusAnimationDuration: 2000,
     focusDistanceRadiusScale: 1.5,
@@ -56,11 +56,11 @@ const World = () => {
     const [options, setOptions] = useState(initOptions);
 
     const initZoom = () => {
-        const newOptions = {...options};
-        newOptions.cameraAutoRotateSpeed = 0.1;
+        // const newOptions = {...options};
+        // newOptions.cameraAutoRotateSpeed = 0.1;
         setFocus([-33, 151]);
         setOpen(false);
-        setOptions(newOptions);
+        // setOptions(newOptions);
     }
 
     useEffect(() => {
@@ -72,7 +72,18 @@ const World = () => {
         })
     }, []);
 
-    // const texture = 'https://raw.githubusercontent.com/chrisrzhou/react-globe/main/textures/globe_dark.jpg'
+    const onClick = (obj) => {
+        zoomToMarker(setFocus, obj);
+        const newOptions = {...options};
+        newOptions.cameraAutoRotateSpeed = 0;
+        setOptions(newOptions);
+    };
+
+    const onDefocus = () => {
+        const newOptions = {...options};
+        newOptions.cameraAutoRotateSpeed = 0.1;
+        setOptions(newOptions);
+    }
 
     return (
         <>  
@@ -100,8 +111,9 @@ const World = () => {
                 width="100wh"
                 markers={projects}
                 options={options}
-                onClickMarker={obj => zoomToMarker(setFocus, obj)}
-                initialCameraDistanceRadiusScale={30}
+                onClickMarker={onClick}
+                onDefocus={onDefocus}
+                initialCameraDistanceRadiusScale={25}
             />
         </>
     )
