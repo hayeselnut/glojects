@@ -59,7 +59,7 @@ class API {
       // },
     };
     this.users = {
-      createUser: async (uid, username, email, location) =>
+      createUser: async (uid, username, email, location, photoURL) =>
         await this.#db.collection('users').doc(uid).set({
           username: username,
           email: email,
@@ -67,6 +67,7 @@ class API {
           active_glojects: [],
           past_glojects: [],
           interests: [],
+          photoURL: photoURL,
         }),
       getById: async (uid) => await this.#db.collection('users').doc(uid).get(),
       exists: async (uid) => (await this.users.getById(uid)).exists,
