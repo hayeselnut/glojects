@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { Container, Grid, Header, Image, Label } from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Icon, Image, Label, Popup } from 'semantic-ui-react';
 import api from '../../api';
 import GlojectTeam from './GlojectTeam';
 import Avatar from '../avatar/Avatar';
 import GlobjectCard from '../common/GlojectCard';
+import { redirect } from '../../helpers';
+import DifficultyLabel from './DifficultyLabel';
 
 const GlojectPage = (props) => {
   const { glojectId } = props.match.params;
@@ -28,17 +30,31 @@ const GlojectPage = (props) => {
         fluid
         src={glojectData.image}
       />
-      <Header size="huge">{glojectData.title}</Header>
-      <Label.Group tag style={{marginBottom: '2em'}}>
-        {glojectData.tags?.map(tag => (
-          <Label key={tag}>{tag}</Label>
-        ))}
-      </Label.Group>
+      <Grid columns="equal">
+        <Grid.Column width={10}>
+          <Header size="huge">{glojectData.title}</Header>
+          <Label.Group>
+            <DifficultyLabel difficulty={glojectData.difficulty} />
+          </Label.Group>
+        </Grid.Column>
+        <Grid.Column>
+
+        {/* TODO: only show if user is owner */}
+        <Button circular floated='right' icon='pencil' primary onClick={() => redirect(`/g/${glojectId}/edit`)} />
+        </Grid.Column>
+      </Grid>
+
       <Grid columns="equal">
         <Grid.Column width={10}>
           {glojectData.description?.split('\n').map((p, i) => (
             <p key={i}>{p}</p>
           ))}
+
+          <Label.Group tag style={{marginBottom: '2em'}}>
+            {glojectData.tags?.map(tag => (
+              <Label key={tag}>{tag}</Label>
+              ))}
+          </Label.Group>
         </Grid.Column>
 
         <Grid.Column>

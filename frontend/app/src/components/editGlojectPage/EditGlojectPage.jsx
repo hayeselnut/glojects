@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Button, Container, Form, Header, Message, Radio } from 'semantic-ui-react';
+import { Button, Container, Form, Header, Message, Popup, Radio } from 'semantic-ui-react';
 import api from '../../api';
 import { fileToDataUrl, redirect } from '../../helpers';
 
@@ -83,6 +83,14 @@ const EditGlojectPage = (props) => {
   return (
     <Container>
       <Header content="Edit Gloject"/>
+      <Popup on='click' inverted position='left center' trigger={<Button circular floated='right' negative icon='trash' />}>
+        <p>Are you sure you want to delete this question?</p>
+        <Button content='Delete' negative onClick={() => {
+          api.glojects.delete(glojectId);
+          redirect("/");
+        }}
+      />
+      </Popup>
       <Form loading={loading} error={error} onSubmit={handleSubmit}>
         <Message error content={errorMsg} />
         <Form.Input
