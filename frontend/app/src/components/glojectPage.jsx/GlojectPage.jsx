@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Container, Grid, Header, Image } from 'semantic-ui-react';
+import { Container, Grid, Header, Image, Label } from 'semantic-ui-react';
 import api from '../../api';
 import GlojectTeam from './GlojectTeam';
 import Avatar from '../avatar/Avatar';
@@ -29,6 +29,11 @@ const GlojectPage = (props) => {
         src={glojectData.image}
       />
       <Header size="huge">{glojectData.title}</Header>
+      <Label.Group tag style={{marginBottom: '2em'}}>
+        {glojectData.tags?.map(tag => (
+          <Label key={tag}>{tag}</Label>
+        ))}
+      </Label.Group>
       <Grid columns="equal">
         <Grid.Column width={10}>
           {glojectData.description?.split('\n').map((p, i) => (

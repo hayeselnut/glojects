@@ -33,10 +33,10 @@ const NewGlojectPage = () => {
     }
   };
 
-  const extractTags = (tagsString) => tagsString
+  const extractTags = (tagsString) => [...new Set(tagsString
     .split(',')
     .map((tag) => tag.trim())
-    .filter((tag) => !!tag);
+    .filter((tag) => !!tag))];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
