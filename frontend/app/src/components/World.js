@@ -34,7 +34,7 @@ const initOptions = {
   // markerGlowRadiusScale: 0.8,
   markerRadiusScaleRange: [0.005, 0.02],
   markerType: 'dot',
-  enableMarkerToolTip: true,
+  enableMarkerTooltip: false,
   // markerEnterAnimationDuration: 3000,
   // markerEnterEasingFunction: ['Bounce', 'InOut'],
   // markerExitEasingFunction: ['Cubic', 'Out'],
@@ -49,6 +49,15 @@ const initOptions = {
   cameraRotateSpeed: 0.5,
   focusEasingFunction: ['Linear', 'None'],
   enableDefocus: true,
+  // markerToolTipRenderer: () => <GlobjectCard
+  //   style={{ position: 'sticky', right: '200px' }}
+  //   src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
+  //   title="Boss Coffee Boss Iced Long Black"
+  //   tags={['coffee', 'tea']}
+  //   description="iced long black flas k brew breed hot / chilled fast - no1 coffee in japan kawaiiiiiidesu"
+  //   owner="35Z6uU2PpFRb9XbVG0rF"
+  // />, markerRenderer
+  // markerToolTipRenderer: marker => `HELP ME PLEASE ${marker.color}`,
 };
 
 const World = () => {
@@ -56,6 +65,7 @@ const World = () => {
   const [focus, setFocus] = useState(null);
   const [open, setOpen] = useState(true);
   const [options, setOptions] = useState(initOptions);
+  const [hover, setHover] = useState(false);
 
   const initZoom = () => {
     // const newOptions = {...options};
@@ -88,6 +98,16 @@ const World = () => {
     setOptions(newOptions);
   };
 
+  const onMouseOverMarker = (marker) => {
+    console.log(`MARKER: ${marker}`);
+    setHover(true);
+  }
+
+  const onMouseOutMarker = (marker) => {
+    console.log(`Leaving card`);
+    setHover(false);
+  }
+
   return (
     <>
       {/* <button onClick={() => setProjects(filterByExactField(projects, "experience", "beginner"))}>Filter by Beginner</button> */}
@@ -103,14 +123,19 @@ const World = () => {
           <div style={lowerText}>Press any key to continue</div>
         </div>
       ) : null}
-      <GlobjectCard
-        style={{ position: 'fixed', right: '200px' }}
-        src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
-        title="Boss Coffee Boss Iced Long Black"
-        tags={['coffee', 'tea']}
-        description="iced long black flas k brew breed hot / chilled fast - no1 coffee in japan kawaiiiiiidesu"
-        owner="35Z6uU2PpFRb9XbVG0rF"
-      />
+      {hover ? (
+        <div style={startModalStyle}>
+          <GlobjectCard
+            style={{ position: 'sticky', right: '200px' }}
+            src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
+            title="Boss Coffee Boss Iced Long Black"
+            tags={['coffee', 'tea']}
+            description="iced long black flas k brew breed hot / chilled fast - no1 coffee in japan kawaiiiiiidesu"
+            owner="35Z6uU2PpFRb9XbVG0rF"
+          />
+        </div>
+      ) : null
+      }
       <ReactGlobe
         globeTexture={texture}
         focus={focus}
@@ -121,6 +146,8 @@ const World = () => {
         onClickMarker={onClick}
         onDefocus={onDefocus}
         initialCameraDistanceRadiusScale={25}
+        onMouseOverMarker={onMouseOverMarker}
+        onMouseOutMarker={onMouseOutMarker}
       />
     </>
   );
