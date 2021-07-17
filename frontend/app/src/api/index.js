@@ -48,9 +48,11 @@ class API {
 
       getAllFilters: async ({difficulty, tags}) => {
         const allGlojects = await this.glojects.getAll();
+
+        console.log("tags length", tags.length)
         return allGlojects
           .filter((gloject) => difficulty === '' ? true : gloject.difficulty === difficulty)
-          .filter((gloject) => tags.length ? gloject.tags.every(t => tags.includes(t)) : true );
+          .filter((gloject) => tags.length ? tags.every(t => gloject.tags.includes(t)) : true );
       },
       getAllTags: async () => {
         const allGlojects = await this.glojects.getAll();
