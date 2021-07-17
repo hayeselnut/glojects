@@ -11,6 +11,7 @@
     "react-globe.gl": "^2.18.7",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "semantic-ui-react": "^2.0.3",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
