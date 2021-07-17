@@ -1,7 +1,7 @@
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 import firebase from 'firebase/app';
 
-export const signUp = (email, password) => {
+export const signup = (email, password) => {
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
@@ -23,12 +23,12 @@ export const signUp = (email, password) => {
 export const resendVerification = (email) => {
   firebase
     .auth()
-    .getUserByEmail(email)
-    .then((userRecord) => {
-      userRecord.sendEmailVerification();
+    .currentUser.sendEmailVerification()
+    .then(function () {
+      console.log('Sent verification email');
     })
-    .catch((error) => {
-      console.log('Error fetching user data:', error);
+    .catch(function (error) {
+      // Error occurred. Inspect error.code.
     });
 };
 
@@ -51,5 +51,15 @@ export const login = (email, password) => {
 };
 
 export const logout = () => {
-  firebase.auth().signOut();
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      console.log('Logged out!');
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    });
 };
