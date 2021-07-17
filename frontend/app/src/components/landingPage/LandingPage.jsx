@@ -5,11 +5,13 @@ import { Button } from 'semantic-ui-react';
 import { Header } from 'semantic-ui-react';
 
 import NavBar from '../common/NavBar';
-
+import api from '../../api';
 import './LandingPage.css';
 
 const LandingPage = () => {
   const history = useHistory();
+
+  // TODO: add props to navbar
   return (
     <div>
       <NavBar />
