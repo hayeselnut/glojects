@@ -4,15 +4,12 @@ import { Image } from 'semantic-ui-react';
 import api from '../../api';
 
 const Avatar = (props) => {
-  const { userId } = props;
   const [userData, setUserData] = useState({});
-
-  const [userId, setUserId] = useState('');
+  const [userId, setUserId] = useState(localStorage.getItem('id'));
 
   useEffect(() => {
     const ue = async () => {
-      const user = await firebase.auth().currentUser;
-      const userData = await api.users.getById(user.id);
+      const userData = await api.users.getById(userId);
       setUserData(userData);
     };
     ue();
