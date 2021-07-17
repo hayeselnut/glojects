@@ -11,7 +11,7 @@ const Avatar = (props) => {
   useEffect(() => {
     const ue = async () => {
       const snapshot = await api.users.getById(username);
-      setUserData(snapshot);
+      setUserData(snapshot.data());
     };
     ue();
   }, [username]);
