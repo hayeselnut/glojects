@@ -25,12 +25,12 @@ const StyledNav = styled.div`
 const LeftDiv = styled.div``;
 const RightDiv = styled.div`
   display: flex;
-  justify-content: center;
+  // justify-content: center;
   // padding: 10px;
   // margin: 10px;
   padding-left: 1vw;
   padding-right: 1vw;
-  width: 270px;
+  width: 300px;
   // background-color: green;
   justify-content: space-between;
 `;
