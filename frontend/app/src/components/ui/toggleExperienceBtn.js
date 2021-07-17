@@ -1,31 +1,32 @@
-// import React, {useState, useEffect} from 'react';
-// import { Button } from 'semantic-ui-react';
-// import { filterByExactField } from '../WorldUtil/projectsUtil';
-// const toggleExperienceBtn = (markers, setMarkers) => {
-//     const [state, setState] = useState("all");
+import React, {useState, useEffect} from 'react';
+import { Button } from 'semantic-ui-react';
+import { filterByExactField } from '../WorldUtil/projectsUtil';
+const ToggleExperienceBtn = ({markers, setMarkers}) => {
+    const [state, setState] = useState("All");
 
-//     const getNextState = () => {
-//         if (state === "all") {
-//             return "easy";
-//         } else if (state === "easy") {
-//             return "medium";
-//         } else if (state === "medium") {
-//             return "hard";
-//         } else if (state === "hard") {
-//             return "all";
-//         }
-//     }
+    const getNextState = () => {
+        if (state === "All") {
+            return "Easy";
+        } else if (state === "Easy") {
+            return "Medium";
+        } else if (state === "Medium") {
+            return "Hard";
+        } else if (state === "Hard") {
+            return "All";
+        }
+    }
 
-//     const onClick = () => {
-//         setState(getNextState());
-//         setMarkers(filterByExactField())
-//     }
+    const onClick = () => {
+        const mode = getNextState();
+        setState(mode);
+        setMarkers(filterByExactField(markers, "difficulty", mode));
+    }
 
-//     return (
-//         <Button onClick={onClick}>
-//             Experience: {state}
-//         </Button>
-//     )
-// }
+    return (
+        <Button onClick={onClick}>
+            Difficulty: {state}
+        </Button>
+    )
+}
 
-// export default toggleExperienceBtn;
+export default ToggleExperienceBtn;

@@ -4,6 +4,7 @@ certain criteria as well as functions to add or delete projects, etc*/
 // Given an array of objects, a text field and a value, returns a filtered
 // array containing only objects matching the criteria
 export const filterByExactField = (projects, field, value) => {
+    console.log("Filtering projects", projects);
     const newProjects = projects.filter(obj => obj[field] === value);
     return newProjects;
 }

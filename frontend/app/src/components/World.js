@@ -2,28 +2,30 @@ import React, {useState, useEffect} from 'react';
 import ReactGlobe from 'react-globe';
 import texture from './8k.jpeg';
 
-import { filterByExactField } from './WorldUtil/projectsUtil';
+import api from '../api';
+
+import ToggleExperienceBtn from './ui/toggleExperienceBtn';
 import { zoomToMarker } from './WorldUtil/cameraAnimations';
 
-const sampleData = [...Array(25).keys()].map(() => ({
-    projectName: "Project Name",
-    experience: ["beginner", "moderate", "expert"][Math.round(Math.random() * 2)],
-    coordinates: [(Math.random() - 0.5) * 180, (Math.random() - 0.5) * 360],
-    value: 25,
-}));
+// const sampleData = [...Array(25).keys()].map(() => ({
+//     projectName: "Project Name",
+//     difficulty: ["Easy", "Medium", "Hard"][Math.round(Math.random() * 2)],
+//     coordinates: [(Math.random() - 0.5) * 180, (Math.random() - 0.5) * 360],
+//     value: 25,
+// }));
 
-sampleData.forEach((marker, index) => {
-    marker['id'] = index.toString();
-    if (marker.experience === "beginner") {
-        marker['color'] = 'green';
-    } else if (marker.experience === "moderate") {
-        marker['color'] = 'blue';
-    } else if (marker.experience === "expert") {
-        marker['color'] = 'red';
-    }
-})
+// sampleData.forEach((marker, index) => {
+//     marker['id'] = index.toString();
+//     if (marker.difficulty === "Easy") {
+//         marker['color'] = 'green';
+//     } else if (marker.difficulty === "Medium") {
+//         marker['color'] = 'blue';
+//     } else if (marker.difficulty === "Hard") {
+//         marker['color'] = 'red';
+//     }
+// })
 
-console.log(sampleData);
+// console.log(sampleData);
 
 const initOptions = {
     enableMarkerGlow: true,
@@ -64,6 +66,7 @@ const World = () => {
     }
 
     useEffect(() => {
+        api.glojects.getAllActives().
         setProjects(sampleData);
 
         window.addEventListener('keydown', () => {
@@ -104,6 +107,7 @@ const World = () => {
                     Press any key to continue
                 </div>
             </div> : null}
+            <ToggleExperienceBtn setMarkers={setProjects}/>
             <ReactGlobe 
                 globeTexture={texture}
                 focus={focus}
