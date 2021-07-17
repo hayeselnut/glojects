@@ -26,7 +26,9 @@ const NewGlojectPage = () => {
     try {
       const dataUrl = await fileToDataUrl(file);
       setImage(dataUrl);
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const extractTags = (tagsString) => tagsString
@@ -51,7 +53,7 @@ const NewGlojectPage = () => {
 
     setLoading(true);
     const res = await api.glojects.create({
-      title, description, difficulty, owner, team, status,
+      title, description, difficulty, owner, team, status, image, maxTeamSize,
       tags: extractTags(tags),
     })
     setLoading(false);
@@ -86,7 +88,7 @@ const NewGlojectPage = () => {
           <Form.Input
             icon='group'
             iconPosition='left'
-            label='Maximum Team Size'
+            label='Maximum Team Size (including you)'
             placeholder='Maximum Team Size'
             type='number'
             value={maxTeamSize}

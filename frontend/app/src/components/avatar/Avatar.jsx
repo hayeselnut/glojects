@@ -4,23 +4,23 @@ import { Image } from 'semantic-ui-react';
 import api from '../../api';
 
 const Avatar = (props) => {
-  const { username } = props;
+  const { userId } = props;
 
   const [userData, setUserData] = useState({});
 
   useEffect(() => {
     const ue = async () => {
-      const snapshot = await api.users.getById(username);
-      setUserData(snapshot.data());
+      const userData = await api.users.getById(userId);
+      setUserData(userData);
     };
     ue();
-  }, [username]);
+  }, [userId]);
 
   return (
-    <a href={`/u/${username}`}>
+    <a href={`/u/${userId}`}>
       <div>
         <Image src={userData?.picture} avatar />
-        <span>{username}</span>
+        <span>{userId}</span>
       </div>
     </a>
   );
