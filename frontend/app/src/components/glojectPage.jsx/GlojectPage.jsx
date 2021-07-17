@@ -30,14 +30,6 @@ const GlojectPage = (props) => {
       ))}
     </Container>
   );
-
-  // const history = useHistory();
-  // return (
-  //   <div>
-  //     Landing page
-  //     <button onClick={() => history.push('/signup')}>Go to sign up</button>
-  //   </div>
-  // );
 };
 
 export default GlojectPage;

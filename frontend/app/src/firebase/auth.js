@@ -2,7 +2,7 @@
 import firebase from 'firebase/app';
 import api from '../api';
 
-export const signup = (email, password, username, location, photoURL) => {
+export const signup = async (email, password, username, location, photoURL) => {
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
@@ -23,7 +23,7 @@ export const signup = (email, password, username, location, photoURL) => {
   return true;
 };
 
-export const resendVerification = (email) => {
+export const resendVerification = async (email) => {
   firebase
     .auth()
     .currentUser.sendEmailVerification()
@@ -35,7 +35,7 @@ export const resendVerification = (email) => {
     });
 };
 
-export const login = (email, password) => {
+export const login = async (email, password) => {
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
@@ -46,15 +46,17 @@ export const login = (email, password) => {
         throw new Error('Please verify your email');
       }
       console.log('Successfully logged in.');
+      return true;
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
+      return false;
     });
 };
 
-export const logout = () => {
+export const logout = async () => {
   firebase
     .auth()
     .signOut()
