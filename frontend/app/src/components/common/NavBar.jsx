@@ -46,10 +46,10 @@ const NavBar = (props) => {
   useEffect(() => {
     const pathname = window.location.pathname;
     console.log(pathname);
-    if (logggedIn || userId !== '') {
+    if (logggedIn || userId !== null) {
       setButtons(
         <RightDiv>
-          <Avatar props={props} />
+          <Avatar userId={localStorage.getItem('id')} />
           <Button name="sign out" inverted onClick={handleLogout}>
             Sign Out
           </Button>
