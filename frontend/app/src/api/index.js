@@ -44,7 +44,7 @@ class API {
           interests: [],
         }),
       getById: async (uid) =>
-        await this.#db.collection('users').doc(uid).get(),to_dict(),
+        await this.#db.collection('users').doc(uid).get().data(),
       exists: async (uid) => (await this.users.getById(uid)).exists,
     };
   }
