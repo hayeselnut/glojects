@@ -22,10 +22,10 @@ const StyledNav = styled.div`
 const LeftDiv = styled.div``;
 const RightDiv = styled.div`
   display: flex;
-  align-items: center;
+  justify-content: center;
   padding: 10px;
   margin: 10px;
-  width: 250px;
+  width: 300px;
   justify-content: space-between;
 `;
 
@@ -46,11 +46,21 @@ const NavBar = (props) => {
   useEffect(() => {
     const pathname = window.location.pathname;
     console.log(pathname);
+    console.log(logggedIn, userId);
     if (logggedIn || userId !== null) {
+      console.log(logggedIn, userId);
       setButtons(
         <RightDiv>
-          <Avatar userId={localStorage.getItem('id')} />
-          <Button name="sign out" inverted onClick={handleLogout}>
+          <Avatar
+            userId={localStorage.getItem('id')}
+            style={{ margin: '10px' }}
+          />
+          <Button
+            name="sign out"
+            inverted
+            onClick={handleLogout}
+            style={{ margin: '10px' }}
+          >
             Sign Out
           </Button>
         </RightDiv>
@@ -58,10 +68,20 @@ const NavBar = (props) => {
     } else {
       setButtons(
         <RightDiv>
-          <Button name="sign in" inverted onClick={() => setLoginOpen(true)}>
+          <Button
+            name="sign in"
+            style={{ margin: '5px' }}
+            inverted
+            onClick={() => setLoginOpen(true)}
+          >
             Sign In
           </Button>
-          <Button name="register" inverted onClick={() => setSignupOpen(true)}>
+          <Button
+            name="register"
+            style={{ margin: '5px' }}
+            inverted
+            onClick={() => setSignupOpen(true)}
+          >
             Register
           </Button>
         </RightDiv>

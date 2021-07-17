@@ -35,6 +35,7 @@ const GlojectPage = (props) => {
           <Header size="huge">{glojectData.title}</Header>
           <Label.Group>
             <DifficultyLabel difficulty={glojectData.difficulty} />
+            {/* LOCATION LABEL */}
           </Label.Group>
         </Grid.Column>
         <Grid.Column>
