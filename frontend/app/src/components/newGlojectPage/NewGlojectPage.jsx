@@ -13,8 +13,8 @@ const NewGlojectPage = () => {
   // const [language, setLanguage] = useState('English'); // I think we shouldn't do language because it creates a barrier of entry - better to force everyoen to use English?
   const [maxTeamSize, setMaxTeamSize] = useState(6);
   const [image, setImage] = useState('');
-  const owner = "testinguser"; // TODO: find get current user
-  const location = ""; // TODO: find current location
+  const [location, setLocation] = useState({longitude: 0, latitude: 0}); // TODO: find current location
+  const owner = "byQQiP6Yniry7xZtF79y"; // TODO: find get current user
   const team = [];
   const status = "ACTIVE"
 
@@ -26,7 +26,9 @@ const NewGlojectPage = () => {
     try {
       const dataUrl = await fileToDataUrl(file);
       setImage(dataUrl);
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const extractTags = (tagsString) => tagsString
@@ -51,7 +53,7 @@ const NewGlojectPage = () => {
 
     setLoading(true);
     const res = await api.glojects.create({
-      title, description, difficulty, owner, team, status,
+      title, description, difficulty, owner, team, status, image, maxTeamSize, location,
       tags: extractTags(tags),
     })
     setLoading(false);
@@ -86,7 +88,7 @@ const NewGlojectPage = () => {
           <Form.Input
             icon='group'
             iconPosition='left'
-            label='Maximum Team Size'
+            label='Maximum Team Size (including you)'
             placeholder='Maximum Team Size'
             type='number'
             value={maxTeamSize}
@@ -98,6 +100,23 @@ const NewGlojectPage = () => {
             type='file'
             accept='image/png, image/jpeg, image/jpg'
             onChange={(e) => convertAndSetImage(e.target.files[0])}
+          />
+        </Form.Group>
+
+        <label>Location Coordinates</label>
+        <Form.Group widths='equal'>
+          <Form.Input
+            label='Longitude'
+            placeholder='longitude'
+            value={location.longitude}
+            onChange={(e) => setLocation({longitude: e.target.value, latitude: location.latitude})}
+          />
+
+          <Form.Input
+            label='Latitude'
+            placeholder='latitude'
+            value={location.latitude}
+            onChange={(e) => setLocation({longitude: location.longitude, latitude: e.target.value})}
           />
         </Form.Group>
 

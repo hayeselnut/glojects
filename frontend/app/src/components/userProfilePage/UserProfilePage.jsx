@@ -18,14 +18,16 @@ const UserProfilePage = (props) => {
 
   useEffect(() => {
     const getUserData = async () => {
-      const snapshot = await api.users.getById(uid);
-      setUserData(snapshot.data());
+      const userData = await api.users.getById(uid);
+      setUserData(userData);
     };
     getUserData();
   }, [uid]);
 
   useEffect(() => {
-    let promises = userData.active_glojects.map((id) => {
+    if (!userData.active_glojects) return;
+
+    let promises = userData.active_glojects?.map((id) => {
       return api.glojects.getById(id);
     });
     Promise.all(promises).then((res) => {
@@ -40,7 +42,7 @@ const UserProfilePage = (props) => {
         })
       );
     });
-    promises = userData.past_glojects.map((id) => {
+    promises = userData.past_glojects?.map((id) => {
       return api.glojects.getById(id);
     });
     Promise.all(promises).then((res) => {

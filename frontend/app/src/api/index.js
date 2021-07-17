@@ -65,12 +65,7 @@ class API {
         await this.#db.collection('glojects').add(glojectData),
       delete: async (glojectId) =>
         await this.#db.collection('glojects').doc(glojectId).delete(),
-      // update: {
-      //   title: async (glojectId, title) => await this.#db.collection('glojects').doc(glojectId).update({title}),
-      //   description: async (glojectId, description) => await this.#db.collection('glojects').doc(glojectId).update({description}),
-      //   team: async (glojectId, team) => await this.#db.collection('glojects').doc(glojectId).update({team}),
-      //   tags: async (glojectId, tags) => await this.#db.collection('glojects').doc(glojectId).update({tags}),
-      // },
+      update: async (glojectId, updated) => await this.#db.collection('glojects').doc(glojectId).update(updated),
     };
     this.users = {
       createUser: async (uid, username, email, location, photoURL) =>
@@ -83,7 +78,12 @@ class API {
           interests: [],
           photoURL: photoURL,
         }),
-      getById: async (uid) => await this.#db.collection('users').doc(uid).get(),
+      getById: async (uid) => {
+        const snapshot = await this.#db.collection('users').doc(uid).get()
+        const id = snapshot.id;
+        const data = snapshot.data();
+        return {id, ...data};
+      },
       exists: async (uid) => (await this.users.getById(uid)).exists,
     };
   }
