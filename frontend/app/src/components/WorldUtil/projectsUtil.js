@@ -38,11 +38,11 @@ export const scrapeToGlojectObj = (value) => {
     }
 
     if (gloject.difficulty === 'EASY') {
-        gloject['color'] = 'green';
+        gloject['color'] = '#90ee90';
     } else if (gloject.difficulty === 'MEDIUM') {
-        gloject['color'] = 'blue';
+        gloject['color'] = '#fce37f';
     } else if (gloject.difficulty === 'HARD') {
-        gloject['color'] = 'red';
+        gloject['color'] = '#ff7272';
     }
 
     return gloject;
