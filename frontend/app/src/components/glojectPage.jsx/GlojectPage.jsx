@@ -13,7 +13,7 @@ const GlojectPage = (props) => {
   useEffect(() => {
     const ue = async () => {
       const snapshot = await api.glojects.getById(glojectId);
-      setGlojectData(snapshot.data());
+      setGlojectData(snapshot);
     };
     ue();
   }, [glojectId]);
