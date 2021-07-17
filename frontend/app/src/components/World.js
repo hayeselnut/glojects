@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactGlobe from 'react-globe';
 import texture from './8k.jpeg';
 
@@ -13,15 +13,15 @@ const sampleData = [...Array(25).keys()].map(() => ({
 }));
 
 sampleData.forEach((marker, index) => {
-    marker['id'] = index.toString();
-    if (marker.experience === "beginner") {
-        marker['color'] = 'green';
-    } else if (marker.experience === "moderate") {
-        marker['color'] = 'blue';
-    } else if (marker.experience === "expert") {
-        marker['color'] = 'red';
-    }
-})
+  marker['id'] = index.toString();
+  if (marker.experience === 'beginner') {
+    marker['color'] = 'green';
+  } else if (marker.experience === 'moderate') {
+    marker['color'] = 'blue';
+  } else if (marker.experience === 'expert') {
+    marker['color'] = 'red';
+  }
+});
 
 console.log(sampleData);
 

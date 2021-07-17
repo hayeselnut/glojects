@@ -17,34 +17,54 @@ export default function LoginModal(props) {
 
   return (
     <Modal
-      dimmer="blurred"
+      dimmer="blurring"
       open={loginOpen}
       onClose={() => setLoginOpen(false)}
+      basic
+      size="tiny"
+      style={{ zIndex: -1 }}
+      style={{ display: 'flex', justifyContent: 'center' }}
     >
-      <Modal.Header>Login to Glojects now!</Modal.Header>
+      <Header as="h1" textAlign="center">
+        Login to Gl<span>&#x1f30e;</span>jects now!
+      </Header>
       <Modal.Content>
         <div style={{ margin: 10, marginRight: 40, marginLeft: 40 }}>
-          <Header as="h3">Email</Header>
+          <Header as="h3" style={{ color: 'white' }}>
+            Email
+          </Header>
           <Input
             onChange={(event) => setEmail(event.target.value)}
             placeholder="john_smith@email.com"
             fluid
             required
             autoFocus
+            transparent
+            style={{ borderBottom: '1px solid grey' }}
           />
-          <Header as="h3">Password</Header>
+          <Header as="h3" style={{ color: 'white' }}>
+            Password
+          </Header>
           <Input
             onChange={(event) => setPassword(event.target.value)}
-            placeholder="mypass123"
+            placeholder="*******"
             fluid
             required
             autoFocus
+            transparent
+            style={{ borderBottom: '1px solid grey' }}
             type="password"
           />
         </div>
       </Modal.Content>
       <Modal.Actions>
-        <Button onClick={() => handleLogin()}>Log in</Button>
+        <Button
+          inverted
+          style={{ margin: 'auto', display: 'flex', justifyContent: 'center' }}
+          onClick={() => handleLogin()}
+        >
+          Log in
+        </Button>
       </Modal.Actions>
     </Modal>
   );
