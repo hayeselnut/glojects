@@ -19,7 +19,7 @@ const Avatar = (props) => {
   return (
     <a href={`/u/${userId}`}>
       <div>
-        <Image src={userData.photoURL} avatar />
+        <Image src={userData.image} avatar />
         <span>{userData.username}</span>
         {console.log(userData)}
       </div>

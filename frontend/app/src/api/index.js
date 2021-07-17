@@ -68,7 +68,7 @@ class API {
       update: async (glojectId, updated) => await this.#db.collection('glojects').doc(glojectId).update(updated),
     };
     this.users = {
-      createUser: async (uid, username, email, location, photoURL) =>
+      createUser: async (uid, username, email, location, image) =>
         await this.#db.collection('users').doc(uid).set({
           username: username,
           email: email,
@@ -76,7 +76,7 @@ class API {
           active_glojects: [],
           past_glojects: [],
           interests: [],
-          photoURL: photoURL,
+          image: image,
         }),
       getById: async (uid) => {
         const snapshot = await this.#db.collection('users').doc(uid).get()
