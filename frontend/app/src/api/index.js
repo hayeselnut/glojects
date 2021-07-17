@@ -84,6 +84,7 @@ class API {
         const data = snapshot.data();
         return {id, ...data};
       },
+      getCurrentUserId: () => firebase.auth().currentUser.id,
       exists: async (uid) => (await this.users.getById(uid)).exists,
     };
   }
