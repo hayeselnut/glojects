@@ -83,7 +83,7 @@ const EditGlojectPage = (props) => {
   return (
     <Container>
       <Header content="Edit Gloject"/>
-      <Form error={error} onSubmit={handleSubmit}>
+      <Form loading={loading} error={error} onSubmit={handleSubmit}>
         <Message error content={errorMsg} />
         <Form.Input
           name='glojectTitle'
