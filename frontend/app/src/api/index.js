@@ -43,8 +43,8 @@ class API {
           past_glojects: [],
           interests: [],
         }),
-      getByUsername: async (uid) =>
-        await this.#db.collection('users').doc(uid).get(),
+      getById: async (uid) =>
+        await this.#db.collection('users').doc(uid).get(),to_dict(),
       exists: async (uid) => (await this.users.getByUsername(uid)).exists,
     };
   }
