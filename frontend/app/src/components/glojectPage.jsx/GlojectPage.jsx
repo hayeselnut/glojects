@@ -37,7 +37,7 @@ const GlojectPage = (props) => {
         </Grid.Column>
 
         <Grid.Column>
-          <GlojectTeam glojectData={glojectData} />
+          <GlojectTeam glojectData={glojectData} setGlojectData={setGlojectData}/>
         </Grid.Column>
       </Grid>
       <GlobjectCard

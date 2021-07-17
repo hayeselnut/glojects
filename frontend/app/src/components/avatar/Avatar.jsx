@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
-import { Image } from 'semantic-ui-react';
+import { Button, Icon, Image } from 'semantic-ui-react';
 import api from '../../api';
 
 const Avatar = (props) => {
-  const { userId } = props;
+  const { userId, removeFromTeam } = props;
 
   const [userData, setUserData] = useState({});
 
+  const currentUserId = 'mhGPVkmyRhVHwzNZc7UH'; // TODO
+  // const currentUserId = api.users.getCurrentUserId();
   useEffect(() => {
     const ue = async () => {
       const userData = await api.users.getById(userId);
@@ -17,12 +19,24 @@ const Avatar = (props) => {
   }, [userId]);
 
   return (
-    <a href={`/u/${userId}`}>
-      <div>
-        <Image src={userData.image} avatar />
-        <span>{userData.username}</span>
-      </div>
-    </a>
+    <div style={{display: 'flex'}}>
+      <a href={`/u/${userId}`} style={{flexGrow: 1}}>
+        <Image src={userData.image} avatar style={{marginRight: '0.5em'}} />
+        <span>{`${userData.username}${userId === currentUserId && ' (You)'}`}</span>
+      </a>
+      {removeFromTeam && (
+        <Icon
+          fitted
+          circular
+          inverted
+          size='tiny'
+          color='grey'
+          name='minus'
+          style={{cursor: 'pointer'}}
+          onClick={(e) => removeFromTeam()}
+        />
+      )}
+    </div>
   );
 };
 
