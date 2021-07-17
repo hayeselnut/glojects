@@ -8,6 +8,7 @@ const ToggleTag = ({updateGlojects}) => {
     const [tags, setTags] = useState([]);
     const [allTags, setAllTags] = useState([]);
 
+    // Just load all the tags initially for now
     useEffect(() => {
         const ue = async () => {
           const allTags = await api.glojects.getAllTags();
@@ -16,10 +17,13 @@ const ToggleTag = ({updateGlojects}) => {
         ue();
       }, []);
     
+
+
+
     return (
         <>
             <Dropdown
-                placeholder='Tags'
+                placeholder='Filter by Tags'
                 multiple
                 search
                 selection
@@ -28,8 +32,7 @@ const ToggleTag = ({updateGlojects}) => {
             >
             </Dropdown>
             <Button
-                content="Filter Glojects" 
-                onCLick    
+                content="Search"
             >
             </Button>
         </>

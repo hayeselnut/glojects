@@ -28,45 +28,44 @@ const ToggleExperienceBtn = ({updateGlojects}) => {
         }
     }
 
-    const onClick = () => {
-        const mode = getNextState();
-        
+    const onExperienceClick = () => {
+        let mode = getNextState();
         setState(mode);
-        api.glojects.getAllActives().then((res) => {
-            // Only keep the glojects matching the difficulty
+
+        let difficulty = mode;
+        if (difficulty === 'ALL') {
+            difficulty = '';
+        }
+
+        filterGlojects(difficulty);
+    }
+
+    const onTagClick = () => {
+        let difficulty = state;
+        if (difficulty === 'ALL') {
+            difficulty = '';
+        }
+        filterGlojects(difficulty);
+    }
+
+    const filterGlojects = (difficulty) => {
+        api.glojects.getAllFilters({difficulty, tags}).then(res => {
             const newGlojects = [];
-            if (mode === 'ALL') {
-                res.forEach(value => {
-                    newGlojects.push(scrapeToGlojectObj(value));
-                })
-            } else {
-                res.forEach(value => {
-                    if (mode === value.difficulty) {
-                        newGlojects.push(scrapeToGlojectObj(value));
-                    }
-                })
-            }
+            res.forEach(value => {
+                newGlojects.push(scrapeToGlojectObj(value));
+            })
 
             updateGlojects(newGlojects);
         })
     }
 
-    const onTagClick = () => {
-        api.glojects.getAllFilters({state, tags}).then((res) => {
-            const newGlojects = [];
-            res.forEach(value => {
-                newGlojects.push(scrapeToGlojectObj(value));
-            })
-        })
-    }
-
     return (
         <>
-            <Button onClick={onClick}>
+            <Button onClick={onExperienceClick}>
                 Difficulty: {state}
             </Button>
             <Dropdown
-                placeholder='Tags'
+                placeholder='Add tags'
                 multiple
                 search
                 selection
@@ -75,7 +74,7 @@ const ToggleExperienceBtn = ({updateGlojects}) => {
             >
             </Dropdown>
             <Button
-                content="Filter Glojects" 
+                content="Filter" 
                 onClick={onTagClick}
             >
             </Button>
