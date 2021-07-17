@@ -79,7 +79,7 @@ const World = () => {
                 newGlojects.push(scrapeToGlojectObj(value));
 
             })
-            
+
             console.log("New glojects are ", newGlojects);
             setGlojects(newGlojects);
         })
@@ -109,8 +109,8 @@ const World = () => {
 
 
     return (
-        <>  
-                  {console.log("In world")}
+        <>
+            {console.log("In world")}
             { open ? <div style={startModalStyle}>
                 <div style={upperText}/>
                 <div style={middleText}>
