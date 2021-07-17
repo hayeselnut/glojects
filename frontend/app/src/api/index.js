@@ -11,15 +11,35 @@ const getDb = () => {
   return firebase.firestore();
 };
 
+const convertToArray = (snapshot) => {
+  const glojects = [];
+  snapshot.forEach((doc) => {
+    const id = doc.id;
+    const data = doc.data();
+    const gloject = {id, ...data};
+    glojects.push(gloject);
+  });
+  return glojects;
+};
+
 class API {
   #db;
 
   constructor() {
     this.#db = getDb();
     this.glojects = {
-      getAll: async () => await this.#db.collection('glojects').get(),
+      getAll: async () => {
+        const snapshot = await this.#db.collection('glojects').get();
+        return convertToArray(snapshot);
+      },
+      getAllActives: async () => {
+        const snapshot = await this.#db.collection('glojects')
+          .where('status', '==', 'ACTIVE')
+          .get();
+        return convertToArray(snapshot);
+      },
       getById: async (glojectId) =>
-        await this.#db.collection('glojects').doc(glojectId).get(),
+        (await this.#db.collection('glojects').doc(glojectId).get()).data(),
       exists: async (glojectId) =>
         (await this.glojects.getById(glojectId)).exists,
       create: async (glojectData) =>
