@@ -34,12 +34,12 @@ const initOptions = {
   // markerGlowRadiusScale: 0.8,
   markerRadiusScaleRange: [0.005, 0.02],
   markerType: 'dot',
-  enableMarkerTooltip: false,
+  enableMarkerTooltip: true,
   // markerEnterAnimationDuration: 3000,
   // markerEnterEasingFunction: ['Bounce', 'InOut'],
   // markerExitEasingFunction: ['Cubic', 'Out'],
-  // markerTooltipRenderer: marker =>
-  //     `${marker.city} (Sales: ${marker.value}.0M)`,
+  markerTooltipRenderer: (marker) =>
+    `${marker.title} Boss Coffee Boss Iced Long Black`,
   // markerRadiusScaleRange: [0.01, 0.05],
 
   // cameraAutoRotateSpeed: 0.5,
@@ -90,23 +90,25 @@ const World = () => {
     const newOptions = { ...options };
     newOptions.cameraAutoRotateSpeed = 0;
     setOptions(newOptions);
+    setHover(true);
   };
 
   const onDefocus = () => {
     const newOptions = { ...options };
     newOptions.cameraAutoRotateSpeed = 0.1;
     setOptions(newOptions);
+    setHover(false);
   };
 
   const onMouseOverMarker = (marker) => {
     console.log(`MARKER: ${marker}`);
-    setHover(true);
-  }
+    // setHover(true);
+  };
 
   const onMouseOutMarker = (marker) => {
     console.log(`Leaving card`);
     // setHover(false);
-  }
+  };
 
   return (
     <>
@@ -126,7 +128,6 @@ const World = () => {
       {hover ? (
         <div style={cardStyle}>
           <GlobjectCard
-            style={{ position: 'sticky', right: '200px' }}
             src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
             title="Boss Coffee Boss Iced Long Black"
             tags={['coffee', 'tea']}
@@ -134,8 +135,7 @@ const World = () => {
             owner="35Z6uU2PpFRb9XbVG0rF"
           />
         </div>
-      ) : null
-      }
+      ) : null}
       <ReactGlobe
         globeTexture={texture}
         focus={focus}
@@ -156,10 +156,10 @@ const World = () => {
 export default World;
 
 const cardStyle = {
-  width: "5vw",
-  height: "5vw",
-  position: 'fixed'
-}
+  position: 'fixed',
+  right: '10%',
+  top: '35%',
+};
 
 const startModalStyle = {
   width: '100%',
