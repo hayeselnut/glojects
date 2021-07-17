@@ -10,15 +10,14 @@ export default function SignupModal(props) {
   const [location, setLocation] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const handleSignup = () => {
-    if (signup(email, password, username, location)) {
-      setSignupOpen(false);
-    }
+  const handleSignup = async () => {
+    await signup(email, password, username, location);
+    setSignupOpen(false);
   };
 
   return (
     <Modal
-      dimmer="inverted"
+      dimmer="blurred"
       open={signupOpen}
       onClose={() => setSignupOpen(false)}
     >

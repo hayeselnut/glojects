@@ -6,11 +6,10 @@ import LandingPage from './components/landingPage/LandingPage';
 import SignupPage from './components/signupPage/SignupPage';
 import GlojectPage from './components/glojectPage.jsx/GlojectPage';
 import UserProfilePage from './components/userProfilePage/UserProfilePage';
+import MenuNav from './components/common/MenuNav';
 import NewGlojectPage from './components/newGlojectPage/NewGlojectPage';
 import World from './components/World';
-
 import { signup, resendVerification, login, logout } from './firebase/auth';
-
 import './App.css';
 import 'semantic-ui-css/semantic.min.css'
 import ApiPage from './components/apiPage/ApiPage';
@@ -18,6 +17,7 @@ import ApiPage from './components/apiPage/ApiPage';
 function App() {
   return (
     <StoreProvider>
+      <MenuNav />
       <Router>
         <Switch>
           <PrivateRoute path="/signup" component={SignupPage} />
