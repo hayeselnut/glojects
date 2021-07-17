@@ -9,9 +9,6 @@ import UserProfilePage from './components/userProfilePage/UserProfilePage';
 import NewGlojectPage from './components/newGlojectPage/NewGlojectPage';
 import World from './components/World';
 
-import { signup, resendVerification, login, logout } from './firebase/auth';
-
-import './App.css';
 import 'semantic-ui-css/semantic.min.css'
 import ApiPage from './components/apiPage/ApiPage';
 

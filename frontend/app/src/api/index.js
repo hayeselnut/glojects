@@ -45,6 +45,18 @@ class API {
         const data = snapshot.data();
         return {id, ...data};
       },
+
+      getAllFilters: async ({difficulty, tags}) => {
+        const allGlojects = await this.glojects.getAll();
+        return allGlojects
+          .filter((gloject) => difficulty === '' ? true : gloject.difficulty === difficulty)
+          .filter((gloject) => tags.length ? gloject.tags.every(t => tags.includes(t)) : true );
+      },
+      getAllTags: async () => {
+        const allGlojects = await this.glojects.getAll();
+        const allTags = [...new Set(allGlojects.map((gloject) => gloject.tags).flat())];
+        return allTags;
+      },
       exists: async (glojectId) =>
         (await this.glojects.getById(glojectId)).exists,
       create: async (glojectData) =>
