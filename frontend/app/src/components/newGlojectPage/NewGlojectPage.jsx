@@ -14,6 +14,7 @@ const NewGlojectPage = () => {
   const [maxTeamSize, setMaxTeamSize] = useState(6);
   const [img, setImg] = useState('');
   const owner = "testinguser"; // TODO: find get current user
+  const location = ""; // TODO: find current location
   const team = [];
   const status = "ACTIVE"
 
