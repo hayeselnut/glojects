@@ -9,6 +9,8 @@ import { zoomToMarker } from './WorldUtil/cameraAnimations';
 import { scrapeToGlojectObj } from './WorldUtil/projectsUtil';
 import RandomGlojectBtn from './ui/RandomGlojectBtn';
 
+import GlobjectCard from '../components/common/GlojectCard';
+
 // const sampleData = [...Array(25).keys()].map(() => ({
 //     projectName: "Project Name",
 //     difficulty: ["Easy", "Medium", "Hard"][Math.round(Math.random() * 2)],
@@ -30,140 +32,167 @@ import RandomGlojectBtn from './ui/RandomGlojectBtn';
 // console.log(sampleData);
 
 const initOptions = {
-    enableMarkerGlow: true,
-    markerGlowCoefficient: 1,
-    markerGlowPower: 1,
-    markerGlowRadiusScale: 0.6,
+  enableMarkerGlow: true,
+  markerGlowCoefficient: 1,
+  markerGlowPower: 1,
+  markerGlowRadiusScale: 0.6,
 
-    markerRadiusScaleRange: [0.005, 0.02],
-    markerType: 'dot', // dot | bar
-    enableMarkerToolTip: true,
-    // markerEnterAnimationDuration: 3000,
-    // markerEnterEasingFunction: ['Bounce', 'InOut'],
-    // markerExitEasingFunction: ['Cubic', 'Out'],
-    // markerTooltipRenderer: marker => 
-    //     `${marker.city} (Sales: ${marker.value}.0M)`,
-    // markerRadiusScaleRange: [0.01, 0.05],
+  markerRadiusScaleRange: [0.005, 0.02],
+  markerType: 'dot', // dot | bar
+  enableMarkerToolTip: true,
+  // markerEnterAnimationDuration: 3000,
+  // markerEnterEasingFunction: ['Bounce', 'InOut'],
+  // markerExitEasingFunction: ['Cubic', 'Out'],
+  markerTooltipRenderer: (marker) => `${marker.title}`,
+  // markerRadiusScaleRange: [0.01, 0.05],
 
-    // cameraAutoRotateSpeed: 0.5,
+  // cameraAutoRotateSpeed: 0.5,
 
-    focusAnimationDuration: 2000,
-    focusDistanceRadiusScale: 1.5,
-    cameraRotateSpeed: 0.5,
-    focusEasingFunction: ['Linear', 'None'],
-    enableDefocus: true,
-}
+  focusAnimationDuration: 2000,
+  focusDistanceRadiusScale: 1.5,
+  cameraRotateSpeed: 0.5,
+  focusEasingFunction: ['Linear', 'None'],
+  enableDefocus: true,
+};
 
 const World = () => {
-    const [glojects, setGlojects] = useState([]);
-    const [focus, setFocus] = useState(null);
-    const [open, setOpen] = useState(true);
-    const [options, setOptions] = useState(initOptions);
+  const [glojects, setGlojects] = useState([]);
+  const [focus, setFocus] = useState(null);
+  const [open, setOpen] = useState(true);
+  const [options, setOptions] = useState(initOptions);
+  const [hover, setHover] = useState(false);
 
-    const initZoom = () => {
-        // const newOptions = {...options};
-        // newOptions.cameraAutoRotateSpeed = 0.1;
-        window.removeEventListener('keydown', initZoom, true);
-        window.removeEventListener('click', initZoom, true);
-        setFocus([-33, 151]);
-        setOpen(false);
-        // setOptions(newOptions);
-    }
+  const [cardSrc, setCardSrc] = useState('');
+  const [cardTitle, setCardTitle] = useState('');
+  const [cardTags, setCardTags] = useState([]);
+  const [cardDescription, setCardDescription] = useState('');
+  const [cardOwner, setCardOwner] = useState('');
 
-    useEffect(() => {
-        window.addEventListener('keydown', initZoom, true);
-        window.addEventListener('click', initZoom, true);
+  const initZoom = () => {
+    // const newOptions = {...options};
+    // newOptions.cameraAutoRotateSpeed = 0.1;
+    window.removeEventListener('keydown', initZoom, true);
+    window.removeEventListener('click', initZoom, true);
+    setFocus([-33, 151]);
+    setOpen(false);
+    // setOptions(newOptions);
+  };
 
-        api.glojects.getAllActives().then((res) => {
-            const newGlojects = [];
-            res.forEach((value, index) => {
-                newGlojects.push(scrapeToGlojectObj(value));
+  useEffect(() => {
+    window.addEventListener('keydown', initZoom, true);
+    window.addEventListener('click', initZoom, true);
 
-            })
+    api.glojects.getAllActives().then((res) => {
+      const newGlojects = [];
+      res.forEach((value, index) => {
+        newGlojects.push(scrapeToGlojectObj(value));
+      });
 
-            console.log("New glojects are ", newGlojects);
-            setGlojects(newGlojects);
-        })
-    }, []);
+      console.log('New glojects are ', newGlojects);
+      setGlojects(newGlojects);
+    });
+  }, []);
 
-    const onClick = (obj) => {
-        zoomToMarker(setFocus, obj);
-        const newOptions = {...options};
-        newOptions.cameraAutoRotateSpeed = 0;
-        setOptions(newOptions);
-    };
+  const onClick = (obj) => {
+    zoomToMarker(setFocus, obj);
+    const newOptions = { ...options };
+    newOptions.cameraAutoRotateSpeed = 0;
+    setOptions(newOptions);
+    setCardSrc(obj.image);
+    setCardTitle(obj.title);
+    setCardTags(obj.tags);
+    setCardDescription(obj.description);
+    setCardOwner(obj.owner);
+    setHover(true);
+  };
 
-    const onDefocus = () => {
-        const newOptions = {...options};
-        newOptions.cameraAutoRotateSpeed = 0.1;
-        setOptions(newOptions);
-    }
+  const onDefocus = () => {
+    const newOptions = { ...options };
+    newOptions.cameraAutoRotateSpeed = 0.1;
+    setOptions(newOptions);
+    setHover(false);
+  };
 
+  const updateGlojects = (newGlojects) => {
+    setGlojects(newGlojects);
+  };
 
-    const updateGlojects = (newGlojects) => {
-        setGlojects(newGlojects);
-    }
+  const updateFocus = (coordinates) => {
+    setFocus(coordinates);
+  };
 
-    const updateFocus = (coordinates) => {
-        setFocus(coordinates);
-    }
-
-
-    return (
-        <>
-            {console.log("In world")}
-            { open ? <div style={startModalStyle}>
-                <div style={upperText}/>
-                <div style={middleText}>
-                    <div style={leftContainer}>
-                        G<span style={{letterSpacing: 0}}>L</span>
-                    </div>
-                    <div style={middle}/>
-                    <div style={right}>JECTS</div>
-                </div>
-                <div style={lowerText}>
-                    Press any key to continue
-                </div>
-            </div> : null}
-            <RandomGlojectBtn glojects={glojects} updateFocus={updateFocus}/>
-            {/* <ToggleExperienceBtn updateGlojects={updateGlojects}/> */}
-            <ReactGlobe 
-                globeTexture={texture}
-                focus={focus}
-                height="100vh"
-                width="100wh"
-                markers={glojects}
-                options={options}
-                onClickMarker={onClick}
-                onDefocus={onDefocus}
-                initialCameraDistanceRadiusScale={25}
-            />
-        </>
-    )
-}
+  return (
+    <>
+      {console.log('In world')}
+      {open ? (
+        <div style={startModalStyle}>
+          <div style={upperText} />
+          <div style={middleText}>
+            <div style={left}>
+                G<span style={{letterSpacing: 0}}>L</span>
+            </div>
+            <div style={middle}/>
+            <div style={right}>JECTS</div>
+          </div>
+          <div style={lowerText}>Press any key to continue</div>
+        </div>
+      ) : null}
+      {/* <RandomGlojectBtn glojects={glojects} updateFocus={updateFocus} /> */}
+      {/* <ToggleExperienceBtn updateGlojects={updateGlojects}/> */}
+      {hover ? (
+        <div style={cardStyle}>
+          <GlobjectCard
+            src={cardSrc}
+            title={cardTitle}
+            tags={cardTags}
+            description={cardDescription}
+            owner={cardOwner}
+          />
+        </div>
+      ) : null}
+      <ReactGlobe
+        globeTexture={texture}
+        focus={focus}
+        height="100vh"
+        width="100wh"
+        markers={glojects}
+        options={options}
+        onClickMarker={onClick}
+        onDefocus={onDefocus}
+        initialCameraDistanceRadiusScale={25}
+      />
+    </>
+  );
+};
 
 export default World;
 
-const startModalStyle = {
-    width: "100%",
-    height: "100%",
-    position: "fixed",
-    backgroundColor: 'rgba(0, 0, 0, 0)',
-    // border: "10px solid blue",
-    display: "flex",
-    flexDirection: "column",
-    color: "white",
-    justifyContent: "center",
+const cardStyle = {
+  position: 'fixed',
+  right: '10%',
+  top: '35%',
+};
 
-    pointEvents: "none"
-}
+const startModalStyle = {
+  width: '100%',
+  height: '100%',
+  position: 'fixed',
+  backgroundColor: 'rgba(0, 0, 0, 0)',
+  // border: "10px solid blue",
+  display: 'flex',
+  flexDirection: 'column',
+  color: 'white',
+  justifyContent: 'center',
+
+  pointEvents: 'none',
+};
 
 const upperText = {
-    flex: 4,
-    // border: "5px solid red",
-    // backgroundColor: "red",
-    // fontSize: "50px"
-}
+  flex: 4,
+  // border: "5px solid red",
+  // backgroundColor: "red",
+  // fontSize: "50px"
+};
 
 const middleText = {
     flex: 3,
@@ -180,7 +209,7 @@ const middleText = {
     // paddingLeft: "18%"
 }
 
-const leftContainer = {
+const left = {
     flex: 4,
     display: "flex",
     flexDirection: "row",
@@ -190,20 +219,19 @@ const leftContainer = {
 }
 
 const middle = {
-    flex: 1,
-    // border: "2px solid white",
-}
+  flex: 1,
+  // border: "2px solid white",
+};
 
 const right = {
-    flex: 4,
-    // border: "2px solid orange",
-    alignItems: "flex-start"
-}
+  flex: 4,
+  // border: "2px solid orange",
+  alignItems: 'flex-start',
+};
 
 const lowerText = {
-    flex: 4,
-    // border: "5px solid yellow",
-    textAlign: "center"
-    // backgroundColor: "yellow"
-}
-
+  flex: 4,
+  // border: "5px solid yellow",
+  textAlign: 'center',
+  // backgroundColor: "yellow"
+};
