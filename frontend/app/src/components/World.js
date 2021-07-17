@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactGlobe from 'react-globe';
-import texture from './8k.jpeg';
+import texture from './16k.jpeg';
 
 import api from '../api';
 
@@ -115,13 +115,11 @@ const World = () => {
             { open ? <div style={startModalStyle}>
                 <div style={upperText}/>
                 <div style={middleText}>
-                    <div style={left}>
-                        G L
+                    <div style={leftContainer}>
+                        G<span style={{letterSpacing: 0}}>L</span>
                     </div>
                     <div style={middle}/>
-                    <div style={right}>
-                        J E C T S
-                    </div>
+                    <div style={right}>JECTS</div>
                 </div>
                 <div style={lowerText}>
                     Press any key to continue
@@ -177,12 +175,12 @@ const middleText = {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    // letterSpacing: "1vw",
+    letterSpacing: "2vw",
     // marginLeft: "20vw",
     // paddingLeft: "18%"
 }
 
-const left = {
+const leftContainer = {
     flex: 4,
     display: "flex",
     flexDirection: "row",
@@ -190,6 +188,7 @@ const left = {
     alignItems: "flex-end",
     justifyContent: "flex-end",
 }
+
 const middle = {
     flex: 1,
     // border: "2px solid white",
