@@ -6,6 +6,7 @@ import LandingPage from './components/landingPage/LandingPage';
 import SignupPage from './components/signupPage/SignupPage';
 import GlojectPage from './components/glojectPage.jsx/GlojectPage';
 import UserProfilePage from './components/userProfilePage/UserProfilePage';
+import World from './components/World';
 
 import { signup, resendVerification, login, logout } from './firebase/auth';
 
@@ -18,6 +19,7 @@ function App() {
       <Router>
         <Switch>
           <PrivateRoute path="/signup" component={SignupPage} />
+          <Route exact path="/World" component={World}/>
           <Route exact path="/" component={LandingPage} />
           <Route exact path='/g/:glojectId' component={GlojectPage} />
           <Route exact path='/u/:username' component={UserProfilePage} />
