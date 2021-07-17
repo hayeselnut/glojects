@@ -29,7 +29,7 @@ class API {
       // update: {
       //   title: async (glojectId, title) => await this.#db.collection('glojects').doc(glojectId).update({title}),
       //   description: async (glojectId, description) => await this.#db.collection('glojects').doc(glojectId).update({description}),
-      //   team_members: async (glojectId, team_members) => await this.#db.collection('glojects').doc(glojectId).update({team_members}),
+      //   team: async (glojectId, team) => await this.#db.collection('glojects').doc(glojectId).update({team}),
       //   tags: async (glojectId, tags) => await this.#db.collection('glojects').doc(glojectId).update({tags}),
       // },
     };

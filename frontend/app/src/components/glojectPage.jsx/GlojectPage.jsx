@@ -33,7 +33,7 @@ const GlojectPage = (props) => {
       <p>
         Team members:
       </p>
-      {glojectData.team_members?.map((username) => <Avatar username={username} />)}
+      {glojectData.team?.map((username) => <Avatar username={username} />)}
     </Container>
   );
 

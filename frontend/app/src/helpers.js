@@ -1,3 +1,5 @@
+import { useHistory } from "react-router-dom";
+
 /**
  * Given a js file object representing a jpg or png image, such as one taken
  * from a html file input element, return a promise which resolves to the file
@@ -28,4 +30,8 @@
   });
   reader.readAsDataURL(file);
   return dataUrlPromise;
+}
+
+export function redirect (path) {
+  document.location.href = path;
 }
