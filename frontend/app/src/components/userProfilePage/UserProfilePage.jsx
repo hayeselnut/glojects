@@ -7,6 +7,7 @@ import NavBar from '../common/NavBar';
 
 const UserProfilePage = (props) => {
   const { uid } = useParams();
+  const history = useHistory();
 
   const [userData, setUserData] = useState({
     active_glojects: [],
@@ -24,16 +25,34 @@ const UserProfilePage = (props) => {
   }, [uid]);
 
   useEffect(() => {
-    setActiveGlojects(
-      userData.active_glojects.map((g) => {
-        return <div>{g}</div>;
-      })
-    );
-    setPastGlojects(
-      userData.past_glojects.map((g) => {
-        return <div>{g}</div>;
-      })
-    );
+    let promises = userData.active_glojects.map((id) => {
+      return api.glojects.getById(id);
+    });
+    Promise.all(promises).then((res) => {
+      setActiveGlojects(
+        res.map((g) => {
+          return (
+            <div style={{ cursor: 'pointer', margin: '3px 0px' }}>
+              <b onClick={() => history.push(`/g/${g.id}`)}>{g.data().title}</b>
+            </div>
+          );
+        })
+      );
+    });
+    promises = userData.past_glojects.map((id) => {
+      return api.glojects.getById(id);
+    });
+    Promise.all(promises).then((res) => {
+      setPastGlojects(
+        res.map((g) => {
+          return (
+            <div style={{ cursor: 'pointer', margin: '3px 0px' }}>
+              <b onClick={() => history.push(`/g/${g.id}`)}>{g.data().title}</b>
+            </div>
+          );
+        })
+      );
+    });
   }, [userData]);
 
   console.log('userdta', userData);
@@ -80,11 +99,11 @@ const UserProfilePage = (props) => {
           }}
         >
           <div style={{ flex: 1, display: 'block' }}>
-            <Header style={{ margin: 0 }}>Active Glojects</Header>
+            <Header>Active Glojects</Header>
             {activeGlojects}
           </div>
           <div style={{ flex: 1, display: 'block' }}>
-            <Header style={{ margin: 0 }}>Past Glojects</Header>
+            <Header>Past Glojects</Header>
             {pastGlojects}
           </div>
         </div>
