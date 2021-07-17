@@ -39,6 +39,7 @@ class API {
         return convertToArray(snapshot);
       },
       getById: async (glojectId) => {
+        if (!glojectId) return {};
         const snapshot = await this.#db.collection('glojects').doc(glojectId).get();
         if (!snapshot.exists) return {};
         const id = snapshot.id;
@@ -79,6 +80,7 @@ class API {
           image: image,
         }),
       getById: async (uid) => {
+        if (!uid) return {};
         const snapshot = await this.#db.collection('users').doc(uid).get()
         const id = snapshot.id;
         const data = snapshot.data();

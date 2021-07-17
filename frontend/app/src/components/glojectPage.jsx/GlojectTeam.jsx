@@ -17,8 +17,8 @@ const GlojectTeam = (props) => {
     )
   }, [glojectData]);
 
-  const currentUserId = 'mhGPVkmyRhVHwzNZc7UH'; // TODO
-  // const currentUserId = api.users.getCurrentUserId();
+  const currentUserId = localStorage.getItem('id');
+
   const joinTeam = async () => {
     const updated = {team: glojectData.team.concat(currentUserId)}
     await api.glojects.update(glojectData.id, updated);
