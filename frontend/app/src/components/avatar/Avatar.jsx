@@ -21,7 +21,6 @@ const Avatar = (props) => {
       <div>
         <Image src={userData.image} avatar />
         <span>{userData.username}</span>
-        {console.log(userData)}
       </div>
     </a>
   );
