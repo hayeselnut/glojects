@@ -166,7 +166,7 @@ const Moon = () => {
 
     return (
         <Globe 
-            globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+            globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
             backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
             labelsData={landingSites}
             labelText="label"
