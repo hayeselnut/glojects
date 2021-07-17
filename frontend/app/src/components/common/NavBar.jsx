@@ -6,6 +6,8 @@ import { Menu, Segment, Header, Button } from 'semantic-ui-react';
 import { logout } from '../../firebase/auth';
 import SignupModal from '../signupPage/SignupModal';
 import LoginModal from '../signupPage/LoginModal';
+import ProfileModal from '../userProfilePage/ProfileModal';
+import GlojectModal from '../glojectPage.jsx/GlojectModal';
 
 const StyledNav = styled.div`
   display: flex;
@@ -36,8 +38,13 @@ const NavBar = (props) => {
   const [signupOpen, setSignupOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [userId, setUserId] = useState(localStorage.getItem('id'));
+  // Profile
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [profileId, setProfileId] = useState('');
+  // Gloject
+  const [glojectOpen, setGlojectOpen] = useState(false);
+  const [glojectId, setGlojectId] = useState('');
 
-  const handleItemClick = () => {};
   const handleLogout = async () => {
     await logout();
     setLoggedIn(false);
@@ -52,8 +59,11 @@ const NavBar = (props) => {
       setButtons(
         <RightDiv>
           <Avatar
-            userId={localStorage.getItem('id')}
             style={{ margin: '10px' }}
+            profileId={userId}
+            setProfileId={setProfileId}
+            setProfileOpen={setProfileOpen}
+            setGlojectOpen={setGlojectOpen}
           />
           <Button
             name="sign out"
@@ -87,7 +97,7 @@ const NavBar = (props) => {
         </RightDiv>
       );
     }
-  }, [logggedIn]);
+  }, [logggedIn, userId]);
   return (
     <StyledNav>
       <LeftDiv>
@@ -97,7 +107,6 @@ const NavBar = (props) => {
       </LeftDiv>
       <RightDiv>
         {buttons}
-
         <SignupModal
           signupOpen={signupOpen}
           setSignupOpen={setSignupOpen}
@@ -110,6 +119,20 @@ const NavBar = (props) => {
           logggedIn={logggedIn}
           setLoggedIn={setLoggedIn}
         ></LoginModal>
+        <ProfileModal
+          profileOpen={profileOpen}
+          profileId={profileId}
+          setProfileOpen={setProfileOpen}
+          setGlojectId={setGlojectId}
+          setGlojectOpen={setGlojectOpen}
+        ></ProfileModal>
+        <GlojectModal
+          glojectId={glojectId}
+          setGlojectOpen={setGlojectOpen}
+          glojectOpen={glojectOpen}
+          setProfileId={setProfileId}
+          setProfileOpen={setProfileOpen}
+        ></GlojectModal>
       </RightDiv>
     </StyledNav>
   );
