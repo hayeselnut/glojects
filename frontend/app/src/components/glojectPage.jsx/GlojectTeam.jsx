@@ -9,7 +9,9 @@ const GlojectTeam = (props) => {
   const { glojectData } = props
 
   const joinTeam = async () => {
-    const currentUserId = api.users.getCurrentUserId();
+    const currentUserId = 'mhGPVkmyRhVHwzNZc7UH'; // TODO
+    // const currentUserId = api.users.getCurrentUserId();
+
     const updated = {team: glojectData.team.concat(currentUserId)}
     await api.glojects.update(glojectData.id, updated);
     window.location.reload();
