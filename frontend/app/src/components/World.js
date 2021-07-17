@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import ReactGlobe from 'react-globe';
+import texture from './16k.jpeg';
 
 import { filterByExactField } from './WorldUtil/projectsUtil';
 import { zoomToMarker } from './WorldUtil/cameraAnimations';
@@ -50,12 +51,14 @@ const World = () => {
         enableDefocus: false,
     }
 
+    // const texture = 'https://raw.githubusercontent.com/chrisrzhou/react-globe/main/textures/globe_dark.jpg'
 
     return (
         <>  
             <button onClick={() => setProjects(filterByExactField(projects, "experience", "beginner"))}>Filter by Beginner</button>
             <button onClick={() => setFocus([1.3521, 103.8198])}>Singapore</button>
             <ReactGlobe 
+                globeTexture={texture}
                 focus={focus}
                 height="100vh"
                 width="100wh"
