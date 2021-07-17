@@ -4,7 +4,7 @@ import texture from './8k.jpeg';
 
 import api from '../api';
 
-import ToggleExperienceBtn from './ui/toggleExperienceBtn';
+// import ToggleExperienceBtn from './ui/toggleExperienceBtn';
 import { zoomToMarker } from './WorldUtil/cameraAnimations';
 import { scrapeToGlojectObj } from './WorldUtil/projectsUtil';
 
@@ -118,7 +118,7 @@ const World = () => {
                     Press any key to continue
                 </div>
             </div> : null}
-            <ToggleExperienceBtn updateGlojects={updateGlojects}/>
+            {/* <ToggleExperienceBtn updateGlojects={updateGlojects}/> */}
             <ReactGlobe 
                 globeTexture={texture}
                 focus={focus}
