@@ -45,7 +45,7 @@ class API {
         }),
       getById: async (uid) =>
         await this.#db.collection('users').doc(uid).get(),to_dict(),
-      exists: async (uid) => (await this.users.getByUsername(uid)).exists,
+      exists: async (uid) => (await this.users.getById(uid)).exists,
     };
   }
 }
