@@ -13,7 +13,7 @@ const NewGlojectPage = () => {
   // const [language, setLanguage] = useState('English'); // I think we shouldn't do language because it creates a barrier of entry - better to force everyoen to use English?
   const [maxTeamSize, setMaxTeamSize] = useState(6);
   const [img, setImg] = useState('');
-  const owner = "YOU"; // TODO: find get current user
+  const owner = "testinguser"; // TODO: find get current user
   const team = [];
   const status = "ACTIVE"
 
