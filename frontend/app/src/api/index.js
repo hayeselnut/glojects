@@ -19,10 +19,11 @@ class API {
     this.glojects = {
       getAll: async () => await this.#db.collection('glojects').get(),
       getById: async (glojectId) => await this.#db.collection('glojects').doc(glojectId).get(),
+      exists: async (glojectId) => (await this.glojects.getById(glojectId)).exists,
     };
     this.users = {
       getByUsername: async (username) => await this.#db.collection('users').doc(username).get(),
-      exists: async (username) => (await this.#db.collection('users').doc(username).get()).exists
+      exists: async (username) => (await this.users.getByUsername(username)).exists,
     };
   }
 }
