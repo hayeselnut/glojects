@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ReactGlobe from 'react-globe';
+import ReactGlobe, { defaultDotMarkerOptions } from 'react-globe';
 import texture from './8k.jpeg';
 
 import api from '../api';
