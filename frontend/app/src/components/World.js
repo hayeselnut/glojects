@@ -33,22 +33,6 @@ const World = () => {
     }, [])
 
     const options = {
-        // enableMarkerGlow: true,
-        // markerRadiusScaleRange: [0.005, 0.02],
-        // markerOffsetRadiusScale: 0,
-        // markerType: 'dot',
-        // enableMarkerToolTip: true,
-        // // markerEnterAnimationDuration: 3000,
-        // // markerEnterEasingFunction: ['Bounce', 'InOut'],
-        // // markerExitEasingFunction: ['Cubic', 'Out'],
-        // // markerTooltipRenderer: marker => 
-        // //     `${marker.city} (Sales: ${marker.value}.0M)`,
-        // // markerRadiusScaleRange: [0.01, 0.05],
-
-        // focusAnimationDuration: 3000,
-        // focusDistanceRadiusScale: 1.4,
-        // focusEasingFunction: ['Circular', 'In'],
-        // enableDefocus: false,
         enableMarkerGlow: true,
         markerRadiusScaleRange: [0.005, 0.02],
         markerType: 'dot',
@@ -73,6 +57,7 @@ const World = () => {
                 markers={projects}
                 options={options}
                 onClickMarker={obj => zoomToMarker(setFocus, obj)}
+                initialCameraDistanceRadiusScale={40}
             />
         </>
     )
