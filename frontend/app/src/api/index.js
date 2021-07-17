@@ -16,7 +16,7 @@ const convertToArray = (snapshot) => {
   snapshot.forEach((doc) => {
     const id = doc.id;
     const data = doc.data();
-    const gloject = {id, ...data};
+    const gloject = { id, ...data };
     glojects.push(gloject);
   });
   return glojects;
@@ -33,31 +33,41 @@ class API {
         return convertToArray(snapshot);
       },
       getAllActives: async () => {
-        const snapshot = await this.#db.collection('glojects')
+        const snapshot = await this.#db
+          .collection('glojects')
           .where('status', '==', 'ACTIVE')
           .get();
         return convertToArray(snapshot);
       },
       getById: async (glojectId) => {
         if (!glojectId) return {};
-        const snapshot = await this.#db.collection('glojects').doc(glojectId).get();
+        const snapshot = await this.#db
+          .collection('glojects')
+          .doc(glojectId)
+          .get();
         if (!snapshot.exists) return {};
         const id = snapshot.id;
         const data = snapshot.data();
-        return {id, ...data};
+        return { id, ...data };
       },
 
-      getAllFilters: async ({difficulty, tags}) => {
+      getAllFilters: async ({ difficulty, tags }) => {
         const allGlojects = await this.glojects.getAll();
 
-        console.log("tags length", tags.length)
+        console.log('tags length', tags.length);
         return allGlojects
-          .filter((gloject) => difficulty === '' ? true : gloject.difficulty === difficulty)
-          .filter((gloject) => tags.length ? tags.every(t => gloject.tags.includes(t)) : true );
+          .filter((gloject) =>
+            difficulty === '' ? true : gloject.difficulty === difficulty
+          )
+          .filter((gloject) =>
+            tags.length ? tags.every((t) => gloject.tags.includes(t)) : true
+          );
       },
       getAllTags: async () => {
         const allGlojects = await this.glojects.getAll();
-        const allTags = [...new Set(allGlojects.map((gloject) => gloject.tags).flat())];
+        const allTags = [
+          ...new Set(allGlojects.map((gloject) => gloject.tags).flat()),
+        ];
         return allTags;
       },
       exists: async (glojectId) =>
@@ -66,10 +76,11 @@ class API {
         await this.#db.collection('glojects').add(glojectData),
       delete: async (glojectId) =>
         await this.#db.collection('glojects').doc(glojectId).delete(),
-      update: async (glojectId, updated) => await this.#db.collection('glojects').doc(glojectId).update(updated),
+      update: async (glojectId, updated) =>
+        await this.#db.collection('glojects').doc(glojectId).update(updated),
     };
     this.users = {
-      createUser: async (uid, username, email, location, image) =>
+      createUser: async (uid, username, email, location) =>
         await this.#db.collection('users').doc(uid).set({
           username: username,
           email: email,
@@ -77,14 +88,15 @@ class API {
           active_glojects: [],
           past_glojects: [],
           interests: [],
-          image: image,
+          image:
+            'https://www.nicepng.com/png/detail/933-9332131_profile-picture-default-png.png',
         }),
       getById: async (uid) => {
         if (!uid) return {};
-        const snapshot = await this.#db.collection('users').doc(uid).get()
+        const snapshot = await this.#db.collection('users').doc(uid).get();
         const id = snapshot.id;
         const data = snapshot.data();
-        return {id, ...data};
+        return { id, ...data };
       },
       getCurrentUserId: () => firebase.auth().currentUser.id,
       exists: async (uid) => (await this.users.getById(uid)).exists,

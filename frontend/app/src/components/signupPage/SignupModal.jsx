@@ -10,10 +10,9 @@ export default function SignupModal(props) {
   const [email, setEmail] = React.useState('');
   const [location, setLocation] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [photo, setPhoto] = React.useState('');
 
   const handleSignup = async () => {
-    await signup(email, password, username, location, photo);
+    await signup(email, password, username, location);
     setSignupOpen(false);
   };
 
