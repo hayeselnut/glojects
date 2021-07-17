@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactGlobe from 'react-globe';
-import texture from './16k.jpeg';
+import texture from './8k.jpeg';
 
 import api from '../api';
 
