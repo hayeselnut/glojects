@@ -77,7 +77,7 @@ const UserProfilePage = (props) => {
               width: '150px',
               borderRadius: '50%',
             }}
-            src={userData.photoURL}
+            src={userData.image}
           />
           <div style={{ marginLeft: '50px' }}>
             <Header style={{ fontSize: '40px' }}>{userData.username}</Header>
