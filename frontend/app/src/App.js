@@ -19,6 +19,7 @@ function App() {
       <NavBar />
       <Router>
         <Switch>
+          {console.log("In router")}
           <PrivateRoute path="/signup" component={SignupPage} />
           <Route exact path="/" component={World} />
           <Route exact path="/api" component={ApiPage} />

@@ -110,6 +110,7 @@ const World = () => {
 
     return (
         <>  
+                  {console.log("In world")}
             { open ? <div style={startModalStyle}>
                 <div style={upperText}/>
                 <div style={middleText}>
