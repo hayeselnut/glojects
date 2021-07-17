@@ -22,6 +22,16 @@ class API {
         await this.#db.collection('glojects').doc(glojectId).get(),
       exists: async (glojectId) =>
         (await this.glojects.getById(glojectId)).exists,
+      create: async (glojectData) =>
+        await this.#db.collection('glojects').add(glojectData),
+      delete: async (glojectId) =>
+        await this.#db.collection('glojects').doc(glojectId).delete(),
+      // update: {
+      //   title: async (glojectId, title) => await this.#db.collection('glojects').doc(glojectId).update({title}),
+      //   description: async (glojectId, description) => await this.#db.collection('glojects').doc(glojectId).update({description}),
+      //   team_members: async (glojectId, team_members) => await this.#db.collection('glojects').doc(glojectId).update({team_members}),
+      //   tags: async (glojectId, tags) => await this.#db.collection('glojects').doc(glojectId).update({tags}),
+      // },
     };
     this.users = {
       createUser: async (uid, username, email, location) =>
