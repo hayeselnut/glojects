@@ -27,10 +27,13 @@ const ToggleExperienceBtn = ({updateGlojects}) => {
             return "ALL";
         }
     }
+    
+
 
     const onExperienceClick = () => {
         let mode = getNextState();
         setState(mode);
+        
 
         let difficulty = mode;
         if (difficulty === 'ALL') {
@@ -59,27 +62,78 @@ const ToggleExperienceBtn = ({updateGlojects}) => {
         })
     }
 
+
     return (
-        <>
-            <Button onClick={onExperienceClick}>
+        <>  
+            {state === 'ALL' ? <Button inverted onClick={onExperienceClick} style={experienceBtnStyleALL}>
                 Difficulty: {state}
-            </Button>
-            <Dropdown
-                placeholder='Add tags'
-                multiple
-                search
-                selection
-                options={allTags}
-                onChange={(e, {value}) => setTags(value)}
-            >
-            </Dropdown>
-            <Button
-                content="Filter" 
-                onClick={onTagClick}
-            >
-            </Button>
+            </Button> : null}
+            {state === 'EASY' ? <Button inverted onClick={onExperienceClick} style={experienceBtnStyleEASY}>                Difficulty: {state}
+            </Button> : null}
+            {state === 'MEDIUM' ? <Button inverted onClick={onExperienceClick} style={experienceBtnStyleMEDIUM}>
+                Difficulty: {state}
+            </Button> : null}
+            {state === 'HARD' ? <Button inverted onClick={onExperienceClick} style={experienceBtnStyleHARD}>
+                Difficulty: {state}
+            </Button> : null}
+            {/* <Button inverted onClick={onExperienceClick} style={experienceBtnStyle}>
+                Difficulty: {state}
+            </Button> */}
+
+            <div style={filterTagStyle}>  
+                <Dropdown
+                    inverted
+                    placeholder='Add tags'
+                    multiple
+                    search
+                    selection
+                    options={allTags}
+                    onChange={(e, {value}) => setTags(value)}
+                >
+                </Dropdown>
+                <Button
+                    inverted
+                    content="Filter" 
+                    onClick={onTagClick}
+                >
+                </Button>
+            </div>
         </> 
     )
 }
 
 export default ToggleExperienceBtn;
+
+let experienceBtnStyleALL = {
+    position: "absolute",
+    bottom: "7.5vh",
+    left: "1vw",
+    color: 'white'
+}
+
+let experienceBtnStyleEASY = {
+    position: "absolute",
+    bottom: "7.5vh",
+    left: "1vw",
+    color: '#90ee90'
+}
+
+let experienceBtnStyleMEDIUM = {
+    position: "absolute",
+    bottom: "7.5vh",
+    left: "1vw",
+    color: '#fce37f'
+}
+
+let experienceBtnStyleHARD = {
+    position: "absolute",
+    bottom: "7.5vh",
+    left: "1vw",
+    color: '#ff7272'
+}
+
+const filterTagStyle = {
+    position: "absolute",
+    bottom: "2vh",
+    left: "1vw"
+}

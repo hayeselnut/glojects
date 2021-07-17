@@ -4,7 +4,7 @@ import texture from './8k.jpeg';
 
 import api from '../api';
 
-// import ToggleExperienceBtn from './ui/toggleExperienceBtn';
+import ToggleExperienceBtn from './ui/toggleExperienceBtn';
 import { zoomToMarker } from './WorldUtil/cameraAnimations';
 import { scrapeToGlojectObj } from './WorldUtil/projectsUtil';
 import RandomGlojectBtn from './ui/RandomGlojectBtn';
@@ -135,8 +135,8 @@ const World = () => {
           <div style={lowerText}>Press any key to continue</div>
         </div>
       ) : null}
-      <RandomGlojectBtn glojects={glojects} updateFocus={updateFocus} />
-      {/* <ToggleExperienceBtn updateGlojects={updateGlojects}/> */}
+      {!open ? <RandomGlojectBtn glojects={glojects} updateFocus={updateFocus} /> : null}
+      {!open ? <ToggleExperienceBtn updateGlojects={updateGlojects}/> : null}
       {hover ? (
         <div style={cardStyle}>
           <GlobjectCard
@@ -176,7 +176,6 @@ const startModalStyle = {
   height: '100%',
   position: 'fixed',
   backgroundColor: 'rgba(0, 0, 0, 0)',
-  // border: "10px solid blue",
   display: 'flex',
   flexDirection: 'column',
   color: 'white',
