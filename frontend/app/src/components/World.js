@@ -61,7 +61,7 @@ const World = () => {
             <button onClick={() => setProjects(filterByExactField(projects, "experience", "beginner"))}>Filter by Beginner</button>
             <button onClick={() => setFocus([1.3521, 103.8198])}>Singapore</button>
             <ReactGlobe 
-                // globeTexture={texture}
+                globeTexture={texture}
                 focus={focus}
                 height="100vh"
                 width="100wh"
