@@ -31,11 +31,12 @@ import RandomGlojectBtn from './ui/RandomGlojectBtn';
 
 const initOptions = {
     enableMarkerGlow: true,
-    // markerGlowCoefficient: 1,
-    // markerGlowPower: 1,
-    // markerGlowRadiusScale: 0.8,
+    markerGlowCoefficient: 1,
+    markerGlowPower: 1,
+    markerGlowRadiusScale: 0.6,
+
     markerRadiusScaleRange: [0.005, 0.02],
-    markerType: 'dot',
+    markerType: 'dot', // dot | bar
     enableMarkerToolTip: true,
     // markerEnterAnimationDuration: 3000,
     // markerEnterEasingFunction: ['Bounce', 'InOut'],
@@ -79,7 +80,7 @@ const World = () => {
                 newGlojects.push(scrapeToGlojectObj(value));
 
             })
-            
+
             console.log("New glojects are ", newGlojects);
             setGlojects(newGlojects);
         })
