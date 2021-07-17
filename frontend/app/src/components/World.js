@@ -5,11 +5,11 @@ import texture from './16k.jpeg';
 import { filterByExactField } from './WorldUtil/projectsUtil';
 import { zoomToMarker } from './WorldUtil/cameraAnimations';
 
-const sampleData = [...Array(100).keys()].map(() => ({
+const sampleData = [...Array(50).keys()].map(() => ({
     projectName: "Project Name",
     experience: ["beginner", "moderate", "expert"][Math.round(Math.random() * 2)],
     coordinates: [(Math.random() - 0.5) * 180, (Math.random() - 0.5) * 360],
-    value: (Math.random() * 50),
+    value: 50,
 }));
 
 sampleData.forEach((marker, index) => {
@@ -34,13 +34,24 @@ const World = () => {
 
     const options = {
         enableMarkerGlow: true,
+        // markerGlowCoefficient: 1,
+        // markerGlowPower: 1,
+        // markerGlowRadiusScale: 0.8,
         markerRadiusScaleRange: [0.005, 0.02],
         markerType: 'dot',
         enableMarkerToolTip: true,
-        focusAnimationDuration: 3000,
-        focusDistanceRadiusScale: 1.4,
-        focusEasingFunction: ['Circular', 'In'],
-        enableDefocus: false,
+        // markerEnterAnimationDuration: 3000,
+        // markerEnterEasingFunction: ['Bounce', 'InOut'],
+        // markerExitEasingFunction: ['Cubic', 'Out'],
+        // markerTooltipRenderer: marker => 
+        //     `${marker.city} (Sales: ${marker.value}.0M)`,
+        // markerRadiusScaleRange: [0.01, 0.05],
+
+        // focusAnimationDuration: 2000,
+        // focusDistanceRadiusScale: 1.5,
+        cameraRotateSpeed: 0.5,
+        focusEasingFunction: ['Linear', 'None'],
+        enableDefocus: true,
     }
 
     // const texture = 'https://raw.githubusercontent.com/chrisrzhou/react-globe/main/textures/globe_dark.jpg'
@@ -50,7 +61,7 @@ const World = () => {
             <button onClick={() => setProjects(filterByExactField(projects, "experience", "beginner"))}>Filter by Beginner</button>
             <button onClick={() => setFocus([1.3521, 103.8198])}>Singapore</button>
             <ReactGlobe 
-                globeTexture={texture}
+                // globeTexture={texture}
                 focus={focus}
                 height="100vh"
                 width="100wh"
