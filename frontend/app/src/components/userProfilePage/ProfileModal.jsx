@@ -31,7 +31,6 @@ export default function ProfileModal(props) {
   };
 
   useEffect(() => {
-    console.log('pls', profileId, profileOpen);
     const getUserData = async () => {
       const userData = await api.users.getById(profileId);
       setUserData(userData);
@@ -46,7 +45,6 @@ export default function ProfileModal(props) {
       return api.glojects.getById(id);
     });
     Promise.all(promises).then((res) => {
-      console.log('res', res);
       setActiveGlojects(
         res.map((g) => {
           return (
