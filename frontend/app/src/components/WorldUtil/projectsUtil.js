@@ -21,3 +21,29 @@ export const removeProject = (projects, pId) => {
     const newProjects = projects.filter(obj => obj.id !== pId)
     return newProjects;
 }
+
+// Given a scraped gloject, converts it into a gloject object
+export const scrapeToGlojectObj = (value) => {
+    const gloject = {
+        id: value.id,
+        title: value.title,
+        description: value.description,
+        difficulty: value.difficulty,
+        coordinates: [value.location.latitude, value.location.longitude],
+        team: value.team,
+        tags: value.tags,
+        ownerId: value.owner,
+        maxTeamSize: value.maxTeamSize,
+        value: 25
+    }
+
+    if (gloject.difficulty === 'EASY') {
+        gloject['color'] = 'green';
+    } else if (gloject.difficulty === 'MEDIUM') {
+        gloject['color'] = 'blue';
+    } else if (gloject.difficulty === 'HARD') {
+        gloject['color'] = 'red';
+    }
+
+    return gloject;
+}

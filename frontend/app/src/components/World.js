@@ -6,26 +6,27 @@ import api from '../api';
 
 import ToggleExperienceBtn from './ui/toggleExperienceBtn';
 import { zoomToMarker } from './WorldUtil/cameraAnimations';
+import { scrapeToGlojectObj } from './WorldUtil/projectsUtil';
 
-const sampleData = [...Array(25).keys()].map(() => ({
-    projectName: "Project Name",
-    difficulty: ["Easy", "Medium", "Hard"][Math.round(Math.random() * 2)],
-    coordinates: [(Math.random() - 0.5) * 180, (Math.random() - 0.5) * 360],
-    value: 25,
-}));
+// const sampleData = [...Array(25).keys()].map(() => ({
+//     projectName: "Project Name",
+//     difficulty: ["Easy", "Medium", "Hard"][Math.round(Math.random() * 2)],
+//     coordinates: [(Math.random() - 0.5) * 180, (Math.random() - 0.5) * 360],
+//     value: 25,
+// }));
 
-sampleData.forEach((marker, index) => {
-    marker['id'] = index.toString();
-    if (marker.difficulty === "Easy") {
-        marker['color'] = 'green';
-    } else if (marker.difficulty === "Medium") {
-        marker['color'] = 'blue';
-    } else if (marker.difficulty === "Hard") {
-        marker['color'] = 'red';
-    }
-})
+// sampleData.forEach((marker, index) => {
+//     marker['id'] = index.toString();
+//     if (marker.difficulty === "Easy") {
+//         marker['color'] = 'green';
+//     } else if (marker.difficulty === "Medium") {
+//         marker['color'] = 'blue';
+//     } else if (marker.difficulty === "Hard") {
+//         marker['color'] = 'red';
+//     }
+// })
 
-console.log(sampleData);
+// console.log(sampleData);
 
 const initOptions = {
     enableMarkerGlow: true,
@@ -52,7 +53,7 @@ const initOptions = {
 }
 
 const World = () => {
-    const [projects, setProjects] = useState([]);
+    const [glojects, setGlojects] = useState([]);
     const [focus, setFocus] = useState(null);
     const [open, setOpen] = useState(true);
     const [options, setOptions] = useState(initOptions);
@@ -66,8 +67,16 @@ const World = () => {
     }
 
     useEffect(() => {
-        // api.glojects.getAllActives().
-        setProjects(sampleData);
+        api.glojects.getAllActives().then((res) => {
+            const newGlojects = [];
+            res.forEach((value, index) => {
+                newGlojects.push(scrapeToGlojectObj(value));
+
+            })
+            
+            console.log("New glojects are ", newGlojects);
+            setGlojects(newGlojects);
+        })
 
         window.addEventListener('keydown', () => {
             initZoom();
@@ -88,10 +97,12 @@ const World = () => {
         setOptions(newOptions);
     }
 
+
+    const updateGlojects = (newGlojects) => {
+        setGlojects(newGlojects);
+    }
     return (
         <>  
-            {/* <button onClick={() => setProjects(filterByExactField(projects, "experience", "beginner"))}>Filter by Beginner</button> */}
-            {/* <button onClick={() => setFocus([1.3521, 103.8198])}>Singapore</button> */}
             { open ? <div style={startModalStyle}>
                 <div style={upperText}/>
                 <div style={middleText}>
@@ -107,13 +118,13 @@ const World = () => {
                     Press any key to continue
                 </div>
             </div> : null}
-            <ToggleExperienceBtn setMarkers={setProjects}/>
+            <ToggleExperienceBtn updateGlojects={updateGlojects}/>
             <ReactGlobe 
                 globeTexture={texture}
                 focus={focus}
                 height="100vh"
                 width="100wh"
-                markers={projects}
+                markers={glojects}
                 options={options}
                 onClickMarker={onClick}
                 onDefocus={onDefocus}

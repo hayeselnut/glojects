@@ -42,9 +42,9 @@ export const login = async (email, password) => {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      if (!user?.emailVerified) {
-        throw new Error('Please verify your email');
-      }
+      // if (!user?.emailVerified) {
+      //   throw new Error('Please verify your email');
+      // }
       console.log('Successfully logged in.');
       return true;
     })

@@ -1,25 +1,44 @@
 import React, {useState, useEffect} from 'react';
 import { Button } from 'semantic-ui-react';
-import { filterByExactField } from '../WorldUtil/projectsUtil';
-const ToggleExperienceBtn = ({markers, setMarkers}) => {
-    const [state, setState] = useState("All");
+import { scrapeToGlojectObj } from '../WorldUtil/projectsUtil';
+import api from '../../api';
+
+const ToggleExperienceBtn = ({updateGlojects}) => {
+    const [state, setState] = useState("ALL");
 
     const getNextState = () => {
-        if (state === "All") {
-            return "Easy";
-        } else if (state === "Easy") {
-            return "Medium";
-        } else if (state === "Medium") {
-            return "Hard";
-        } else if (state === "Hard") {
-            return "All";
+        if (state === "ALL") {
+            return "EASY";
+        } else if (state === "EASY") {
+            return "MEDIUM";
+        } else if (state === "MEDIUM") {
+            return "HARD";
+        } else if (state === "HARD") {
+            return "ALL";
         }
     }
 
     const onClick = () => {
         const mode = getNextState();
+        
         setState(mode);
-        setMarkers(filterByExactField(markers, "difficulty", mode));
+        api.glojects.getAllActives().then((res) => {
+            // Only keep the glojects matching the difficulty
+            const newGlojects = [];
+            if (mode === 'ALL') {
+                res.forEach(value => {
+                    newGlojects.push(scrapeToGlojectObj(value));
+                })
+            } else {
+                res.forEach(value => {
+                    if (mode === value.difficulty) {
+                        newGlojects.push(scrapeToGlojectObj(value));
+                    }
+                })
+            }
+
+            updateGlojects(newGlojects);
+        })
     }
 
     return (
