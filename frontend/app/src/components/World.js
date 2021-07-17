@@ -38,15 +38,15 @@ const World = () => {
         markerOffsetRadiusScale: 0,
         markerType: 'dot',
         enableMarkerToolTip: true,
-        markerEnterAnimationDuration: 3000,
-        markerEnterEasingFunction: ['Bounce', 'InOut'],
-        markerExitEasingFunction: ['Cubic', 'Out'],
+        // markerEnterAnimationDuration: 3000,
+        // markerEnterEasingFunction: ['Bounce', 'InOut'],
+        // markerExitEasingFunction: ['Cubic', 'Out'],
         // markerTooltipRenderer: marker => 
         //     `${marker.city} (Sales: ${marker.value}.0M)`,
         // markerRadiusScaleRange: [0.01, 0.05],
 
-        focusAnimationDuration: 2000,
-        focusDistanceRadiusScale: 2,
+        focusAnimationDuration: 3000,
+        focusDistanceRadiusScale: 1.4,
         focusEasingFunction: ['Circular', 'In'],
         enableDefocus: false,
     }
