@@ -1,10 +1,20 @@
 import React, {useState, useEffect} from 'react';
-import { Button } from 'semantic-ui-react';
+import { Button, Dropdown } from 'semantic-ui-react';
 import { scrapeToGlojectObj } from '../WorldUtil/projectsUtil';
 import api from '../../api';
 
 const ToggleExperienceBtn = ({updateGlojects}) => {
     const [state, setState] = useState("ALL");
+    const [tags, setTags] = useState([]);
+    const [allTags, setAllTags] = useState([]);
+
+    useEffect(() => {
+        const ue = async () => {
+          const allTags = await api.glojects.getAllTags();
+          setAllTags(allTags.map((tag) => ({key: tag, text: tag, value: tag})));
+        };
+        ue();
+      }, []);
 
     const getNextState = () => {
         if (state === "ALL") {
@@ -41,10 +51,35 @@ const ToggleExperienceBtn = ({updateGlojects}) => {
         })
     }
 
+    const onTagClick = () => {
+        api.glojects.getAllFilters({state, tags}).then((res) => {
+            const newGlojects = [];
+            res.forEach(value => {
+                newGlojects.push(scrapeToGlojectObj(value));
+            })
+        })
+    }
+
     return (
-        <Button onClick={onClick}>
-            Difficulty: {state}
-        </Button>
+        <>
+            <Button onClick={onClick}>
+                Difficulty: {state}
+            </Button>
+            <Dropdown
+                placeholder='Tags'
+                multiple
+                search
+                selection
+                options={allTags}
+                onChange={(e, {value}) => setTags(value)}
+            >
+            </Dropdown>
+            <Button
+                content="Filter Glojects" 
+                onClick={onTagClick}
+            >
+            </Button>
+        </> 
     )
 }
 

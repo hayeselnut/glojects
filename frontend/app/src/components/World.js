@@ -62,6 +62,7 @@ const World = () => {
         // const newOptions = {...options};
         // newOptions.cameraAutoRotateSpeed = 0.1;
         window.removeEventListener('keydown', initZoom, true);
+        window.removeEventListener('click', initZoom, true);
         setFocus([-33, 151]);
         setOpen(false);
         // setOptions(newOptions);
@@ -69,6 +70,7 @@ const World = () => {
 
     useEffect(() => {
         window.addEventListener('keydown', initZoom, true);
+        window.addEventListener('click', initZoom, true);
 
         api.glojects.getAllActives().then((res) => {
             const newGlojects = [];
