@@ -93,11 +93,9 @@ const World = () => {
     });
   }, []);
 
+
   const onClick = (obj) => {
-    zoomToMarker(setFocus, obj);
-    const newOptions = { ...options };
-    newOptions.cameraAutoRotateSpeed = 0;
-    setOptions(newOptions);
+    zoomToMarker(updateFocus, obj);
     setCardSrc(obj.image);
     setCardTitle(obj.title);
     setCardTags(obj.tags);
@@ -107,9 +105,6 @@ const World = () => {
   };
 
   const onDefocus = () => {
-    const newOptions = { ...options };
-    newOptions.cameraAutoRotateSpeed = 0.1;
-    setOptions(newOptions);
     setHover(false);
   };
 
