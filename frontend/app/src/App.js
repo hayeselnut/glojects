@@ -11,6 +11,7 @@ import NewGlojectPage from './components/newGlojectPage/NewGlojectPage';
 import World from './components/World';
 import 'semantic-ui-css/semantic.min.css';
 import ApiPage from './components/apiPage/ApiPage';
+import EditGlojectPage from './components/editGlojectPage/EditGlojectPage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/api" component={ApiPage} />
           <Route exact path="/g/new" component={NewGlojectPage} />
           <Route exact path="/g/:glojectId" component={GlojectPage} />
+          <Route exact path="/g/:glojectId/edit" component={EditGlojectPage} />
           <Route exact path="/u/:uid" component={UserProfilePage} />
         </Switch>
       </Router>
