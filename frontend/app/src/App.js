@@ -7,6 +7,9 @@ import SignupPage from './components/signupPage/SignupPage';
 import GlojectPage from './components/glojectPage.jsx/GlojectPage';
 import UserProfilePage from './components/userProfilePage/UserProfilePage';
 import NewGlojectPage from './components/newGlojectPage/NewGlojectPage';
+import World from './components/World';
+
+import { signup, resendVerification, login, logout } from './firebase/auth';
 
 import './App.css';
 import 'semantic-ui-css/semantic.min.css'
@@ -17,6 +20,7 @@ function App() {
       <Router>
         <Switch>
           <PrivateRoute path="/signup" component={SignupPage} />
+          <Route exact path="/World" component={World}/>
           <Route exact path="/" component={LandingPage} />
           <Route exact path='/g/new' component={NewGlojectPage} />
           <Route exact path='/g/:glojectId' component={GlojectPage} />
