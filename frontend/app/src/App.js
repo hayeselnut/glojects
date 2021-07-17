@@ -10,7 +10,7 @@ import MenuNav from './components/common/MenuNav';
 import NewGlojectPage from './components/newGlojectPage/NewGlojectPage';
 import World from './components/World';
 
-import 'semantic-ui-css/semantic.min.css'
+import 'semantic-ui-css/semantic.min.css';
 import ApiPage from './components/apiPage/ApiPage';
 
 function App() {
