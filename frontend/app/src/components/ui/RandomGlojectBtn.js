@@ -11,11 +11,19 @@ const RandomGlojectBtn = ({glojects, updateFocus}) => {
 
     return (
         <Button
+            style={buttonStyle}
+            inverted
             onClick={randomGlojectCoordinates}
         >
-            Explore!    
+            Random Gloject    
         </Button>
     )
 }
 
 export default RandomGlojectBtn;
+
+const buttonStyle = {
+    position: "absolute",
+    bottom: "2vh",
+    right: "1vw"
+}

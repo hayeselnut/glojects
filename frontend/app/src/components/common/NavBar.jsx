@@ -12,12 +12,13 @@ import GlojectModal from '../glojectPage.jsx/GlojectModal';
 const StyledNav = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 10px;
+  // align-items: center;
+  // padding: 10px;
   position: absolute;
-  margin: 10px;
-  margin-right: 20px;
-  margin-left: 20px;
+  top: 1vh;
+  // margin: 10px;
+  margin-right: 1vw;
+  margin-left: 1vw;
   width: 100%;
 `;
 
@@ -25,9 +26,12 @@ const LeftDiv = styled.div``;
 const RightDiv = styled.div`
   display: flex;
   justify-content: center;
-  padding: 10px;
-  margin: 10px;
-  width: 300px;
+  // padding: 10px;
+  // margin: 10px;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  width: 270px;
+  // background-color: green;
   justify-content: space-between;
 `;
 
@@ -100,11 +104,11 @@ const NavBar = (props) => {
   }, [logggedIn, userId]);
   return (
     <StyledNav>
-      <LeftDiv>
+      {/* <LeftDiv> */}
         <Header as="h1" style={{ color: 'white' }}>
           Gl<span>&#x1f30e;</span>jects
         </Header>
-      </LeftDiv>
+      {/* </LeftDiv> */}
       <RightDiv>
         {buttons}
         <SignupModal
