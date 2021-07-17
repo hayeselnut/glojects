@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
 
-import { Button, Container, Form, Header, Message, Radio, TextArea } from 'semantic-ui-react';
+import { Button, Container, Form, Header, Message, Radio } from 'semantic-ui-react';
 import api from '../../api';
-import Avatar from '../avatar/Avatar';
+import { redirect } from '../../helpers';
 
 const NewGlojectPage = () => {
   const [title, setTitle] = useState('');
@@ -13,12 +12,13 @@ const NewGlojectPage = () => {
   const [difficulty, setDifficulty] = useState('EASY');
   // const [language, setLanguage] = useState('English'); // I think we shouldn't do language because it creates a barrier of entry - better to force everyoen to use English?
   const [maxTeamSize, setMaxTeamSize] = useState(6);
+  const [img, setImg] = useState('');
   const owner = "YOU"; // TODO: find get current user
   const team = [];
   const status = "ACTIVE"
 
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const [error, setError] = useState(false);
 
   const extractTags = (tagsString) => tagsString
@@ -29,20 +29,33 @@ const NewGlojectPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (title === '') {
+      setErrorMsg('Title must not be empty');
+      setError(true);
+      return;
+    }
+
+    if (description === '') {
+      setErrorMsg('Description must not be empty');
+      setError(true);
+      return;
+    }
+
     setLoading(true);
-    await api.glojects.create({
+    const res = await api.glojects.create({
       title, description, difficulty, owner, team, status,
       tags: extractTags(tags),
     })
     setLoading(false);
+
+    redirect(`/g/${res.id}`);
   }
 
   return (
     <Container>
       <Header content="Make a new Gloject"/>
-      <Form success={success} error={error} onSubmit={handleSubmit}>
-        <Message error content='Something ' />
-        <Message success content='Login success!' />
+      <Form error={error} onSubmit={handleSubmit}>
+        <Message error content={errorMsg} />
         <Form.Input
           name='glojectTitle'
           label='Title'
