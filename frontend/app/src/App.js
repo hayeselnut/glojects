@@ -4,8 +4,10 @@ import { StoreProvider } from './utils/store';
 import PrivateRoute from './PrivateRoute';
 import LandingPage from './components/landingPage/LandingPage';
 import SignupPage from './components/signupPage/SignupPage';
+import GlojectPage from './components/glojectPage.jsx/GlojectPage';
 
 import './App.css';
+import UserProfilePage from './components/userProfilePage/UserProfilePage';
 
 function App() {
   return (
@@ -13,7 +15,9 @@ function App() {
       <Router>
         <Switch>
           <PrivateRoute path="/signup" component={SignupPage} />
-          <Route path="/" component={LandingPage} />
+          <Route exact path="/" component={LandingPage} />
+          <Route exact path='/g/:glojectid' component={GlojectPage} />
+          <Route exact path='/u/:username' component={UserProfilePage} />
         </Switch>
       </Router>
     </StoreProvider>
