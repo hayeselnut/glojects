@@ -1,6 +1,6 @@
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 import firebase from 'firebase/app';
-import api from '../../api';
+import api from '../api';
 
 export const signup = (email, password, username, location) => {
   firebase
@@ -18,7 +18,9 @@ export const signup = (email, password, username, location) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
+      return false;
     });
+  return true;
 };
 
 export const resendVerification = (email) => {
