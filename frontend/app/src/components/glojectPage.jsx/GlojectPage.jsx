@@ -19,6 +19,8 @@ const GlojectPage = (props) => {
     ue();
   }, [glojectId]);
 
+  console.log('gjdata', glojectData);
+
   return (
     <Container>
       <Image
@@ -43,6 +45,7 @@ const GlojectPage = (props) => {
         title={glojectData.title}
         owner={glojectData.owner}
         description={glojectData.description}
+        tags={glojectData.tags}
       />
     </Container>
   );
