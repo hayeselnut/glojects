@@ -7,6 +7,7 @@ import api from '../api';
 // import ToggleExperienceBtn from './ui/toggleExperienceBtn';
 import { zoomToMarker } from './WorldUtil/cameraAnimations';
 import { scrapeToGlojectObj } from './WorldUtil/projectsUtil';
+import RandomGlojectBtn from './ui/RandomGlojectBtn';
 
 // const sampleData = [...Array(25).keys()].map(() => ({
 //     projectName: "Project Name",
@@ -101,6 +102,12 @@ const World = () => {
     const updateGlojects = (newGlojects) => {
         setGlojects(newGlojects);
     }
+
+    const updateFocus = (coordinates) => {
+        setFocus(coordinates);
+    }
+
+
     return (
         <>  
             { open ? <div style={startModalStyle}>
@@ -118,6 +125,7 @@ const World = () => {
                     Press any key to continue
                 </div>
             </div> : null}
+            <RandomGlojectBtn glojects={glojects} updateFocus={updateFocus}/>
             {/* <ToggleExperienceBtn updateGlojects={updateGlojects}/> */}
             <ReactGlobe 
                 globeTexture={texture}
