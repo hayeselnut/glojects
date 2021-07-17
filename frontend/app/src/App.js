@@ -7,8 +7,6 @@ import SignupPage from './components/signupPage/SignupPage';
 import GlojectPage from './components/glojectPage.jsx/GlojectPage';
 import UserProfilePage from './components/userProfilePage/UserProfilePage';
 
-import { signup, resendVerification, login, logout } from './firebase/auth';
-
 import './App.css';
 import 'semantic-ui-css/semantic.min.css'
 
