@@ -26,7 +26,13 @@ const NewGlojectPage = () => {
     .split(',')
     .map((tag) => tag.trim())
     .filter((tag) => !!tag);
-
+  // const extractTags = (tagsString) => {
+  //   const tags = tagsString
+  //     .split(',')
+  //     .map((tag) => tag.trim())
+  //     .filter((tag) => !!tag);
+  //   return tags || [];
+  // }
   const handleSubmit = async (e) => {
     e.preventDefault();
 

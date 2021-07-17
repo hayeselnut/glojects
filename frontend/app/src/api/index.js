@@ -40,6 +40,7 @@ class API {
       },
       getById: async (glojectId) => {
         const snapshot = await this.#db.collection('glojects').doc(glojectId).get();
+        if (!snapshot.exists) return {};
         const id = snapshot.id;
         const data = snapshot.data();
         return {id, ...data};

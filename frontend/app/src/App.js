@@ -13,6 +13,7 @@ import { signup, resendVerification, login, logout } from './firebase/auth';
 
 import './App.css';
 import 'semantic-ui-css/semantic.min.css'
+import ApiPage from './components/apiPage/ApiPage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <PrivateRoute path="/signup" component={SignupPage} />
           <Route exact path="/World" component={World}/>
           <Route exact path="/" component={LandingPage} />
+          <Route exact path="/api" component={ApiPage} />
           <Route exact path='/g/new' component={NewGlojectPage} />
           <Route exact path='/g/:glojectId' component={GlojectPage} />
           <Route exact path='/u/:username' component={UserProfilePage} />

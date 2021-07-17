@@ -36,14 +36,6 @@ const GlojectPage = (props) => {
       {glojectData.team?.map((username) => <Avatar username={username} />)}
     </Container>
   );
-
-  // const history = useHistory();
-  // return (
-  //   <div>
-  //     Landing page
-  //     <button onClick={() => history.push('/signup')}>Go to sign up</button>
-  //   </div>
-  // );
 };
 
 export default GlojectPage;
