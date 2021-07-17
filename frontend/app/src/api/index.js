@@ -45,6 +45,20 @@ class API {
         const data = snapshot.data();
         return {id, ...data};
       },
+
+      getAllFilters: async ({difficulty, tags}) => {
+        const allGlojects = await this.glojects.getAll();
+
+        console.log("tags length", tags.length)
+        return allGlojects
+          .filter((gloject) => difficulty === '' ? true : gloject.difficulty === difficulty)
+          .filter((gloject) => tags.length ? tags.every(t => gloject.tags.includes(t)) : true );
+      },
+      getAllTags: async () => {
+        const allGlojects = await this.glojects.getAll();
+        const allTags = [...new Set(allGlojects.map((gloject) => gloject.tags).flat())];
+        return allTags;
+      },
       exists: async (glojectId) =>
         (await this.glojects.getById(glojectId)).exists,
       create: async (glojectData) =>
@@ -59,7 +73,7 @@ class API {
       // },
     };
     this.users = {
-      createUser: async (uid, username, email, location) =>
+      createUser: async (uid, username, email, location, photoURL) =>
         await this.#db.collection('users').doc(uid).set({
           username: username,
           email: email,
@@ -67,6 +81,7 @@ class API {
           active_glojects: [],
           past_glojects: [],
           interests: [],
+          photoURL: photoURL,
         }),
       getById: async (uid) => await this.#db.collection('users').doc(uid).get(),
       exists: async (uid) => (await this.users.getById(uid)).exists,

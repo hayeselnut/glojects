@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 
 import { Button, Container, Form, Header, Message, Radio } from 'semantic-ui-react';
 import api from '../../api';
-import { redirect } from '../../helpers';
+import { fileToDataUrl, redirect } from '../../helpers';
 
 const NewGlojectPage = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   // const [dueDate, setDueDate] = useState(null); // Due date gives time pressure - not rly a good thing? Make people learn and do stuff at their own pace
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState('');
   const [difficulty, setDifficulty] = useState('EASY');
   // const [language, setLanguage] = useState('English'); // I think we shouldn't do language because it creates a barrier of entry - better to force everyoen to use English?
   const [maxTeamSize, setMaxTeamSize] = useState(6);
-  const [img, setImg] = useState('');
+  const [image, setImage] = useState('');
   const owner = "testinguser"; // TODO: find get current user
   const location = ""; // TODO: find current location
   const team = [];
@@ -22,17 +22,18 @@ const NewGlojectPage = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [error, setError] = useState(false);
 
+  const convertAndSetImage = async (file) => {
+    try {
+      const dataUrl = await fileToDataUrl(file);
+      setImage(dataUrl);
+    } catch (e) {}
+  };
+
   const extractTags = (tagsString) => tagsString
     .split(',')
     .map((tag) => tag.trim())
     .filter((tag) => !!tag);
-  // const extractTags = (tagsString) => {
-  //   const tags = tagsString
-  //     .split(',')
-  //     .map((tag) => tag.trim())
-  //     .filter((tag) => !!tag);
-  //   return tags || [];
-  // }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -81,19 +82,28 @@ const NewGlojectPage = () => {
           onChange={(e) => setDescription(e.target.value)}
         />
 
-        <Form.Input
-          icon='group'
-          iconPosition='left'
-          label='Maximum Team Size'
-          placeholder='Maximum Team Size'
-          type='number'
-          value={maxTeamSize}
-          onChange={(e) => setMaxTeamSize(parseInt(e.target.value, 10) >= 2 ? e.target.value : 2)}
-        />
+        <Form.Group widths='equal'>
+          <Form.Input
+            icon='group'
+            iconPosition='left'
+            label='Maximum Team Size'
+            placeholder='Maximum Team Size'
+            type='number'
+            value={maxTeamSize}
+            onChange={(e) => setMaxTeamSize(parseInt(e.target.value, 10) >= 2 ? e.target.value : 2)}
+          />
+
+          <Form.Input
+            label='Cover photo'
+            type='file'
+            accept='image/png, image/jpeg, image/jpg'
+            onChange={(e) => convertAndSetImage(e.target.files[0])}
+          />
+        </Form.Group>
 
         <Form.Field>
+          <label>Difficulty Level</label>
           <Form.Group inline>
-            <label>Difficulty Level</label>
             <Form.Field
               control={Radio}
               label='Easy'

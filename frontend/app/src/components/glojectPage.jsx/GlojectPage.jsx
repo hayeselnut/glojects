@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
-import { Container, Header } from 'semantic-ui-react';
+import { Container, Header, Image } from 'semantic-ui-react';
 import api from '../../api';
 import Avatar from '../avatar/Avatar';
 
@@ -12,28 +11,23 @@ const GlojectPage = (props) => {
 
   useEffect(() => {
     const ue = async () => {
-      const snapshot = await api.glojects.getById(glojectId);
-      setGlojectData(snapshot.data());
+      const glojectData = await api.glojects.getById(glojectId);
+      setGlojectData(glojectData);
     };
     ue();
   }, [glojectId]);
 
   return (
     <Container>
-      <Header>
-        {glojectData.title}
-      </Header>
-      <p>
-        {glojectData.description}
-      </p>
-      <p>
-        Owner:
-      </p>
+      <Image fluid src={glojectData.img}/>
+      <Header>{glojectData.title}</Header>
+      <p>{glojectData.description}</p>
+      <p>Owner:</p>
       <Avatar username={glojectData.owner} />
-      <p>
-        Team members:
-      </p>
-      {glojectData.team?.map((username) => <Avatar username={username} />)}
+      <p>Team members:</p>
+      {glojectData.team?.map((username) => (
+        <Avatar username={username} />
+      ))}
     </Container>
   );
 };

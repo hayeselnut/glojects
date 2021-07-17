@@ -5,6 +5,7 @@ import { Button } from 'semantic-ui-react';
 import { Header } from 'semantic-ui-react';
 
 import NavBar from '../common/NavBar';
+import MenuNav from '../common/MenuNav';
 import api from '../../api';
 import './LandingPage.css';
 
@@ -14,7 +15,6 @@ const LandingPage = () => {
   // TODO: add props to navbar
   return (
     <div>
-      <NavBar />
       <div className="landing-page-container">
         <Header className="header" as="h1">
           Welcome to Glojects
