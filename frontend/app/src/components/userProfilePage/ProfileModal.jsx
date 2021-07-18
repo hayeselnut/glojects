@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Button, Modal, Container, Image, Header } from 'semantic-ui-react';
+import { Button, Modal, Container, Image, Header, Label } from 'semantic-ui-react';
 import { login } from '../../firebase/auth';
 import { useHistory, useParams } from 'react-router-dom';
 import api from '../../api';
@@ -32,51 +32,24 @@ export default function ProfileModal() {
   const [activeGlojects, setActiveGlojects] = useState([]);
   const [pastGlojects, setPastGlojects] = useState([]);
 
-  const handleGlobjectClick = (globId) => {
+  const handleGlojectClick = (globId) => {
     setProfileOpen(false);
     setGlojectId(globId);
     setGlojectOpen(true);
   };
 
   useEffect(() => {
-    const getUserData = async () => {
+    const ue = async () => {
       const userData = await api.users.getById(profileId);
       setUserData(userData);
+
+      const allInvolvedGlojects = (await api.glojects.getAll())
+        .filter((gloject) => profileId === gloject.owner || gloject.team.includes(profileId))
+
+      setActiveGlojects(allInvolvedGlojects.filter(g => g.status === 'ACTIVE').map(g => <Label color='black' as='a' style={{ marginBottom: '0.5em'}} onClick={() => handleGlojectClick(g.id)}>{g.title}</Label>));
+      setPastGlojects(allInvolvedGlojects.filter(g => g.status !== 'ACTIVE').map(g => <Label color='black' as='a' style={{ marginBottom: '0.5em'}} onClick={() => handleGlojectClick(g.id)}>{g.title}</Label>));
     };
-    getUserData();
-  }, [profileId, profileOpen]);
-
-  useEffect(() => {
-    if (!userData.active_glojects) return;
-
-    let promises = userData.active_glojects?.map((id) => {
-      return api.glojects.getById(id);
-    });
-    Promise.all(promises).then((res) => {
-      setActiveGlojects(
-        res.map((g) => {
-          return (
-            <div style={{ cursor: 'pointer', margin: '3px 0px' }}>
-              <b onClick={() => handleGlobjectClick(g.id)}>{g.title}</b>
-            </div>
-          );
-        })
-      );
-    });
-    promises = userData.past_glojects?.map((id) => {
-      return api.glojects.getById(id);
-    });
-    Promise.all(promises).then((res) => {
-      setPastGlojects(
-        res.map((g) => {
-          return (
-            <div style={{ cursor: 'pointer', margin: '3px 0px' }}>
-              <b onClick={() => handleGlobjectClick(g.id)}>{g.title}</b>
-            </div>
-          );
-        })
-      );
-    });
+    ue();
   }, [userData, profileOpen]);
 
   return (

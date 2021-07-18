@@ -5,57 +5,67 @@ import { Container, Header, Image } from 'semantic-ui-react';
 import api from '../../api';
 
 const UserProfilePage = (props) => {
+  const { userId } = props.params.math;
+
   const { uid } = useParams();
   const history = useHistory();
 
-  const [userData, setUserData] = useState({
-    active_glojects: [],
-    past_glojects: [],
-  });
+  const [userData, setUserData] = useState({}); // WE ARE NOT USING ACTIVE AND PAST GLOJECTS IN USER DATA
   const [activeGlojects, setActiveGlojects] = useState([]);
   const [pastGlojects, setPastGlojects] = useState([]);
 
   useEffect(() => {
-    const getUserData = async () => {
+    const ue = async () => {
       const userData = await api.users.getById(uid);
       setUserData(userData);
+
+      const allInvolvedGlojects = (await api.glojects.getAll())
+        .filter((gloject) => uid === gloject.owner || gloject.team.includes(uid))
+
+      setActiveGlojects(allInvolvedGlojects.filter(gloject => gloject.status === 'ACTIVE'));
+      setPastGlojects(allInvolvedGlojects.filter(gloject => gloject.status !== 'ACTIVE'));
     };
-    getUserData();
+    ue();
   }, [uid]);
 
-  useEffect(() => {
-    if (!userData.active_glojects) return;
+  // useEffect(() => {
+  //   // if (!userData.active_glojects) return;
+  //   const ue = async () => {
 
-    let promises = userData.active_glojects?.map((id) => {
-      return api.glojects.getById(id);
-    });
-    Promise.all(promises).then((res) => {
-      console.log('res', res);
-      setActiveGlojects(
-        res.map((g) => {
-          return (
-            <div style={{ cursor: 'pointer', margin: '3px 0px' }}>
-              <b onClick={() => history.push(`/g/${g.id}`)}>{g.title}</b>
-            </div>
-          );
-        })
-      );
-    });
-    promises = userData.past_glojects?.map((id) => {
-      return api.glojects.getById(id);
-    });
-    Promise.all(promises).then((res) => {
-      setPastGlojects(
-        res.map((g) => {
-          return (
-            <div style={{ cursor: 'pointer', margin: '3px 0px' }}>
-              <b onClick={() => history.push(`/g/${g.id}`)}>{g.title}</b>
-            </div>
-          );
-        })
-      );
-    });
-  }, [userData]);
+  //     const allGlojects
+  //   };
+  //   ue();
+
+  //   let promises = userData.active_glojects?.map((id) => {
+  //     return api.glojects.getById(id);
+  //   });
+  //   Promise.all(promises).then((res) => {
+  //     console.log('res', res);
+  //     setActiveGlojects(
+  //       res.map((g) => {
+  //         return (
+  //           <div style={{ cursor: 'pointer', margin: '3px 0px' }}>
+  //             <b onClick={() => history.push(`/g/${g.id}`)}>{g.title}</b>
+  //           </div>
+  //         );
+  //       })
+  //     );
+  //   });
+  //   promises = userData.past_glojects?.map((id) => {
+  //     return api.glojects.getById(id);
+  //   });
+  //   Promise.all(promises).then((res) => {
+  //     setPastGlojects(
+  //       res.map((g) => {
+  //         return (
+  //           <div style={{ cursor: 'pointer', margin: '3px 0px' }}>
+  //             <b onClick={() => history.push(`/g/${g.id}`)}>{g.title}</b>
+  //           </div>
+  //         );
+  //       })
+  //     );
+  //   });
+  // }, [userData]);
 
   return (
     <div>
