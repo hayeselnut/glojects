@@ -38,7 +38,7 @@ const RightDiv = styled.div`
 
 const NavBar = (props) => {
   const [buttons, setButtons] = useState('');
-  const [userId, setUserId] = useState(localStorage.getItem('id'));
+  const [userId, setUserId] = useState('');
 
   const context = useContext(StoreContext);
   const {
@@ -71,8 +71,10 @@ const NavBar = (props) => {
 
   useEffect(() => {
     const pathname = window.location.pathname;
-    console.log(pathname);
+    const userId = localStorage.getItem('id');
+    console.log('user', userId);
     if (loggedIn || userId !== null) {
+      console.log(loggedIn, userId);
       setButtons(
         <RightDiv>
           <Avatar
@@ -113,7 +115,8 @@ const NavBar = (props) => {
         </RightDiv>
       );
     }
-  }, [loggedIn, userId]);
+  }, [loggedIn]);
+
   return (
     <StyledNav>
       {/* <LeftDiv> */}
