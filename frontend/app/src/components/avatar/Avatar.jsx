@@ -7,7 +7,8 @@ const Avatar = (props) => {
   const { leaveTeam, profileId, setProfileId, type } = props;
   const [userData, setUserData] = useState({});
   const context = useContext(StoreContext);
-  const { profileOpenContext, glojectOpenContext } = context;
+  const { profileOpenContext, glojectOpenContext, loggedInContext } = context;
+  const [loggedIn, setLoggedIn] = loggedInContext;
 
   // Profile
   const [profileOpen, setProfileOpen] = profileOpenContext;
@@ -23,7 +24,7 @@ const Avatar = (props) => {
       setUserData(userData);
     };
     ue();
-  }, [profileId, profileOpen, glojectOpen]);
+  }, [profileId, profileOpen, glojectOpen, loggedIn]);
 
   const handleClick = () => {
     setProfileId(profileId);

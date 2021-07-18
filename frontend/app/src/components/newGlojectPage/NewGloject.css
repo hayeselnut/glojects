@@ -1,0 +1,7 @@
+input:focus {
+  color: white;
+}
+
+label {
+  color: #c7c5c5 !important;
+}
