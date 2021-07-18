@@ -174,6 +174,8 @@ const World = () => {
     <>
       {console.log('In world')}
       <Button
+        inverted
+        style={{position: "absolute", top: "6vh", left: "1vw"}}
         onClick={showTeam}
       >
         Show Team!
