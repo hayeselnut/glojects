@@ -10,23 +10,53 @@ import World from './components/World';
 import 'semantic-ui-css/semantic.min.css';
 import ApiPage from './components/apiPage/ApiPage';
 import EditGlojectPage from './components/editGlojectPage/EditGlojectPage';
+import { StoreProvider } from './utils/store';
 
 function App() {
   return (
     <>
-      <NavBar />
-      <Router>
-        <Switch>
-          {console.log("In router")}
-          <PrivateRoute path={`${process.env.PUBLIC_URL}/signup`} component={SignupPage} />
-          <Route exact path={`${process.env.PUBLIC_URL}/`} component={World} />
-          <Route exact path={`${process.env.PUBLIC_URL}/api`} component={ApiPage} />
-          <Route exact path={`${process.env.PUBLIC_URL}/g/new`} component={NewGlojectPage} />
-          <Route exact path={`${process.env.PUBLIC_URL}/g/:glojectId`} component={GlojectPage} />
-          <Route exact path={`${process.env.PUBLIC_URL}/g/:glojectId/edit`} component={EditGlojectPage} />
-          <Route exact path={`${process.env.PUBLIC_URL}/u/:uid`} component={UserProfilePage} />
-        </Switch>
-      </Router>
+      <StoreProvider>
+        <NavBar />
+        <Router>
+          <Switch>
+            {console.log('In router')}
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/signup`}
+              component={SignupPage}
+            />
+            <Route
+              exact
+              path={`${process.env.PUBLIC_URL}/`}
+              component={World}
+            />
+            <Route
+              exact
+              path={`${process.env.PUBLIC_URL}/api`}
+              component={ApiPage}
+            />
+            <Route
+              exact
+              path={`${process.env.PUBLIC_URL}/g/new`}
+              component={NewGlojectPage}
+            />
+            <Route
+              exact
+              path={`${process.env.PUBLIC_URL}/g/:glojectId`}
+              component={GlojectPage}
+            />
+            <Route
+              exact
+              path={`${process.env.PUBLIC_URL}/g/:glojectId/edit`}
+              component={EditGlojectPage}
+            />
+            <Route
+              exact
+              path={`${process.env.PUBLIC_URL}/u/:uid`}
+              component={UserProfilePage}
+            />
+          </Switch>
+        </Router>
+      </StoreProvider>
     </>
   );
 }

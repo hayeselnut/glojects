@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Card, Image } from 'semantic-ui-react';
-
+import { StoreContext } from '../../utils/store';
 import Avatar from '../avatar/Avatar';
 
 const GlojectCard = (props) => {
+  const context = useContext(StoreContext);
+  const { profileIdContext, glojectOpenContext, glojectIdContext } = context;
+
+  const [profileId, setProfileId] = profileIdContext;
+  // Gloject
+  const [glojectOpen, setGlojectOpen] = glojectOpenContext;
+  const [glojectId, setGlojectId] = glojectIdContext;
+
+  const handleReadMore = () => {
+    console.log('props', props);
+    setGlojectId(props.id);
+    setGlojectOpen(true);
+  };
+
   console.log('props', props);
   return (
     <Card>
@@ -28,8 +42,12 @@ const GlojectCard = (props) => {
             alignItems: 'center',
           }}
         >
-          <Avatar profileId={props.owner} />
-          <a>Read more</a>
+          <Avatar
+            profileId={props.owner}
+            setProfileId={setProfileId}
+            type="dark"
+          />
+          <a onClick={() => handleReadMore()}>Read more</a>
         </div>
       </Card.Content>
     </Card>

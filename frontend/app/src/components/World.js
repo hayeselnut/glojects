@@ -67,6 +67,7 @@ const World = () => {
   const [cardTags, setCardTags] = useState([]);
   const [cardDescription, setCardDescription] = useState('');
   const [cardOwner, setCardOwner] = useState('');
+  const [id, setId] = useState('');
 
   const initZoom = () => {
     // const newOptions = {...options};
@@ -93,7 +94,6 @@ const World = () => {
     });
   }, []);
 
-
   const onClick = (obj) => {
     zoomToMarker(updateFocus, obj);
     setCardSrc(obj.image);
@@ -101,6 +101,7 @@ const World = () => {
     setCardTags(obj.tags);
     setCardDescription(obj.description);
     setCardOwner(obj.owner);
+    setId(obj.id);
     setHover(true);
   };
 
@@ -124,16 +125,18 @@ const World = () => {
           <div style={upperText} />
           <div style={middleText}>
             <div style={left}>
-                G<span style={{letterSpacing: 0}}>L</span>
+              G<span style={{ letterSpacing: 0 }}>L</span>
             </div>
-            <div style={middle}/>
+            <div style={middle} />
             <div style={right}>JECTS</div>
           </div>
           <div style={lowerText}>Press any key to continue</div>
         </div>
       ) : null}
-      {!open ? <RandomGlojectBtn glojects={glojects} updateFocus={updateFocus} /> : null}
-      {!open ? <ToggleExperienceBtn updateGlojects={updateGlojects}/> : null}
+      {!open ? (
+        <RandomGlojectBtn glojects={glojects} updateFocus={updateFocus} />
+      ) : null}
+      {!open ? <ToggleExperienceBtn updateGlojects={updateGlojects} /> : null}
       {hover ? (
         <div style={cardStyle}>
           <GlobjectCard
@@ -142,6 +145,7 @@ const World = () => {
             tags={cardTags}
             description={cardDescription}
             owner={cardOwner}
+            id={id}
           />
         </div>
       ) : null}
@@ -189,28 +193,28 @@ const upperText = {
 };
 
 const middleText = {
-    flex: 3,
-    // backgroundColor: "green"
-    // border: "5px solid green",
-    fontSize: "8vw",
-    fontWeight: "bold",
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    letterSpacing: "2vw",
-    // marginLeft: "20vw",
-    // paddingLeft: "18%"
-}
+  flex: 3,
+  // backgroundColor: "green"
+  // border: "5px solid green",
+  fontSize: '8vw',
+  fontWeight: 'bold',
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  letterSpacing: '2vw',
+  // marginLeft: "20vw",
+  // paddingLeft: "18%"
+};
 
 const left = {
-    flex: 4,
-    display: "flex",
-    flexDirection: "row",
-    // border: "2px solid purple",
-    alignItems: "flex-end",
-    justifyContent: "flex-end",
-}
+  flex: 4,
+  display: 'flex',
+  flexDirection: 'row',
+  // border: "2px solid purple",
+  alignItems: 'flex-end',
+  justifyContent: 'flex-end',
+};
 
 const middle = {
   flex: 1,

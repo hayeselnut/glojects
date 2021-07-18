@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Modal, Form, Input, Header } from 'semantic-ui-react';
 import { signup } from '../../firebase/auth';
 import 'react-nice-input-password/dist/react-nice-input-password.css';
 import './InvisInput.css';
+import { StoreContext } from '../../utils/store';
 
-export default function SignupModal(props) {
-  const { signupOpen, setSignupOpen } = props;
+export default function SignupModal() {
   const [username, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [location, setLocation] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const context = useContext(StoreContext);
+  const { signupContext } = context;
+  const [signupOpen, setSignupOpen] = signupContext;
   const handleSignup = async () => {
     await signup(email, password, username, location);
     setSignupOpen(false);

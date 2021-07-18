@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   Label,
   Grid,
@@ -13,15 +13,23 @@ import api from '../../api';
 import 'react-nice-input-password/dist/react-nice-input-password.css';
 import GlobjectCard from '../common/GlojectCard';
 import GlojectTeam from './GlojectTeam';
+import { StoreContext } from '../../utils/store';
 
-export default function GlojectModal(props) {
+export default function GlojectModal() {
+  const context = useContext(StoreContext);
   const {
-    glojectId,
-    glojectOpen,
-    setGlojectOpen,
-    setProfileId,
-    setProfileOpen,
-  } = props;
+    profileOpenContext,
+    profileIdContext,
+    glojectOpenContext,
+    glojectIdContext,
+  } = context;
+  // Profile
+  const [profileOpen, setProfileOpen] = profileOpenContext;
+  const [profileId, setProfileId] = profileIdContext;
+
+  // Gloject
+  const [glojectOpen, setGlojectOpen] = glojectOpenContext;
+  const [glojectId, setGlojectId] = glojectIdContext;
 
   const [glojectData, setGlojectData] = useState({});
 
