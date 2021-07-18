@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Button, Modal, Container, Image, Header } from 'semantic-ui-react';
 import { login } from '../../firebase/auth';
 import { useHistory, useParams } from 'react-router-dom';
 import api from '../../api';
 import 'react-nice-input-password/dist/react-nice-input-password.css';
+import { StoreContext } from '../../utils/store';
 
-export default function ProfileModal(props) {
+export default function ProfileModal() {
+  const context = useContext(StoreContext);
   const {
-    profileOpen,
-    setProfileOpen,
-    profileId,
-    setGlojectId,
-    setGlojectOpen,
-  } = props;
+    profileOpenContext,
+    profileIdContext,
+    glojectOpenContext,
+    glojectIdContext,
+  } = context;
+  // Profile
+  const [profileOpen, setProfileOpen] = profileOpenContext;
+  const [profileId, setProfileId] = profileIdContext;
+
+  // Gloject
+  const [glojectOpen, setGlojectOpen] = glojectOpenContext;
+  const [glojectId, setGlojectId] = glojectIdContext;
 
   //const { uid } = useParams();
   const history = useHistory();

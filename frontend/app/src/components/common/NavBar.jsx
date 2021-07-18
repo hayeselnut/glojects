@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 
 import Avatar from '../avatar/Avatar';
@@ -8,6 +8,7 @@ import SignupModal from '../signupPage/SignupModal';
 import LoginModal from '../signupPage/LoginModal';
 import ProfileModal from '../userProfilePage/ProfileModal';
 import GlojectModal from '../glojectPage.jsx/GlojectModal';
+import { StoreContext } from '../../utils/store';
 
 const StyledNav = styled.div`
   display: flex;
@@ -36,18 +37,32 @@ const RightDiv = styled.div`
 `;
 
 const NavBar = (props) => {
-  const [activeItem, setActiveItem] = useState('home');
-  const [logggedIn, setLoggedIn] = useState(false);
   const [buttons, setButtons] = useState('');
-  const [signupOpen, setSignupOpen] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
   const [userId, setUserId] = useState(localStorage.getItem('id'));
+
+  const context = useContext(StoreContext);
+  const {
+    loggedInContext,
+    profileOpenContext,
+    profileIdContext,
+    glojectOpenContext,
+    glojectIdContext,
+    signupContext,
+    loginContext,
+  } = context;
+
+  const [loggedIn, setLoggedIn] = loggedInContext;
+
+  // Signup
+  const [signupOpen, setSignupOpen] = signupContext;
+  const [loginOpen, setLoginOpen] = loginContext;
+
   // Profile
-  const [profileOpen, setProfileOpen] = useState(false);
-  const [profileId, setProfileId] = useState('');
+  const [profileOpen, setProfileOpen] = profileOpenContext;
+  const [profileId, setProfileId] = profileIdContext;
   // Gloject
-  const [glojectOpen, setGlojectOpen] = useState(false);
-  const [glojectId, setGlojectId] = useState('');
+  const [glojectOpen, setGlojectOpen] = glojectOpenContext;
+  const [glojectId, setGlojectId] = glojectIdContext;
 
   const handleLogout = async () => {
     await logout();
@@ -57,17 +72,14 @@ const NavBar = (props) => {
   useEffect(() => {
     const pathname = window.location.pathname;
     console.log(pathname);
-    console.log(logggedIn, userId);
-    if (logggedIn || userId !== null) {
-      console.log(logggedIn, userId);
+    if (loggedIn || userId !== null) {
       setButtons(
         <RightDiv>
           <Avatar
             style={{ margin: '10px' }}
             profileId={userId}
             setProfileId={setProfileId}
-            setProfileOpen={setProfileOpen}
-            setGlojectOpen={setGlojectOpen}
+            type="light"
           />
           <Button
             name="sign out"
@@ -101,42 +113,20 @@ const NavBar = (props) => {
         </RightDiv>
       );
     }
-  }, [logggedIn, userId]);
+  }, [loggedIn, userId]);
   return (
     <StyledNav>
       {/* <LeftDiv> */}
-        <Header as="h1" style={{ color: 'white' }}>
-          Gl<span>&#x1f30e;</span>jects
-        </Header>
+      <Header as="h1" style={{ color: 'white' }}>
+        Gl<span>&#x1f30e;</span>jects
+      </Header>
       {/* </LeftDiv> */}
       <RightDiv>
         {buttons}
-        <SignupModal
-          signupOpen={signupOpen}
-          setSignupOpen={setSignupOpen}
-          logggedIn={logggedIn}
-          setLoggedIn={setLoggedIn}
-        ></SignupModal>
-        <LoginModal
-          loginOpen={loginOpen}
-          setLoginOpen={setLoginOpen}
-          logggedIn={logggedIn}
-          setLoggedIn={setLoggedIn}
-        ></LoginModal>
-        <ProfileModal
-          profileOpen={profileOpen}
-          profileId={profileId}
-          setProfileOpen={setProfileOpen}
-          setGlojectId={setGlojectId}
-          setGlojectOpen={setGlojectOpen}
-        ></ProfileModal>
-        <GlojectModal
-          glojectId={glojectId}
-          setGlojectOpen={setGlojectOpen}
-          glojectOpen={glojectOpen}
-          setProfileId={setProfileId}
-          setProfileOpen={setProfileOpen}
-        ></GlojectModal>
+        <SignupModal />
+        <LoginModal />
+        <ProfileModal />
+        <GlojectModal />
       </RightDiv>
     </StyledNav>
   );

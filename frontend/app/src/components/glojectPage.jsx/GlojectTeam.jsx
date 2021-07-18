@@ -1,21 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import { Button, Header, Image, List, Transition } from 'semantic-ui-react';
 import api from '../../api';
 import Avatar from '../avatar/Avatar';
 import Plus from '../../assets/plus.svg';
+import { StoreContext } from '../../utils/store';
 
 const GlojectTeam = (props) => {
   const {
     glojectData,
     setGlojectData,
-    setProfileId,
-    setProfileOpen,
-    setGlojectOpen,
     setSuccess,
     setSuccessMsg,
   } = props;
   const [canJoinTeam, setCanJoinTeam] = useState(false);
+
+  const context = useContext(StoreContext);
+  const { profileOpenContext, profileIdContext, glojectOpenContext } = context;
+
+  // Profile
+  const [profileOpen, setProfileOpen] = profileOpenContext;
+  const [profileId, setProfileId] = profileIdContext;
+  const [glojectOpen, setGlojectOpen] = glojectOpenContext;
 
   useEffect(() => {
     console.log(
@@ -57,8 +63,7 @@ const GlojectTeam = (props) => {
       <Avatar
         profileId={glojectData.owner}
         setProfileId={setProfileId}
-        setProfileOpen={setProfileOpen}
-        setGlojectOpen={setGlojectOpen}
+        type="light"
       />
 
       <Header size="tiny" style={{ marginTop: '1em', color: 'white' }}>
@@ -69,10 +74,9 @@ const GlojectTeam = (props) => {
           <List.Item key={i}>
             <Avatar
               profileId={userId}
+              type="light"
               setProfileId={setProfileId}
-              setProfileOpen={setProfileOpen}
-              removeFromTeam={leaveTeam}
-              setGlojectOpen={setGlojectOpen}
+              leaveTeam={leaveTeam}
             />
           </List.Item>
         ))}
