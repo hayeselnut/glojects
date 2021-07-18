@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Card, Image } from 'semantic-ui-react';
+import { Card, Header, Image } from 'semantic-ui-react';
 import { StoreContext } from '../../utils/store';
 import Avatar from '../avatar/Avatar';
 
@@ -35,6 +35,19 @@ const GlojectCard = (props) => {
         <Card.Description>{props.description}</Card.Description>
       </Card.Content>
       <Card.Content extra>
+        <div>
+          <Header as="h5">The Team</Header>
+          {props.team?.map((i) => {
+            return (
+              <div style={{ margin: '5px 0' }}>
+                <Avatar profileId={i} setProfileId={setProfileId} type="dark" />
+              </div>
+            );
+          })}
+        </div>
+      </Card.Content>
+      <Card.Content extra>
+        <Header as="h5">Creator</Header>
         <div
           style={{
             display: 'flex',
