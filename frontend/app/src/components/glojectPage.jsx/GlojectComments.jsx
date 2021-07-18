@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Button, Comment, Form } from 'semantic-ui-react';
+import { Button, Comment, Form, TextArea } from 'semantic-ui-react';
 import api from '../../api';
 import GlojectCommentBlock from './GlojectCommentBlock';
 
@@ -23,22 +23,22 @@ const GlojectComments = (props) => {
       content: commentText,
     }
     const newGlojectData = {...glojectData, comments: emptyObject(glojectData.comments) ? [newComment] : glojectData.comments?.concat(newComment)};
-    await api.glojects.update(glojectData.id, newGlojectData);
     setCommentText('');
     setGlojectData(newGlojectData);
+    await api.glojects.update(glojectData.id, newGlojectData);
   }
 
   return (
     <>
       <Form>
         <Form.TextArea
-          name='glojectComment'
-          label='Comment'
-          placeholder='Comment'
-          id='Comment'
-          value={commentText}
-          style={{ minHeight: 100 }}
-          onChange={(e) => setCommentText(e.target.value)}
+            name='glojectComment'
+            label='Comment'
+            placeholder='Comment'
+            id='Comment'
+            value={commentText}
+            style={{ minHeight: 100 }}
+            onChange={(e) => setCommentText(e.target.value)}
         />
         <Button
           content='Post'
