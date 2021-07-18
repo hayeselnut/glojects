@@ -7,12 +7,7 @@ import Plus from '../../assets/plus.svg';
 import { StoreContext } from '../../utils/store';
 
 const GlojectTeam = (props) => {
-  const {
-    glojectData,
-    setGlojectData,
-    setSuccess,
-    setSuccessMsg,
-  } = props;
+  const { glojectData, setGlojectData, setSuccess, setSuccessMsg } = props;
   const [canJoinTeam, setCanJoinTeam] = useState(false);
 
   const context = useContext(StoreContext);
@@ -41,7 +36,7 @@ const GlojectTeam = (props) => {
     const updated = { team: glojectData.team.concat(currentUserId) };
     await api.glojects.update(glojectData.id, updated);
     setGlojectData(await api.glojects.getById(glojectData.id));
-    setSuccessMsg("You have successfully joined the team!");
+    setSuccessMsg('You have successfully joined the team!');
     setSuccess(true);
   };
 
@@ -51,7 +46,7 @@ const GlojectTeam = (props) => {
     };
     await api.glojects.update(glojectData.id, updated);
     setGlojectData(await api.glojects.getById(glojectData.id));
-    setSuccessMsg("You have successfully removed yourself from the team.");
+    setSuccessMsg('You have successfully removed yourself from the team.');
     setSuccess(true);
   };
 
