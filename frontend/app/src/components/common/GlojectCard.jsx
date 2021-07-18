@@ -38,11 +38,18 @@ const GlojectCard = (props) => {
         <div>
           <Header as="h5">The Team</Header>
           {props.team?.map((i) => {
-            return (
-              <div style={{ margin: '5px 0' }}>
-                <Avatar profileId={i} setProfileId={setProfileId} type="dark" />
-              </div>
-            );
+            console.log(i, props.owner);
+            if (i !== props.owner) {
+              return (
+                <div style={{ margin: '5px 0' }}>
+                  <Avatar
+                    profileId={i}
+                    setProfileId={setProfileId}
+                    type="dark"
+                  />
+                </div>
+              );
+            }
           })}
         </div>
       </Card.Content>
