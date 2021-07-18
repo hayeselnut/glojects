@@ -65,16 +65,20 @@ const GlojectTeam = (props) => {
         Team members:
       </Header>
       <Transition.Group as={List} duration={200} divided verticalAlign="middle">
-        {glojectData.team?.map((userId, i) => (
-          <List.Item key={i}>
-            <Avatar
-              profileId={userId}
-              type="light"
-              setProfileId={setProfileId}
-              leaveTeam={leaveTeam}
-            />
-          </List.Item>
-        ))}
+        {glojectData.team?.map((userId, i) => {
+          if (userId !== glojectData.owner) {
+            return (
+              <List.Item key={i}>
+                <Avatar
+                  profileId={userId}
+                  type="light"
+                  setProfileId={setProfileId}
+                  leaveTeam={leaveTeam}
+                />
+              </List.Item>
+            );
+          }
+        })}
 
         {/* Only show `Join Team` if team has space */}
         {canJoinTeam && (
