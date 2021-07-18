@@ -8,7 +8,7 @@ import ToggleExperienceBtn from './ui/toggleExperienceBtn';
 import { zoomToMarker } from './WorldUtil/cameraAnimations';
 import { scrapeToGlojectObj } from './WorldUtil/projectsUtil';
 import RandomGlojectBtn from './ui/RandomGlojectBtn';
-
+import NewGlojectModal from './newGlojectPage/NewGlojectModal';
 import GlobjectCard from '../components/common/GlojectCard';
 
 // const sampleData = [...Array(25).keys()].map(() => ({
@@ -136,6 +136,7 @@ const World = () => {
       {!open ? (
         <RandomGlojectBtn glojects={glojects} updateFocus={updateFocus} />
       ) : null}
+      {!open ? <NewGlojectModal updateFocus={updateFocus} /> : null}
       {!open ? <ToggleExperienceBtn updateGlojects={updateGlojects} /> : null}
       {hover ? (
         <div style={cardStyle}>

@@ -9,6 +9,7 @@ export const StoreProvider = ({ children }) => {
   const [glojectId, setGlojectId] = useState('');
   const [signupOpen, setSignupOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [newGlojectOpen, setNewGlojectOpen] = useState(false);
   const store = {
     loggedInContext: [loggedIn, setLoggedIn],
     profileOpenContext: [profileOpen, setProfileOpen],
@@ -17,6 +18,7 @@ export const StoreProvider = ({ children }) => {
     glojectIdContext: [glojectId, setGlojectId],
     signupContext: [signupOpen, setSignupOpen],
     loginContext: [loginOpen, setLoginOpen],
+    newGlojectContext: [newGlojectOpen, setNewGlojectOpen],
   };
   return (
     <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
