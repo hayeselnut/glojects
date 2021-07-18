@@ -1,5 +1,5 @@
-input:focus {
-  color: white;
+input {
+  color: rgb(0, 0, 0);
 }
 
 label {

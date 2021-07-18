@@ -7,6 +7,7 @@ import {
   Message,
   Radio,
   Modal,
+  Input,
 } from 'semantic-ui-react';
 import api from '../../api';
 import { fileToDataUrl, redirect } from '../../helpers';
@@ -126,7 +127,7 @@ const NewGlojectModal = ({ updateFocus }) => {
               placeholder="Title"
               id="Title"
               value={title}
-              style={{ color: 'white' }}
+              style={{ color: 'black' }}
               onChange={(e) => setTitle(e.target.value)}
             />
             <Form.TextArea
@@ -212,6 +213,8 @@ const NewGlojectModal = ({ updateFocus }) => {
                   value="HARD"
                   checked={difficulty === 'HARD'}
                   onChange={(e, { value }) => setDifficulty(value)}
+                  transparent
+                  style={{ borderBottom: '1px solid grey', color: 'white' }}
                 />
               </Form.Group>
             </Form.Field>
@@ -239,5 +242,5 @@ export default NewGlojectModal;
 const buttonStyle = {
   position: 'absolute',
   bottom: '2vh',
-  right: '16vw',
+  right: '11vw',
 };
