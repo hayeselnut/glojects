@@ -42,6 +42,7 @@ export default function GlojectModal() {
 
   useEffect(() => {
     const ue = async () => {
+      setGlojectData({});
       const glojectData = await api.glojects.getById(glojectId);
       setGlojectData(glojectData);
     };
