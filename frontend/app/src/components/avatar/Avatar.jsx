@@ -55,7 +55,7 @@ const Avatar = (props) => {
         }}
       >
         <Image src={userData.image} avatar style={{ marginRight: '0.5em' }} />
-        <span style={{ flexGrow: 1, width: '200px' }}>{`${userData.username}${
+        <span style={{ flexGrow: 1, width: '200px' }}>{`${userData.username || ''}${
           profileId === currUserId ? ' (You)' : ''
         }`}</span>
       </a>
@@ -74,7 +74,8 @@ const Avatar = (props) => {
     </div>
   )
 
-  return loading ? placeholder : loaded;
+  // return loading ? placeholder : loaded;
+  return loaded;
 };
 
 export default Avatar;

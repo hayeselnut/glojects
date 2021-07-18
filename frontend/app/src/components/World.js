@@ -124,7 +124,10 @@ const World = () => {
       {console.log('In world')}
       {open ? (
         <div style={startModalStyle}>
-          <div style={upperText} />
+          <div style={upperText}>
+            <div style={first} />
+            <div style={second}>Welcome to</div>
+          </div>
           <div style={middleText}>
             <div style={left}>
               G<span style={{ letterSpacing: 0 }}>L</span>
@@ -132,7 +135,8 @@ const World = () => {
             <div style={middle} />
             <div style={right}>JECTS</div>
           </div>
-          <div style={lowerText}>Press any key to continue</div>
+          <div style={{flex: 1}} />
+          <div style={lowerText}>Dive into a community where passions are shared worldwide</div>
         </div>
       ) : null}
       {!open ? (
@@ -191,15 +195,26 @@ const startModalStyle = {
 
 const upperText = {
   flex: 4,
-  // border: "5px solid red",
+  border: "5px solid red",
   // backgroundColor: "red",
   // fontSize: "50px"
+  display: 'flex',
+};
+
+const first = {
+  flex: 1,
+  border: "5px solid red",
+};
+
+const second = {
+  flex: 7,
+  border: "5px solid red",
 };
 
 const middleText = {
   flex: 3,
   // backgroundColor: "green"
-  // border: "5px solid green",
+  border: "5px solid green",
   fontSize: '8vw',
   fontWeight: 'bold',
   display: 'flex',
@@ -215,25 +230,26 @@ const left = {
   flex: 4,
   display: 'flex',
   flexDirection: 'row',
-  // border: "2px solid purple",
+  border: "2px solid purple",
   alignItems: 'flex-end',
   justifyContent: 'flex-end',
 };
 
 const middle = {
   flex: 1,
-  // border: "2px solid white",
+  border: "2px solid white",
 };
 
 const right = {
   flex: 4,
-  // border: "2px solid orange",
+  border: "2px solid orange",
   alignItems: 'flex-start',
 };
 
 const lowerText = {
-  flex: 4,
-  // border: "5px solid yellow",
+  flex: 3,
+  border: "5px solid yellow",
+  fontSize: '2em',
   textAlign: 'center',
   // backgroundColor: "yellow"
 };
