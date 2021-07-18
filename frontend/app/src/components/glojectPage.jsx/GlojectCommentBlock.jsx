@@ -22,12 +22,12 @@ const GlojectCommentBlock = (props) => {
   return (
     <Comment>
       <Comment.Avatar as='a' href={`${process.env.PUBLIC_URL}/u/${userId}`} src={userData.image || DefaultProfilePic} />
-      <Comment.Content>
+      <Comment.Content style={{color: 'white'}}>
         <Comment.Author as='a' href={`${process.env.PUBLIC_URL}/u/${userId}`}>{userData.username}</Comment.Author>
-        <Comment.Metadata>
+        <Comment.Metadata style={{color: 'gray'}}>
           <div>{time}</div>
         </Comment.Metadata>
-        <Comment.Text>{content}</Comment.Text>
+        <Comment.Text style={{color: 'white'}}>{content}</Comment.Text>
       </Comment.Content>
     </Comment>
   );

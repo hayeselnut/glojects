@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Button, Comment, Form, TextArea } from 'semantic-ui-react';
+import { Button, Comment, Form } from 'semantic-ui-react';
 import api from '../../api';
 import GlojectCommentBlock from './GlojectCommentBlock';
 
@@ -8,6 +8,8 @@ const GlojectComments = (props) => {
   const { glojectData, setGlojectData } = props;
 
   const [commentText, setCommentText] = useState('');
+
+  const emptyObject = (obj) => !obj || Object.keys(glojectData.comments).length === 0;
 
   const postComment = async (e) => {
     e.preventDefault();
@@ -21,7 +23,7 @@ const GlojectComments = (props) => {
       content: commentText,
     }
 
-    await api.glojects.update(glojectData.id, {comments: glojectData.comments.concat(newComment)});
+    await api.glojects.update(glojectData.id, {comments: emptyObject(glojectData.comments) ? [newComment] : glojectData.comments?.concat(newComment)});
     setCommentText('');
     setGlojectData(await api.glojects.getById(glojectData.id));
   }
@@ -46,7 +48,7 @@ const GlojectComments = (props) => {
       </Form>
 
       {glojectData.comment?.length === 0 ? "Be the first one to comment!" : (
-        <Comment.Group>
+        <Comment.Group style={{color: 'white'}}>
           {glojectData.comments?.map((comment, i) => <GlojectCommentBlock key={i} comment={comment}/>)}
         </Comment.Group>
       )}

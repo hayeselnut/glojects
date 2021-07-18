@@ -22,8 +22,6 @@ const GlojectPage = (props) => {
     ue();
   }, [glojectId]);
 
-  console.log('gjdata', glojectData);
-
   return (
     <Container>
       <Image
@@ -56,7 +54,7 @@ const GlojectPage = (props) => {
           <Label.Group tag style={{marginBottom: '2em'}}>
             {glojectData.tags?.map(tag => (
               <Label key={tag}>{tag}</Label>
-              ))}
+            ))}
           </Label.Group>
 
           <GlojectComments glojectData={glojectData} setGlojectData={setGlojectData} />
@@ -64,7 +62,12 @@ const GlojectPage = (props) => {
         </Grid.Column>
 
         <Grid.Column>
-          <GlojectTeam glojectData={glojectData} setGlojectData={setGlojectData} setSuccess={setSuccess} setSuccessMsg={setSuccessMsg} />
+          <GlojectTeam
+            glojectData={glojectData}
+            setGlojectData={setGlojectData}
+            setSuccess={setSuccess}
+            setSuccessMsg={setSuccessMsg}
+          />
         </Grid.Column>
       </Grid>
     </Container>

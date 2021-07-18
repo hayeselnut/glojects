@@ -6,6 +6,8 @@ import {
   Image,
   Header,
   Modal,
+  Message,
+  Button,
 } from 'semantic-ui-react';
 import { login } from '../../firebase/auth';
 import { useHistory, useParams } from 'react-router-dom';
@@ -14,6 +16,9 @@ import 'react-nice-input-password/dist/react-nice-input-password.css';
 import GlobjectCard from '../common/GlojectCard';
 import GlojectTeam from './GlojectTeam';
 import { StoreContext } from '../../utils/store';
+import DifficultyLabel from './DifficultyLabel';
+import GlojectComments from './GlojectComments';
+import { redirect } from '../../helpers';
 
 export default function GlojectModal() {
   const context = useContext(StoreContext);
@@ -32,6 +37,8 @@ export default function GlojectModal() {
   const [glojectId, setGlojectId] = glojectIdContext;
 
   const [glojectData, setGlojectData] = useState({});
+  const [success, setSuccess] = useState(false);
+  const [successMsg, setSuccessMsg] = useState('')
 
   useEffect(() => {
     const ue = async () => {
@@ -57,28 +64,46 @@ export default function GlojectModal() {
           fluid
           src={glojectData.image}
         />
-        <Header style={{ color: 'white' }} size="huge">
-          {glojectData.title}
-        </Header>
-        <Label.Group tag style={{ marginBottom: '2em' }}>
-          {glojectData.tags?.map((tag) => (
-            <Label key={tag}>{tag}</Label>
-          ))}
-        </Label.Group>
+        <Message hidden={!success} success content={successMsg} />
+
+        <Grid columns="equal">
+          <Grid.Column width={10}>
+            <Header style={{ color: 'white' }} size="huge">
+              {glojectData.title}
+            </Header>
+            <Label.Group>
+              <DifficultyLabel difficulty={glojectData.difficulty} />
+              {/* LOCATION LABEL */}
+            </Label.Group>
+          </Grid.Column>
+          <Grid.Column>
+            {/* TODO: only show if user is owner */}
+            <Button circular floated='right' icon='pencil' primary onClick={() => redirect(`/g/${glojectId}/edit`)} />
+          </Grid.Column>
+        </Grid>
+
         <Grid columns="equal">
           <Grid.Column width={10}>
             {glojectData.description?.split('\n').map((p, i) => (
               <p key={i}>{p}</p>
             ))}
+
+            <Label.Group tag style={{ marginBottom: '2em' }}>
+              {glojectData.tags?.map((tag) => (
+                <Label key={tag}>{tag}</Label>
+              ))}
+            </Label.Group>
+
+            <GlojectComments glojectData={glojectData} setGlojectData={setGlojectData} />
+
           </Grid.Column>
 
           <Grid.Column>
             <GlojectTeam
               glojectData={glojectData}
               setGlojectData={setGlojectData}
-              setProfileId={setProfileId}
-              setProfileOpen={setProfileOpen}
-              setGlojectOpen={setGlojectOpen}
+              setSuccess={setSuccess}
+              setSuccessMsg={setSuccessMsg}
             />
           </Grid.Column>
         </Grid>
