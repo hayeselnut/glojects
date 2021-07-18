@@ -22,10 +22,10 @@ const GlojectComments = (props) => {
       userId: localStorage.getItem('id'),
       content: commentText,
     }
-
-    await api.glojects.update(glojectData.id, {comments: emptyObject(glojectData.comments) ? [newComment] : glojectData.comments?.concat(newComment)});
+    const newGlojectData = {...glojectData, comments: emptyObject(glojectData.comments) ? [newComment] : glojectData.comments?.concat(newComment)};
+    await api.glojects.update(glojectData.id, newGlojectData);
     setCommentText('');
-    setGlojectData(await api.glojects.getById(glojectData.id));
+    setGlojectData(newGlojectData);
   }
 
   return (
