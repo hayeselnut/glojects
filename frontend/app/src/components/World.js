@@ -68,6 +68,7 @@ const World = () => {
   const [cardDescription, setCardDescription] = useState('');
   const [cardOwner, setCardOwner] = useState('');
   const [id, setId] = useState('');
+  const [team, setTeam] = useState('');
 
   const initZoom = () => {
     // const newOptions = {...options};
@@ -102,6 +103,7 @@ const World = () => {
     setCardDescription(obj.description);
     setCardOwner(obj.owner);
     setId(obj.id);
+    setTeam(obj.team);
     setHover(true);
   };
 
@@ -146,6 +148,7 @@ const World = () => {
             description={cardDescription}
             owner={cardOwner}
             id={id}
+            team={team}
           />
         </div>
       ) : null}
@@ -169,7 +172,7 @@ export default World;
 const cardStyle = {
   position: 'fixed',
   right: '10%',
-  top: '35%',
+  top: '20%',
 };
 
 const startModalStyle = {
