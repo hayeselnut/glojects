@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
-import { Button, Container, Grid, Header, Icon, Image, Label, Popup } from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Icon, Image, Label, Message, Popup } from 'semantic-ui-react';
 import api from '../../api';
 import GlojectTeam from './GlojectTeam';
-import Avatar from '../avatar/Avatar';
-import GlobjectCard from '../common/GlojectCard';
 import { redirect } from '../../helpers';
 import DifficultyLabel from './DifficultyLabel';
+import GlojectComments from './GlojectComments';
 
 const GlojectPage = (props) => {
   const { glojectId } = props.match.params;
 
   const [glojectData, setGlojectData] = useState({});
+  const [success, setSuccess] = useState(false);
+  const [successMsg, setSuccessMsg] = useState('')
 
   useEffect(() => {
     const ue = async () => {
@@ -30,6 +31,7 @@ const GlojectPage = (props) => {
         fluid
         src={glojectData.image}
       />
+      <Message hidden={!success} success content={successMsg} />
       <Grid columns="equal">
         <Grid.Column width={10}>
           <Header size="huge">{glojectData.title}</Header>
@@ -56,19 +58,15 @@ const GlojectPage = (props) => {
               <Label key={tag}>{tag}</Label>
               ))}
           </Label.Group>
+
+          <GlojectComments glojectData={glojectData} setGlojectData={setGlojectData} />
+
         </Grid.Column>
 
         <Grid.Column>
-          <GlojectTeam glojectData={glojectData} setGlojectData={setGlojectData}/>
+          <GlojectTeam glojectData={glojectData} setGlojectData={setGlojectData} setSuccess={setSuccess} setSuccessMsg={setSuccessMsg} />
         </Grid.Column>
       </Grid>
-      <GlobjectCard
-        src={glojectData.image}
-        title={glojectData.title}
-        owner={glojectData.owner}
-        description={glojectData.description}
-        tags={glojectData.tags}
-      />
     </Container>
   );
 };

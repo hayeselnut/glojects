@@ -19,6 +19,7 @@ const NewGlojectPage = () => {
 
   const team = [];
   const status = "ACTIVE"
+  const comments = [];
 
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -55,7 +56,7 @@ const NewGlojectPage = () => {
 
     setLoading(true);
     const res = await api.glojects.create({
-      title, description, difficulty, owner, team, status, image, maxTeamSize, location,
+      title, description, difficulty, owner, team, status, image, maxTeamSize, location, comments,
       tags: extractTags(tags),
     })
     setLoading(false);
@@ -65,7 +66,7 @@ const NewGlojectPage = () => {
 
   return (
     <Container>
-      <Header content="Make a new Gloject"/>
+      <Header size='huge' content="Make a new Gloject"/>
       <Form loading={loading}  error={error} onSubmit={handleSubmit}>
         <Message error content={errorMsg} />
         <Form.Input

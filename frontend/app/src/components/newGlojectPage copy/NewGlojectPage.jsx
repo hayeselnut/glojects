@@ -65,7 +65,7 @@ const NewGlojectPage = () => {
 
   return (
     <Container>
-      <Header content="Make a new Gloject"/>
+      <Header size='huge' content="Make a new Gloject"/>
       <Form loading={loading} error={error} onSubmit={handleSubmit}>
         <Message error content={errorMsg} />
         <Form.Input

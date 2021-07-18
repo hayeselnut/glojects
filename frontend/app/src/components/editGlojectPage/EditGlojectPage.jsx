@@ -82,15 +82,19 @@ const EditGlojectPage = (props) => {
 
   return (
     <Container>
-      <Header content="Edit Gloject"/>
-      <Popup on='click' inverted position='left center' trigger={<Button circular floated='right' negative icon='trash' />}>
-        <p>Are you sure you want to delete this question?</p>
-        <Button content='Delete' negative onClick={() => {
-          api.glojects.delete(glojectId);
-          redirect("/");
-        }}
-      />
-      </Popup>
+      <Header size='huge' content="Edit Gloject"/>
+
+      <Button content='Mark as complete' positive onClick={(e) => {
+        e.preventDefault();
+        api.glojects.update({status: 'COMPLETED'});
+        redirect("/");
+      }}/>
+      <Button content='Delete' negative onClick={(e) => {
+        e.preventDefault();
+        api.glojects.update({status: 'ARCHIVED'});
+        redirect("/");
+      }}/>
+
       <Form loading={loading} error={error} onSubmit={handleSubmit}>
         <Message error content={errorMsg} />
         <Form.Input
@@ -183,6 +187,7 @@ const EditGlojectPage = (props) => {
         />
 
         <Button primary type='submit' content='Save Gloject' />
+        <Button content='Cancel' onClick={(e) => redirect(`/g/${glojectId}`)}/>
       </Form>
     </Container>
   );

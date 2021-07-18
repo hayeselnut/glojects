@@ -12,6 +12,8 @@ const GlojectTeam = (props) => {
     setProfileId,
     setProfileOpen,
     setGlojectOpen,
+    setSuccess,
+    setSuccessMsg,
   } = props;
   const [canJoinTeam, setCanJoinTeam] = useState(false);
 
@@ -33,14 +35,18 @@ const GlojectTeam = (props) => {
     const updated = { team: glojectData.team.concat(currentUserId) };
     await api.glojects.update(glojectData.id, updated);
     setGlojectData(await api.glojects.getById(glojectData.id));
+    setSuccessMsg("You have successfully joined the team!");
+    setSuccess(true);
   };
 
-  const removeFromTeam = async () => {
+  const leaveTeam = async () => {
     const updated = {
       team: glojectData.team.filter((member) => member !== currentUserId),
     };
     await api.glojects.update(glojectData.id, updated);
     setGlojectData(await api.glojects.getById(glojectData.id));
+    setSuccessMsg("You have successfully removed yourself from the team.");
+    setSuccess(true);
   };
 
   return (
@@ -65,7 +71,7 @@ const GlojectTeam = (props) => {
               profileId={userId}
               setProfileId={setProfileId}
               setProfileOpen={setProfileOpen}
-              removeFromTeam={removeFromTeam}
+              removeFromTeam={leaveTeam}
               setGlojectOpen={setGlojectOpen}
             />
           </List.Item>

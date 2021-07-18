@@ -4,6 +4,8 @@ import firebase from 'firebase';
 import 'firebase/firestore';
 import { firebaseConfig } from '../firebase/firebaseConfig';
 
+import DefaultProfilePic from '../assets/default.png';
+
 const getDb = () => {
   if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig);
@@ -88,8 +90,7 @@ class API {
           active_glojects: [],
           past_glojects: [],
           interests: [],
-          image:
-            'https://www.nicepng.com/png/detail/933-9332131_profile-picture-default-png.png',
+          image: DefaultProfilePic,
         }),
       getById: async (uid) => {
         if (!uid) return {};
