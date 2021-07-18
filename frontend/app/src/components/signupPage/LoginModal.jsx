@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Modal, Input, Header } from 'semantic-ui-react';
 import { login } from '../../firebase/auth';
 import 'react-nice-input-password/dist/react-nice-input-password.css';
+import { StoreContext } from '../../utils/store';
 
-export default function LoginModal(props) {
-  const { loginOpen, setLoginOpen, loggedIn, setLoggedIn } = props;
+export default function LoginModal() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+
+  const context = useContext(StoreContext);
+  const { loginContext, loggedInContext } = context;
+  const [loggedIn, setLoggedIn] = loggedInContext;
+  const [loginOpen, setLoginOpen] = loginContext;
 
   const handleLogin = () => {
     login(email, password).then(() => {
