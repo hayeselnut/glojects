@@ -126,7 +126,7 @@ const World = () => {
         <div style={startModalStyle}>
           <div style={upperText}>
             <div style={first} />
-            {/* <div style={second}>Welcome to</div> */}
+            <div style={second}>WELCOME TO</div>
           </div>
           <div style={middleText}>
             <div style={left}>
@@ -136,7 +136,7 @@ const World = () => {
             <div style={right}>JECTS</div>
           </div>
           <div style={{flex: 1}} />
-          <div style={lowerText}>Dive into a community where passions are shared worldwide</div>
+          <div style={lowerText}>Explore global projects around the world</div>
         </div>
       ) : null}
       {!open ? (
@@ -209,6 +209,11 @@ const first = {
 const second = {
   flex: 7,
   // border: "5px solid red",
+  display: 'flex',
+  alignItems: 'flex-end',
+  fontSize: '4vw',
+  fontWeight: 'bold',
+  letterSpacing: '0.5vw',
 };
 
 const middleText = {
