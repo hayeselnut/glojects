@@ -31,7 +31,7 @@ const RightDiv = styled.div`
   // margin: 10px;
   padding-left: 1vw;
   padding-right: 1vw;
-  width: 275px;
+  width: 300px;
   // background-color: green;
   justify-content: space-between;
 `;

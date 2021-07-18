@@ -239,5 +239,5 @@ export default NewGlojectModal;
 const buttonStyle = {
   position: 'absolute',
   bottom: '2vh',
-  right: '16vw',
+  right: '11vw',
 };
