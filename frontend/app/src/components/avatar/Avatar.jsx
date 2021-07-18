@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Icon, Image } from 'semantic-ui-react';
+import { Icon, Image, Placeholder } from 'semantic-ui-react';
 import api from '../../api';
 import { StoreContext } from '../../utils/store';
 
@@ -9,6 +9,8 @@ const Avatar = (props) => {
   const context = useContext(StoreContext);
   const { profileOpenContext, glojectOpenContext, loggedInContext } = context;
   const [loggedIn, setLoggedIn] = loggedInContext;
+
+  const [loading, setLoading] = useState(true);
 
   // Profile
   const [profileOpen, setProfileOpen] = profileOpenContext;
@@ -22,6 +24,7 @@ const Avatar = (props) => {
       const userData = await api.users.getById(profileId);
       console.log('response', userData);
       setUserData(userData);
+      setLoading(false);
     };
     ue();
   }, [profileId, profileOpen, glojectOpen, loggedIn]);
@@ -33,9 +36,15 @@ const Avatar = (props) => {
     console.log(profileId);
   };
 
-  console.log('type', type);
+  const placeholder = (
+    <Placeholder inverted={type === 'light'}>
+      <Placeholder.Header image>
+        <Placeholder.Line length='medium'/>
+      </Placeholder.Header>
+    </Placeholder>
+  );
 
-  return (
+  const loaded = (
     <div style={{ display: 'flex' }}>
       <a
         onClick={() => handleClick()}
@@ -50,7 +59,7 @@ const Avatar = (props) => {
           profileId === currUserId ? ' (You)' : ''
         }`}</span>
       </a>
-      {leaveTeam && (
+      {currUserId === profileId && leaveTeam && (
         <Icon
           fitted
           circular
@@ -63,7 +72,9 @@ const Avatar = (props) => {
         />
       )}
     </div>
-  );
+  )
+
+  return loading ? placeholder : loaded;
 };
 
 export default Avatar;
