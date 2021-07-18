@@ -10,26 +10,78 @@ import { scrapeToGlojectObj } from './WorldUtil/projectsUtil';
 import RandomGlojectBtn from './ui/RandomGlojectBtn';
 import NewGlojectModal from './newGlojectPage/NewGlojectModal';
 import GlobjectCard from '../components/common/GlojectCard';
+import { Button } from 'semantic-ui-react';
 
-// const sampleData = [...Array(25).keys()].map(() => ({
-//     projectName: "Project Name",
-//     difficulty: ["Easy", "Medium", "Hard"][Math.round(Math.random() * 2)],
-//     coordinates: [(Math.random() - 0.5) * 180, (Math.random() - 0.5) * 360],
-//     value: 25,
-// }));
+const markers = [
+  {
+    id: 'marker1',
+    city: 'Sydney',
+    color: 'red',
+    coordinates: [-33, 151],
+    value: 1
+  },
+  {
+    id: 'marker2',
+    city: 'Perth',
+    color: 'red',
+    coordinates: [-27, 121],
+    value: 1
+  },
+  {
+    id: 'marker3',
+    city: 'Shanghai',
+    color: 'red',
+    coordinates: [31, 121],
+    value: 1
+  },
+  {
+    id: 'marker4',
+    city: 'England',
+    color: 'red',
+    coordinates: [52, -1],
+    value: 1
+  },
+  {
+    id: 'marker5',
+    city: 'South Africa',
+    color: 'red',
+    coordinates: [-15, 34],
+    value: 1
+  }
+]
 
-// sampleData.forEach((marker, index) => {
-//     marker['id'] = index.toString();
-//     if (marker.difficulty === "Easy") {
-//         marker['color'] = 'green';
-//     } else if (marker.difficulty === "Medium") {
-//         marker['color'] = 'blue';
-//     } else if (marker.difficulty === "Hard") {
-//         marker['color'] = 'red';
-//     }
-// })
-
-// console.log(sampleData);
+const initAnimations = [
+  {
+    coordinates: [-33, 151],
+    focusAnimationDuration: 3000,
+    focusDistanceRadiusScale: 1.5,
+    focusEasingFunction: ['Linear', 'None'],
+  },
+  {
+    coordinates: [-27, 121],
+    focusAnimationDuration: 3000,
+    focusDistanceRadiusScale: 1.5,
+    focusEasingFunction: ['Linear', 'None'],
+  },
+  {
+    coordinates: [31, 121],
+    focusAnimationDuration: 3000,
+    focusDistanceRadiusScale: 1.5,
+    focusEasingFunction: ['Linear', 'None'],
+  },
+  {
+    coordinates: [52, -1],
+    focusAnimationDuration: 3000,
+    focusDistanceRadiusScale: 1.5,
+    focusEasingFunction: ['Linear', 'None'],
+  },
+  {
+    coordinates: [-15, 34],
+    focusAnimationDuration: 3000,
+    focusDistanceRadiusScale: 1.5,
+    focusEasingFunction: ['Linear', 'None'],
+  },
+]
 
 const initOptions = {
   enableMarkerGlow: true,
@@ -40,14 +92,7 @@ const initOptions = {
   markerRadiusScaleRange: [0.005, 0.02],
   markerType: 'dot', // dot | bar
   enableMarkerToolTip: true,
-  // markerEnterAnimationDuration: 3000,
-  // markerEnterEasingFunction: ['Bounce', 'InOut'],
-  // markerExitEasingFunction: ['Cubic', 'Out'],
   markerTooltipRenderer: (marker) => `${marker.title}`,
-  // markerRadiusScaleRange: [0.01, 0.05],
-
-  // cameraAutoRotateSpeed: 0.5,
-
   focusAnimationDuration: 2000,
   focusDistanceRadiusScale: 1.5,
   cameraRotateSpeed: 0.5,
@@ -69,6 +114,7 @@ const World = () => {
   const [cardOwner, setCardOwner] = useState('');
   const [id, setId] = useState('');
   const [team, setTeam] = useState('');
+  const [animations, setAnimation] = useState();
 
   const initZoom = () => {
     // const newOptions = {...options};
@@ -119,9 +165,19 @@ const World = () => {
     setFocus(coordinates);
   };
 
+  const showTeam = () => {
+    setAnimation(initAnimations);
+    updateGlojects(markers);
+  }
+
   return (
     <>
       {console.log('In world')}
+      <Button
+        onClick={showTeam}
+      >
+        Show Team!
+      </Button>
       {open ? (
         <div style={startModalStyle}>
           <div style={upperText} />
@@ -163,6 +219,7 @@ const World = () => {
         onClickMarker={onClick}
         onDefocus={onDefocus}
         initialCameraDistanceRadiusScale={25}
+        animations={animations}
       />
     </>
   );
