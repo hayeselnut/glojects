@@ -1,29 +1,29 @@
 {
   "files": {
     "main.css": "/glojects/static/css/main.dcf82b86.chunk.css",
-    "main.js": "/glojects/static/js/main.49bb36f9.chunk.js",
-    "main.js.map": "/glojects/static/js/main.49bb36f9.chunk.js.map",
-    "runtime-main.js": "/glojects/static/js/runtime-main.523f62ac.js",
-    "runtime-main.js.map": "/glojects/static/js/runtime-main.523f62ac.js.map",
+    "main.js": "/glojects/static/js/main.77a13e1b.chunk.js",
+    "main.js.map": "/glojects/static/js/main.77a13e1b.chunk.js.map",
+    "runtime-main.js": "/glojects/static/js/runtime-main.92d14a6d.js",
+    "runtime-main.js.map": "/glojects/static/js/runtime-main.92d14a6d.js.map",
     "static/css/2.046800ec.chunk.css": "/glojects/static/css/2.046800ec.chunk.css",
-    "static/js/2.96425522.chunk.js": "/glojects/static/js/2.96425522.chunk.js",
-    "static/js/2.96425522.chunk.js.map": "/glojects/static/js/2.96425522.chunk.js.map",
-    "static/js/3.042b1774.chunk.js": "/glojects/static/js/3.042b1774.chunk.js",
-    "static/js/3.042b1774.chunk.js.map": "/glojects/static/js/3.042b1774.chunk.js.map",
+    "static/js/2.421239ec.chunk.js": "/glojects/static/js/2.421239ec.chunk.js",
+    "static/js/2.421239ec.chunk.js.map": "/glojects/static/js/2.421239ec.chunk.js.map",
+    "static/js/3.7872134d.chunk.js": "/glojects/static/js/3.7872134d.chunk.js",
+    "static/js/3.7872134d.chunk.js.map": "/glojects/static/js/3.7872134d.chunk.js.map",
     "index.html": "/glojects/index.html",
     "static/css/2.046800ec.chunk.css.map": "/glojects/static/css/2.046800ec.chunk.css.map",
     "static/css/main.dcf82b86.chunk.css.map": "/glojects/static/css/main.dcf82b86.chunk.css.map",
-    "static/js/2.96425522.chunk.js.LICENSE.txt": "/glojects/static/js/2.96425522.chunk.js.LICENSE.txt",
+    "static/js/2.421239ec.chunk.js.LICENSE.txt": "/glojects/static/js/2.421239ec.chunk.js.LICENSE.txt",
     "static/media/8k.c6149084.jpeg": "/glojects/static/media/8k.c6149084.jpeg",
     "static/media/semantic.min.css": "/glojects/static/media/outline-icons.ddae9b1b.woff",
     "static/media/default.b832cfe0.png": "/glojects/static/media/default.b832cfe0.png",
     "static/media/plus.3b1907cc.svg": "/glojects/static/media/plus.3b1907cc.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.523f62ac.js",
+    "static/js/runtime-main.92d14a6d.js",
     "static/css/2.046800ec.chunk.css",
-    "static/js/2.96425522.chunk.js",
+    "static/js/2.421239ec.chunk.js",
     "static/css/main.dcf82b86.chunk.css",
-    "static/js/main.49bb36f9.chunk.js"
+    "static/js/main.77a13e1b.chunk.js"
   ]
 }
